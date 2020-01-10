@@ -8,11 +8,21 @@ Going to use this app for RPA (Robotic Process Automation) at an university boar
 - Automatic assigning system for the Housekeeping chores of the dorm
 - Document Sharing: Meeting report, Financial report, etc.
 
-## Frameworks
+## Install
 
-- Laravel (backend / frontend): MVC model
+### Requirements
+
+- Laravel
+- Composer
 - MySQL
-- Vue.js (frontend)
+
+### Installation
+
+1. `composer install`
+1. `npm install`
+1. `php artisan key:gen`
+1. Seeding
+1. `php artisan serve`
 
 ## Feature Dev Milestones
 
