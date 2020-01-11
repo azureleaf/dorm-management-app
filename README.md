@@ -8,13 +8,16 @@ Going to use this app for RPA (Robotic Process Automation) at an university boar
 - Automatically assign housekeeping chores to every boarder
 - Share documents: Meeting report, Financial report, etc.
 
-## Install
+## Installation
 
 ### Requirements
 
 - Composer
 - npm
 - MySQL
+  - Create database `laravel_dorm`
+- .env
+  - DB_DATABSE=laravel_dorm
 
 ### Installation
 
