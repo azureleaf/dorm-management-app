@@ -6,7 +6,7 @@ RPA (Robotic Process Automation) for administration chores at a university board
 
 - Manage accounting information for each boarder: Who paid? Who has arrear? How much shall I charge him in the next month? In my dorm, every boarder must pay boarding fees by Japan Post Bank accounts.
 - Automatically assign housekeeping chores to every boarder
-- Share documents: Meeting report, Financial report, etc.
+- Share documents: Meeting minutes, Financial report, etc.
 
 ## Installation
 
@@ -15,13 +15,13 @@ RPA (Robotic Process Automation) for administration chores at a university board
 - Composer
 - npm
 - MySQL
-  - Create database `laravel_dorm`
-  - MySQL must run in the background; check status with `sudo systemctl status mysql` @linux, for example.
+    - Create database `laravel_dorm`
+    - MySQL must run in the background; check status with `sudo systemctl status mysql` @linux, for example.
 - config/database.php
-  - `'default' => env('DB_CONNECTION', 'mysql'),` (Default value for Laravel)
+    - `'default' => env('DB_CONNECTION', 'mysql'),` (Default value for Laravel)
 - .env
-  - `DB_CONNECTION=mysql` (Default value for Laravel)
-  - `DB_DATABSE=laravel_dorm`
+    - `DB_CONNECTION=mysql` (Default value for Laravel)
+    - `DB_DATABSE=laravel_dorm`
 
 ### Installation
 
@@ -38,29 +38,30 @@ Run these commands in the root directory of the Laravel application.
 
 1. Laravel + Blade + MySQL
 1. Accounting
-  - Show payment history tables
-  - Billing to each boarder: Monthly boarding fee, penalty fines, reward for dorm tasks
-  - Register if the electronic payment was successful or not.
+    - Show payment history tables
+    - Billing to each boarder: Monthly boarding fee, penalty fines, reward for dorm tasks
+    - Register if the electronic payment was successful or not.
 1. Show the latest info of the dorm
-  - Follow-ups
-  - Dorm events scheduling
-  - Show "bad boarders" who didn't pay on schedule or those who didn't do the assigned dorm chores
+    - Notification to the members
+    - Dorm events scheduling
+    - Show "bad boarders" who didn't pay on schedule or those who didn't do the assigned dorm chores
 1. Show the records on the events in the past
-  - Minutes of the meeting
-  - 
+    - Minutes of the meeting
+    - Monthly financial reports
+    - History of the dorm events
 1. Write w/ Vue.js instead of Blade
 1. Login feature: Session Management, Middlewares
-  - With E-mail & Password
+    - With E-mail & Password
 1. Admin feature
 1. Form Validation
 1. Automatic Chores Scheduling
-  - Ask every boarder which days are available for them
-  - Confirm job scheduling
+    - Ask every boarder which days are available for them
+    - Confirm job scheduling
 1. Data visualization feature (maybe Chart.js): Show the financial history of the dorm in the past
 1. Vuetify
 
 ### Optional features
-- Slack Integration
-- Google Calendar Integration
+- Slack integration / LINE integration
+- Google calendar integration
 - Dockerize
-- Deploy to the cloud server rather than on-premise one
+- Deploy to the cloud server
