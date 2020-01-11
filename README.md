@@ -5,15 +5,15 @@
 Going to use this app for RPA (Robotic Process Automation) at an university boarding hall
 
 - Manage accounting information for each boarder: Who paid? Who has arrear? How much shall I charge him in the next month?
-- Automatic assigning system for the Housekeeping chores of the dorm
-- Document Sharing: Meeting report, Financial report, etc.
+- Automatically assign housekeeping chores to every boarder
+- Share documents: Meeting report, Financial report, etc.
 
 ## Install
 
 ### Requirements
 
-- Laravel
 - Composer
+- npm
 - MySQL
 
 ### Installation
@@ -31,11 +31,11 @@ Going to use this app for RPA (Robotic Process Automation) at an university boar
 1. Login feature
 1. Admin feature
 1. Form Validation
-1. Data visualization feature
+1. Data visualization feature (maybe Chart.js)
+1. Vuetify Integration
 
-
-### Optional features:
+### Optional features
 - Slack Integration
 - Google Calendar Integration
 - Dockerize
-- Deploy in the cloud (now I think I should run this app on-premise tho)
+- Deploy to the cloud server rather than on-premise one
