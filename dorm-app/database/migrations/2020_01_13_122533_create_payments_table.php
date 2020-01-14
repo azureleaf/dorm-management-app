@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Carbon;
 
 class CreatePaymentsTable extends Migration
 {
@@ -15,6 +16,7 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->dateTime('date')->default(Carbon::create(2000, 1, 1, 0, 0, 0, 'Asia/Tokyo'));
             $table->integer('member_id');
             $table->string('description');
             $table->integer('amount');
