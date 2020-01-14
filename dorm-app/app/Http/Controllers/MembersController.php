@@ -23,4 +23,8 @@ class MembersController extends Controller
             }
         }
     }
+
+    public function blade(){
+        return view();
+    }
 }

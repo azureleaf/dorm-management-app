@@ -20,3 +20,6 @@ Route::get('/', function () {
 // IDが特定されていないなら、全てのメンバを表示する
 // IDが見つからない場合には、その旨を表示
 Route::get('/members/{id?}', 'MembersController@index');
+
+// bladeの試験に使うroute
+Route::get('/blade', 'MembersController@blade');
