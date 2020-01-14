@@ -29,5 +29,17 @@ class MembersTableSeeder extends Seeder
             'room' => 103,
         ];
         DB::table('members')->insert($param);
+
+        $param = [
+            'name' => 'Anakin Skywalker',
+            'room' => 104,
+        ];
+        DB::table('members')->insert($param);
+
+        $param = [
+            'name' => 'John Brand',
+            'room' => 105,
+        ];
+        DB::table('members')->insert($param);
     }
 }

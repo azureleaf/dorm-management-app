@@ -14,3 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+// メンバーを表示する
+// IDが特定されたなら、そのメンバのみを表示
+// IDが特定されていないなら、全てのメンバを表示する
+// IDが見つからない場合には、その旨を表示
+Route::get('/members/{id?}', 'MembersController@index');
