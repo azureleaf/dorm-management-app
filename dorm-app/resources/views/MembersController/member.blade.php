@@ -27,14 +27,19 @@
             <input type="submit">
         </form>
     </div>
-    {{ $members }}
-
     <table id="paymentTable">
         <tr>
             <th>寮生識別番号</th>
             <th>部屋番号</th>
             <th>氏名</th>
         </tr>
+        @foreach($members as $member)
+        <tr>
+            <td>{{$member->id}}</td>
+            <td>{{$member->room}}</td>
+            <td>{{$member->name}}</td>
+        </tr>
+        @endforeach
     </table>
 </body>
 

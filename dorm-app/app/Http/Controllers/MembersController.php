@@ -28,9 +28,6 @@ class MembersController extends Controller
     public function showPayments()
     {
         $data = [
-            // 'payment' => DB::table('payments')
-            // ->where('id', '=', 1)
-            // ->first()
             'payments' => DB::table('payments')
             ->get()
         ];
@@ -53,11 +50,8 @@ class MembersController extends Controller
         $data = [
             'members' => DB::table('members')
             ->where('id', '=', $request->memberID)
-            ->first()
+            ->get()
         ];
-        foreach ($data as $item) {
-            echo gettype($item);
-        }
         return view('MembersController.member', $data);
     }
 }
