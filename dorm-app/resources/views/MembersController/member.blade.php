@@ -23,16 +23,19 @@
     <div>
         <form method="POST" action="/members">
             {{ csrf_field()}}
-            <input type="text" name="memberID">
+            <input type="text" name="roomNum" placeholder="部屋番号を入力">
             <input type="submit">
         </form>
     </div>
+    @if(count($members)==0)
+    <p>指定された条件に合致する記録はありません。</p>
+    @else
     <table id="paymentTable">
         <tr>
             <th>寮生識別番号</th>
             <th>部屋番号</th>
             <th>氏名</th>
-        </tr>
+        </tr>        
         @foreach($members as $member)
         <tr>
             <td>{{$member->id}}</td>
@@ -40,6 +43,7 @@
             <td>{{$member->name}}</td>
         </tr>
         @endforeach
+        @endif
     </table>
 </body>
 

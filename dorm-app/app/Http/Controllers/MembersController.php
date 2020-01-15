@@ -49,7 +49,7 @@ class MembersController extends Controller
     {
         $data = [
             'members' => DB::table('members')
-            ->where('id', '=', $request->memberID)
+            ->where('room', '=', $request->roomNum)
             ->get()
         ];
         return view('MembersController.member', $data);
