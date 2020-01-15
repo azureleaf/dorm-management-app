@@ -19,22 +19,22 @@
 </head>
 
 <body>
-    <h1>Payment History</h1>
+    <h1>寮生一覧</h1>
+    <div>
+        <form method="POST" action="/members">
+            {{ csrf_field()}}
+            <input type="text" name="memberID">
+            <input type="submit">
+        </form>
+    </div>
+    {{ $members }}
+
     <table id="paymentTable">
         <tr>
-            <th>処理番号</th>
-            <th>摘要</th>
-            <th>金額</th>
-            <th>債務残高</th>
+            <th>寮生識別番号</th>
+            <th>部屋番号</th>
+            <th>氏名</th>
         </tr>
-        @foreach($payments as $payment)
-        <tr>
-            <td>{{$payment->id}}</td>
-            <td>{{$payment->description}}</td>
-            <td>{{$payment->amount}}</td>
-            <td>{{$payment->balance}}</td>
-        </tr>
-        @endforeach
     </table>
 </body>
 

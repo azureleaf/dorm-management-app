@@ -24,7 +24,40 @@ class MembersController extends Controller
         }
     }
 
-    public function blade(){
-        return view();
+    // Show all the payments
+    public function showPayments()
+    {
+        $data = [
+            // 'payment' => DB::table('payments')
+            // ->where('id', '=', 1)
+            // ->first()
+            'payments' => DB::table('payments')
+            ->get()
+        ];
+        return view('MembersController.payment', $data);
+    }
+
+    // Show all the members
+    public function showMembers()
+    {
+        $data = [
+            'members' => DB::table('members')
+            ->get()
+        ];
+        return view('MembersController.member', $data);
+    }
+
+    // Show the single member specified by the form input
+    public function showSingleMember(Request $request)
+    {
+        $data = [
+            'members' => DB::table('members')
+            ->where('id', '=', $request->memberID)
+            ->first()
+        ];
+        foreach ($data as $item) {
+            echo gettype($item);
+        }
+        return view('MembersController.member', $data);
     }
 }

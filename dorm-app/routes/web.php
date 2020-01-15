@@ -19,7 +19,11 @@ Route::get('/', function () {
 // IDが特定されたなら、そのメンバのみを表示
 // IDが特定されていないなら、全てのメンバを表示する
 // IDが見つからない場合には、その旨を表示
-Route::get('/members/{id?}', 'MembersController@index');
+Route::get('/eachmember/{id?}', 'MembersController@index');
 
-// bladeの試験に使うroute
-Route::get('/blade', 'MembersController@blade');
+// Show all the members
+Route::get('/payments', 'MembersController@showPayments');
+
+// Show all the members
+Route::get('/members', 'MembersController@showMembers');
+Route::post('/members', 'MembersController@showSingleMember');
