@@ -23,7 +23,7 @@
     <div>
         <form method="POST" action="/members">
             {{ csrf_field()}}
-            <input type="text" name="roomNum" placeholder="部屋番号を入力">
+            <input type="text" name="roomNum" placeholder="部屋番号で絞り込み">
             <input type="submit">
         </form>
     </div>
