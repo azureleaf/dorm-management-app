@@ -34,7 +34,7 @@
         @else
         <table id="paymentTable">
             <tr>
-                <th>寮生識別番号</th>
+                <th>寮生番号</th>
                 <th>部屋番号</th>
                 <th>氏名</th>
                 <th>よみがな</th>
