@@ -21,9 +21,14 @@ Route::get('/', function () {
 // IDが見つからない場合には、その旨を表示
 Route::get('/eachmember/{id?}', 'MembersController@index');
 
-// Show all the members
+// Show all the payment records
 Route::get('/payments', 'MembersController@showPayments');
 
 // Show all the members
-Route::get('/members', 'MembersController@showMembers');
-Route::post('/members', 'MembersController@showSingleMember');
+Route::get('/members', 'MembersController@showAll');
+
+// Show a specified member
+Route::post('/members', 'MembersController@showOne');
+
+// Page to accept the new member addition
+Route::post('/members/add', 'MembersController@add');
