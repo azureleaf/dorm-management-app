@@ -21,11 +21,23 @@ Route::get('/', function () {
 // IDが見つからない場合には、その旨を表示
 Route::get('/eachmember/{id?}', 'MembersController@index');
 
-// Show all the payment records
-Route::get('/payments', 'PaymentsController@showAll');
-// Show all the payment records
-Route::post('/payments/single', 'PaymentsController@addSingle');
+/**
+ * Payments
+ */
 
+// Show payment records for all members
+Route::get('/payments', 'PaymentsController@showAll');
+
+// Show payment records for the single member
+Route::get('/payments', 'PaymentsController@showAll');
+
+// Register new payment record for multiple members
+Route::post('/payments/register', 'PaymentsController@register');
+
+
+/**
+ * Members
+ */
 
 // Show all the members
 Route::get('/members', 'MembersController@showAll');

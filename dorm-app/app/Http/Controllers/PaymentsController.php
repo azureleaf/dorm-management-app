@@ -19,7 +19,7 @@ class PaymentsController extends Controller
 
     // Add
 
-    public function addSingle(Request $request)
+    public function register(Request $request)
     {
 
         // 残高を計算する機能をここにつける
