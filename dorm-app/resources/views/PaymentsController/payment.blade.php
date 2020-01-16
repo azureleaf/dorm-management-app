@@ -22,7 +22,7 @@
     <h1>寮費処理</h1>
     <div>
         <h2>寮費履歴</h2>
-        <form method="POST" action="/payments/single">
+        <form method="POST" action="/payments/filter">
             {{ csrf_field()}}
             <input type="text" name="member_id" placeholder="寮生番号">
             <input type="submit" value="検索">
@@ -59,21 +59,12 @@
 
 
     </table>
+    
     <div>
-        <h2>個別処理登録</h2>
-        <form method="POST" action="/payments/single">
+        <h2>会計処理登録</h2>
+        <form method="POST" action="/payments/register">
             {{ csrf_field()}}
-            <input type="text" name="member_id" placeholder="寮生番号">
-            <input type="text" name="amount" placeholder="金額">
-            <input type="text" name="description" placeholder="摘要">
-            <input type="submit">
-        </form>
-    </div>
-    <div>
-        <h2>一括処理登録</h2>
-        <form method="POST" action="/payments/single">
-            {{ csrf_field()}}
-            <input type="text" name="member_id" placeholder="部屋番号一括（カンマ区切り）">
+            <input type="text" name="member_id" placeholder="部屋番号（複数ある場合はカンマ区切り）">
             <input type="text" name="amount" placeholder="金額">
             <input type="text" name="description" placeholder="摘要">
             <input type="submit">
