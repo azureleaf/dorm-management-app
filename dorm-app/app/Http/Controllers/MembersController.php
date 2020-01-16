@@ -72,7 +72,10 @@ class MembersController extends Controller
         DB::table('members')
             ->insert([
                 'room' => $request->room,
-                'name' => $request->name,
+                'last_name' => $request->lastName,
+                'first_name' => $request->firstName,
+                'last_name_reading' => $request->lastNameReading,
+                'first_name_reading' => $request->firstNameReading,
                 ]);
 
         // 更新された表を表示

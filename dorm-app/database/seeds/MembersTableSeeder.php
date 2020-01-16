@@ -13,26 +13,20 @@ class MembersTableSeeder extends Seeder
     public function run()
     {
         $members = [
-        [
-            'name' => 'Michael Scott',
-            'room' => 101,
-        ],
-        [
-            'name' => 'Sheldon Cooper',
-            'room' => 102,
-        ],
-        [
-            'name' => 'Vincent Vega',
-            'room' => 103,
-        ],
-        [
-            'name' => 'Anakin Skywalker',
-            'room' => 104,
-        ],
-        [
-            'name' => 'John Brand',
-            'room' => 105,
-        ],
+            [
+                'last_name' => '田中',
+                'first_name' => '太郎',
+                'last_name_reading' => 'タナカ',
+                'first_name_reading' => 'タロウ',
+                'room' => 101,
+            ],
+            [
+                'last_name' => '佐藤',
+                'first_name' => '一郎',
+                'last_name_reading' => 'サトウ',
+                'first_name_reading' => 'イチロウ',
+                'room' => 102,
+            ],
         ];
 
         foreach ($members as $member) {
