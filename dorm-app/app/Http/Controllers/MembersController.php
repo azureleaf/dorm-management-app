@@ -47,6 +47,10 @@ class MembersController extends Controller
     // Show the single member specified by the form input
     public function showSingleMember(Request $request)
     {
+        if ($request->roomNum=='') {
+            // 検索条件が空欄の場合には、全ての寮生を表示する
+            return redirect()->action('MembersController@showMembers');
+        }
         $data = [
             'members' => DB::table('members')
             ->where('room', '=', $request->roomNum)
