@@ -22,7 +22,7 @@ Route::get('/', function () {
 Route::get('/eachmember/{id?}', 'MembersController@index');
 
 // Show all the payment records
-Route::get('/payments', 'MembersController@showPayments');
+Route::get('/payments', 'PaymentsController@showAll');
 
 // Show all the members
 Route::get('/members', 'MembersController@showAll');

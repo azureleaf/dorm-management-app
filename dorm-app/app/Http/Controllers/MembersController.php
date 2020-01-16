@@ -24,15 +24,7 @@ class MembersController extends Controller
         }
     }
 
-    // Show all the payments
-    public function showPayments()
-    {
-        $data = [
-            'payments' => DB::table('payments')
-            ->get()
-        ];
-        return view('MembersController.payment', $data);
-    }
+    
 
     // Show all the members
     public function showAll()
