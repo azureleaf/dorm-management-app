@@ -17,6 +17,22 @@ class PaymentsController extends Controller
         return view('PaymentsController.payment', $data);
     }
 
+    // Show all the payments
+    public function showFiltered(Request $request)
+    {
+        if ($request->member_id=='') {
+            // 検索条件が空欄の場合には、全ての支払い記録を表示する
+            return redirect()->action('PaymentsController@showAll');
+        }
+        $data = [
+            'payments' => DB::table('payments')
+            ->where('member_id', '=', $request->member_id)
+            ->get()
+        ];
+        return view('PaymentsController.payment', $data);
+    }
+
+
     // Add
 
     public function register(Request $request)
