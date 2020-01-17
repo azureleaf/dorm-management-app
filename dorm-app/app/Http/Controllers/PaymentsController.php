@@ -12,7 +12,8 @@ class PaymentsController extends Controller
     {
         $data = [
             'payments' => DB::table('payments')
-            ->get()
+            ->get(),
+            'roomStatuses' => $this->getRoomStatuses()
         ];
         return view('PaymentsController.payment', $data);
     }
@@ -27,7 +28,8 @@ class PaymentsController extends Controller
         $data = [
             'payments' => DB::table('payments')
             ->where('member_id', '=', $request->member_id)
-            ->get()
+            ->get(),
+            'roomStatuses' => $this->getRoomStatuses()
         ];
         return view('PaymentsController.payment', $data);
     }
@@ -52,5 +54,27 @@ class PaymentsController extends Controller
 
         // 更新された表を表示
         return redirect()->action('PaymentsController@showAll');
+    }
+
+    // 部屋が空室なのか、入居中なのかを全部屋分について連想配列にして返す関数（viewは返さない）
+    public function getRoomStatuses()
+    {
+        // $rooms = DB::table('members')
+        // ->get()
+
+        $rooms = array(
+            ['roomNum'=>101, 'status'=>'occupied', 'name'=>'ジョン'],
+            ['roomNum'=>102, 'status'=>'occupied', 'name'=>'マイケル'],
+            ['roomNum'=>103, 'status'=>'vacant',  'name'=>''],
+            ['roomNum'=>104, 'status'=>'occupied',  'name'=>'ジェフ'],
+            ['roomNum'=>105, 'status'=>'occupied',  'name'=>'ジェフ'],
+            ['roomNum'=>106, 'status'=>'occupied',  'name'=>'ジェフ'],
+            ['roomNum'=>107, 'status'=>'occupied',  'name'=>'ジェフ'],
+            ['roomNum'=>108, 'status'=>'occupied',  'name'=>'ジェフ'],
+            ['roomNum'=>109, 'status'=>'occupied',  'name'=>'ジェフ'],
+            ['roomNum'=>110, 'status'=>'occupied',  'name'=>'ジェフ'],
+            ['roomNum'=>111, 'status'=>'occupied',  'name'=>'ジェフ'],
+        );
+        return $rooms;
     }
 }

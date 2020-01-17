@@ -68,6 +68,24 @@
             <input type="submit">
         </form>
     </div>
+    <div>
+        <h2>変更登録</h2>
+        <form method="POST" action="/members/add">
+            {{ csrf_field()}}
+            <input type="text" name="room" placeholder="部屋番号">
+            <input type="text" name="lastName" placeholder="姓">
+            <input type="text" name="firstName" placeholder="名">
+            <input type="text" name="lastNameReading" placeholder="せい">
+            <input type="text" name="firstNameReading" placeholder="なまえ">
+
+            <select name="example">
+                <option value="選択肢1">部屋替え</option>
+                <option value="選択肢2">退寮</option>
+                <option value="選択肢3">氏名修正</option>
+            </select>
+            <input type="submit">
+        </form>
+    </div>
 </body>
 
 </html>

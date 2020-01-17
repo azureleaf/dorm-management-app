@@ -6,11 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Laravel</title>
     <style>
-        #paymentTable {
+        #paymentTable, #roomsTable {
             border-collapse: collapse;
         }
 
         #paymentTable,
+        #roomsTable,
         td,
         th {
             border: 1px solid black;
@@ -28,6 +29,7 @@
             <input type="submit" value="検索">
         </form>
     </div>
+    @if (count($payments) != 0)
     <table id="paymentTable">
         <tr>
             <th>処理番号</th>
@@ -59,12 +61,38 @@
 
 
     </table>
-    
+    @else
+    <div>該当する寮生は存在しません</div>
+    @endif
+
     <div>
         <h2>会計処理登録</h2>
         <form method="POST" action="/payments/register">
             {{ csrf_field()}}
-            <input type="text" name="member_id" placeholder="部屋番号（複数ある場合はカンマ区切り）">
+            <h3>対象部屋</h3>
+            <input type="checkbox" name="vehicle1" value="Ah">全選択
+            <input type="checkbox" name="vehicle1" value="Ah">委員会選択
+            <input type="checkbox" name="vehicle1" value="Ah">選択反転
+
+            <table id="roomsTable">
+            @foreach ($roomStatuses as $roomStatus)
+            @if ($loop->index % 10 == 0)
+            <tr>
+            @endif
+
+            <td>
+            @if ($roomStatus["status"] == 'occupied')
+            <input type="checkbox" name="vehicle1" value="Ah" checked>{{$roomStatus["roomNum"]}} {{$roomStatus['name']}}
+            @else
+            <input type="checkbox" name="vehicle3" value="Boat" disabled>{{ $roomStatus["roomNum"] }}
+            @endif
+            </td>
+
+            @if ($loop->index % 10 == 9)
+            </tr>
+            @endif
+            @endforeach
+            </table>
             <input type="text" name="amount" placeholder="金額">
             <input type="text" name="description" placeholder="摘要">
             <input type="submit">
