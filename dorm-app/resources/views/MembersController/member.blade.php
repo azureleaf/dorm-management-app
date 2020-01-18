@@ -21,12 +21,15 @@
 <body>
     <h1>寮生管理</h1>
     <div>
+        <a href="/">Top</a>
         <h2>寮生記録一覧</h2>
         <div>
             <form method="POST" action="/members">
                 {{ csrf_field()}}
+                <input type="checkbox" name="vehicle1" value="Ah" checked>現寮生のみ表示
+                <input type="checkbox" name="vehicle1" value="Ah">現委員会のみ表示
                 <input type="text" name="roomNum" placeholder="部屋番号で絞り込み">
-                <input type="submit">
+                <input type="submit" value="絞り込み表示">
             </form>
         </div>
         @if(count($members)==0)
@@ -37,7 +40,7 @@
                 <th>寮生番号</th>
                 <th>部屋番号</th>
                 <th>氏名</th>
-                <th>よみがな</th>
+                <th>ヨミガナ</th>
                 <th>入寮日</th>
                 <th>退寮日</th>
             </tr>
@@ -57,33 +60,28 @@
 
     </div>
     <div>
-        <h2>新入寮生登録</h2>
+        <h2>名簿編集</h2>
         <form method="POST" action="/members/add">
             {{ csrf_field()}}
-            <input type="text" name="room" placeholder="部屋番号">
-            <input type="text" name="lastName" placeholder="姓">
-            <input type="text" name="firstName" placeholder="名">
-            <input type="text" name="lastNameReading" placeholder="せい">
-            <input type="text" name="firstNameReading" placeholder="なまえ">
-            <input type="submit">
-        </form>
-    </div>
-    <div>
-        <h2>変更登録</h2>
-        <form method="POST" action="/members/add">
-            {{ csrf_field()}}
-            <input type="text" name="room" placeholder="部屋番号">
-            <input type="text" name="lastName" placeholder="姓">
-            <input type="text" name="firstName" placeholder="名">
-            <input type="text" name="lastNameReading" placeholder="せい">
-            <input type="text" name="firstNameReading" placeholder="なまえ">
 
-            <select name="example">
-                <option value="選択肢1">部屋替え</option>
-                <option value="選択肢2">退寮</option>
-                <option value="選択肢3">氏名修正</option>
+            <select name="changeMemberInfo">
+                <option value="default" disabled selected>編集種別を選択</option>
+                <option value="joinDorm">入寮</option>
+                <option value="leaveDorm">退寮</option>
+                <option value="changeRoom">部屋替え</option>
+                <option value="leaveRole">役職修正</option>
+                <option value="changeName">氏名修正</option>
+                <option value="changeDateJoin">入寮日修正</option>
+                <option value="changeDateLeave">退寮日修正</option>
             </select>
-            <input type="submit">
+
+            <input type="text" name="room" placeholder="部屋番号">
+            <input type="text" name="lastName" placeholder="姓">
+            <input type="text" name="firstName" placeholder="名">
+            <input type="text" name="lastNameReading" placeholder="セイ">
+            <input type="text" name="firstNameReading" placeholder="ナマエ">
+
+            <input type="submit" value="変更登録">
         </form>
     </div>
 </body>

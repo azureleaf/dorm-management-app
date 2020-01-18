@@ -21,8 +21,12 @@
 </head>
 
 <body>
-    <h1>寮費処理</h1>
+
+    <h1>寮費請求</h1>
+    <a href="/">Top</a>
+
     <div>
+
         <h2>寮費履歴</h2>
         <form method="POST" action="/payments/filtered">
             {{ csrf_field()}}
@@ -36,6 +40,7 @@
             <th>処理番号</th>
             <th>処理日時</th>
             <th>寮生番号</th>
+            <th>部屋番号</th>
             <th>氏名</th>
             <th>摘要</th>
             <th>請求額</th>
@@ -47,6 +52,7 @@
             <td>{{$payment->id}}</td>
             <td>{{$payment->date}}</td>
             <td>{{$payment->member_id}}</td>
+            <td>部屋番号がここ</td>
             <td>氏名はここ</td>
             <td>{{$payment->description}}</td>
             @if ($payment->amount >= 0)
@@ -67,6 +73,7 @@
     @endif
 
     <div>
+
         <h2>会計処理登録</h2>
         <form method="POST" action="/payments/register">
             {{ csrf_field()}}
@@ -76,30 +83,32 @@
             <input type="checkbox" name="vehicle1" value="Ah">選択反転
 
             <table id="roomsTable">
-                @foreach ($roomStatuses as $roomStatus)
-                @if ($loop->index % 10 == 0)
-                <tr>
-                    @endif
-
-                    <td>
-                        @if ($roomStatus["status"] == 'occupied')
-                        <input type="checkbox" name="vehicle1" value="Ah" checked>{{$roomStatus["roomNum"]}}
-                        {{$roomStatus['name']}}
-                        @else
-                        <input type="checkbox" name="vehicle3" value="Boat" disabled>{{ $roomStatus["roomNum"] }}
+                @for ($i=0;$i < 10; $i++) <col width="120px">
+                    @endfor
+                    @foreach ($roomStatuses as $roomStatus)
+                    @if ($loop->index % 10 == 0)
+                    <tr>
                         @endif
-                    </td>
 
-                    @if ($loop->index % 10 == 9)
-                </tr>
-                @endif
-                @endforeach
+                        <td>
+                            @if ($roomStatus["status"] == 'occupied')
+                            <input type="checkbox" name="vehicle1" value="Ah" checked>{{$roomStatus["roomNum"]}}
+                            {{$roomStatus['name']}}
+                            @else
+                            <input type="checkbox" name="vehicle3" value="Boat" disabled>{{ $roomStatus["roomNum"] }}
+                            @endif
+                        </td>
+
+                        @if ($loop->index % 10 == 9)
+                    </tr>
+                    @endif
+                    @endforeach
             </table>
             <h3>処理内容</h3>
             <select>
-                <option value="選択肢1" selected disabled>処理区分を選択</option>
+                <option value="choose_cat" selected disabled>処理区分を選択</option>
                 @foreach ($paymentCategories as $paymentCategory)
-                <option value="選択肢1">{{$paymentCategory->cat_id}} {{$paymentCategory->cat_title}}</option>
+                <option value="cat{{$paymentCategory->cat_id}}">{{$paymentCategory->cat_id}}：{{$paymentCategory->cat_title}}</option>
                 @endforeach
             </select>
             <input type="text" name="amount" placeholder="金額">
