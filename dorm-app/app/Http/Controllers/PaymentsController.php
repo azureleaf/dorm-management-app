@@ -13,7 +13,8 @@ class PaymentsController extends Controller
         $data = [
             'payments' => DB::table('payments')
             ->get(),
-            'roomStatuses' => $this->getRoomStatuses()
+            'roomStatuses' => $this->getRoomStatuses(),
+            'paymentCategories' => $this->getPaymentCategories()
         ];
         return view('PaymentsController.payment', $data);
     }
@@ -29,14 +30,14 @@ class PaymentsController extends Controller
             'payments' => DB::table('payments')
             ->where('member_id', '=', $request->member_id)
             ->get(),
-            'roomStatuses' => $this->getRoomStatuses()
+            'roomStatuses' => $this->getRoomStatuses(),
+            'paymentCategories' => $this->getPaymentCategories()
         ];
         return view('PaymentsController.payment', $data);
     }
 
 
-    // Add
-
+    // Add new payment record(s)
     public function register(Request $request)
     {
 
@@ -76,5 +77,11 @@ class PaymentsController extends Controller
             ['roomNum'=>111, 'status'=>'occupied',  'name'=>'ジェフ'],
         );
         return $rooms;
+    }
+
+    public function getPaymentCategories()
+    {
+        $categories = DB::table('payment_categories')->get();
+        return $categories;
     }
 }

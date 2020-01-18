@@ -24,7 +24,7 @@
     <h1>寮費処理</h1>
     <div>
         <h2>寮費履歴</h2>
-        <form method="POST" action="/payments/filter">
+        <form method="POST" action="/payments/filtered">
             {{ csrf_field()}}
             <input type="text" name="member_id" placeholder="寮生番号">
             <input type="submit" value="検索">
@@ -98,18 +98,9 @@
             <h3>処理内容</h3>
             <select>
                 <option value="選択肢1" selected disabled>処理区分を選択</option>
-                <option value="選択肢1" selected disabled>100 基本金請求</option>
-                <option value="選択肢1" selected disabled>101 基本金請求</option>
-                <option value="選択肢1" selected disabled>100 基本金請求</option>
-                <option value="選択肢1" selected disabled>100 基本金請求</option>
-                <option value="選択肢1" selected disabled>100 基本金請求</option>
-                <option value="選択肢1" selected disabled>100 基本金請求</option>
-                <option value="選択肢1" selected disabled>100 基本金請求</option>
-                <option value="選択肢1" selected disabled>100 基本金請求</option>
-                <option value="選択肢1" selected disabled>100 基本金請求</option>
-                <option value="選択肢1" selected disabled>100 基本金請求</option>
-                <option value="選択肢1" selected disabled>100 基本金請求</option>
-                <option value="選択肢1" selected disabled>100 基本金請求</option>
+                @foreach ($paymentCategories as $paymentCategory)
+                <option value="選択肢1">{{$paymentCategory->cat_id}} {{$paymentCategory->cat_title}}</option>
+                @endforeach
             </select>
             <input type="text" name="amount" placeholder="金額">
             <input type="text" name="description" placeholder="摘要">

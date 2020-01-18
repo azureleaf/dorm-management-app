@@ -29,7 +29,7 @@ Route::get('/eachmember/{id?}', 'MembersController@index');
 Route::get('/payments', 'PaymentsController@showAll');
 
 // Show payment records for the single member
-Route::post('/payments/filter', 'PaymentsController@showFiltered');
+Route::post('/payments/filtered', 'PaymentsController@showFiltered');
 
 // Register new payment record for multiple members
 Route::post('/payments/register', 'PaymentsController@register');
