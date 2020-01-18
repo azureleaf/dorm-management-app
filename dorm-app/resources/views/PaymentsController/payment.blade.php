@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Laravel</title>
     <style>
-        #paymentTable, #roomsTable {
+        #paymentTable,
+        #roomsTable {
             border-collapse: collapse;
         }
 
@@ -69,30 +70,47 @@
         <h2>会計処理登録</h2>
         <form method="POST" action="/payments/register">
             {{ csrf_field()}}
-            <h3>対象部屋</h3>
+            <h3>処理対象</h3>
             <input type="checkbox" name="vehicle1" value="Ah">全選択
             <input type="checkbox" name="vehicle1" value="Ah">委員会選択
             <input type="checkbox" name="vehicle1" value="Ah">選択反転
 
             <table id="roomsTable">
-            @foreach ($roomStatuses as $roomStatus)
-            @if ($loop->index % 10 == 0)
-            <tr>
-            @endif
+                @foreach ($roomStatuses as $roomStatus)
+                @if ($loop->index % 10 == 0)
+                <tr>
+                    @endif
 
-            <td>
-            @if ($roomStatus["status"] == 'occupied')
-            <input type="checkbox" name="vehicle1" value="Ah" checked>{{$roomStatus["roomNum"]}} {{$roomStatus['name']}}
-            @else
-            <input type="checkbox" name="vehicle3" value="Boat" disabled>{{ $roomStatus["roomNum"] }}
-            @endif
-            </td>
+                    <td>
+                        @if ($roomStatus["status"] == 'occupied')
+                        <input type="checkbox" name="vehicle1" value="Ah" checked>{{$roomStatus["roomNum"]}}
+                        {{$roomStatus['name']}}
+                        @else
+                        <input type="checkbox" name="vehicle3" value="Boat" disabled>{{ $roomStatus["roomNum"] }}
+                        @endif
+                    </td>
 
-            @if ($loop->index % 10 == 9)
-            </tr>
-            @endif
-            @endforeach
+                    @if ($loop->index % 10 == 9)
+                </tr>
+                @endif
+                @endforeach
             </table>
+            <h3>処理内容</h3>
+            <select>
+                <option value="選択肢1" selected disabled>処理区分を選択</option>
+                <option value="選択肢1" selected disabled>100 基本金請求</option>
+                <option value="選択肢1" selected disabled>101 基本金請求</option>
+                <option value="選択肢1" selected disabled>100 基本金請求</option>
+                <option value="選択肢1" selected disabled>100 基本金請求</option>
+                <option value="選択肢1" selected disabled>100 基本金請求</option>
+                <option value="選択肢1" selected disabled>100 基本金請求</option>
+                <option value="選択肢1" selected disabled>100 基本金請求</option>
+                <option value="選択肢1" selected disabled>100 基本金請求</option>
+                <option value="選択肢1" selected disabled>100 基本金請求</option>
+                <option value="選択肢1" selected disabled>100 基本金請求</option>
+                <option value="選択肢1" selected disabled>100 基本金請求</option>
+                <option value="選択肢1" selected disabled>100 基本金請求</option>
+            </select>
             <input type="text" name="amount" placeholder="金額">
             <input type="text" name="description" placeholder="摘要">
             <input type="submit">
