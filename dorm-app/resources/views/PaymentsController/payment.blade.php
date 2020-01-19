@@ -26,12 +26,11 @@
     <a href="/">Top</a>
 
     <div>
-
         <h2>寮費履歴</h2>
         <form method="POST" action="/payments/filtered">
             {{ csrf_field()}}
             <input type="text" name="member_id" placeholder="寮生番号">
-            <input type="submit" value="検索">
+            <input type="submit" value="この寮生のみ表示">
         </form>
     </div>
     @if (count($payments) != 0)
@@ -85,10 +84,13 @@
             <input type="checkbox" name="vehicle1" value="Ah">選択反転
 
             <table id="roomsTable">
+                {{--テーブル幅の設定--}}
                 @for ($i=0;$i < 10; $i++) <col width="120px">
                     @endfor
+
                     @foreach ($rooms as $room)
 
+                    {{--表の幅を１０列とする--}}
                     @if ($loop->index % 10 == 0)
                     <tr>
                         @endif
@@ -111,13 +113,13 @@
             <h3>処理内容</h3>
             <select>
                 <option value=" choose_cat" selected disabled>処理区分を選択</option>
-                            @foreach ($paymentCategories as $paymentCategory)
-                            <option value="{{$paymentCategory->cat_id}}">{{$paymentCategory->cat_id}}：{{$paymentCategory->cat_title}}</option>
-                            @endforeach
-                            </select>
-                            <input type="text" name="amount" placeholder="金額">
-                            <input type="text" name="description" placeholder="摘要">
-                            <input type="submit">
+                @foreach ($paymentCategories as $paymentCategory)
+                <option value="{{$paymentCategory->cat_id}}">{{$paymentCategory->cat_id}}：{{$paymentCategory->cat_title}}</option>
+                @endforeach
+            </select>
+            <input type="text" name="amount" placeholder="金額">
+            <input type="text" name="description" placeholder="摘要">
+            <input type="submit">
         </form>
     </div>
 </body>
