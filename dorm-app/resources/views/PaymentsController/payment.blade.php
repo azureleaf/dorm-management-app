@@ -79,9 +79,9 @@
         <form method="POST" action="/payments/register">
             {{ csrf_field()}}
             <h3>処理対象</h3>
-            <input type="checkbox" name="vehicle1" value="Ah">全選択
-            <input type="checkbox" name="vehicle1" value="Ah">委員会選択
-            <input type="checkbox" name="vehicle1" value="Ah">選択反転
+            <input type="checkbox" name="checkAll" value="true">在寮生を全て選択
+            <input type="checkbox" name="reverseChecks" value="true">選択反転
+            <input type="checkbox" name="showOB" value="true">退寮した滞納者を表示
 
             <table id="roomsTable">
                 {{--テーブル幅の設定--}}
@@ -90,19 +90,21 @@
 
                     @foreach ($rooms as $room)
 
-                    {{--表の幅を１０列とする--}}
+                    {{--表の幅を１０列とする（行開始タグ側）--}}
                     @if ($loop->index % 10 == 0)
                     <tr>
                         @endif
 
+                        {{--空室のチェックボックスは選択できないようにする--}}
                         <td>
                             @if (!$room["isVacant"])
-                            <input type="checkbox" name="{{$room['roomNum']}}" value="checked" checked>{{$room["roomNum"]}} 氏名
+                            <input type="checkbox" name="{{$room['roomNum']}}" value="checked" checked>{{$room["roomNum"]}} {{$room["name"]}}
                             @else
                             <input type="checkbox" name="{{$room['roomNum']}}" value="checked" disabled>{{ $room["roomNum"] }}
                             @endif
                         </td>
 
+                        {{--表の幅を１０列とする（行終了タグ側）--}}
                         @if ($loop->index % 10 == 9)
                     </tr>
                     @endif

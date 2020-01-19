@@ -65,54 +65,52 @@ class PaymentsController extends Controller
         return redirect()->action('PaymentsController@showAll');
     }
 
-    // 部屋が空室なのか、入居中なのか、その状態全ての部屋について連想配列で返す（viewは返さない）
+    // 部屋が空室なのか、入居中なのか、その状態全ての部屋について連想配列で返す
     public function getRooms()
     {
+        // 全部屋の部屋番号の取得
         $occupiedRoomsCollection = DB::table('members')
-            ->select('room')
+            ->select('room', 'first_name', 'last_name')
             ->get();
 
-        // Collectionから通常の配列に返還
+        // Collectionから部屋番号のみ取り出して通常の配列にする
         $occupiedRooms = array();
         foreach ($occupiedRoomsCollection as $occupiedRoom) {
             array_push($occupiedRooms, $occupiedRoom->room);
         };
 
         // 空き部屋を含めた全部屋の連想配列を作成
-        // １階と２階のそれぞれに40号室まで存在することを前提とする
+        // １階と２階のそれぞれに40号室まで存在することを想定
         $rooms = array();
         for ($i = 0; $i < 40; $i++) {
             array_push(
                 $rooms,
-                array('roomNum' => 101 + $i, 'isVacant' => true)
+                array('roomNum' => 101 + $i, 'isVacant' => true),
+                array('roomNum' => 201 + $i, 'isVacant' => true)
             );
-        }
+        };
 
-        foreach ($rooms as $room) {
-            // if (in_array($room['roomNum'], $occupiedRooms)) {
-            $room['isVacant'] = false;
-            // }
-        }
+        // 部屋番号順に並び替え
+        usort($rooms, function ($roomA, $roomB) {
+            return $roomA["roomNum"] > $roomB["roomNum"];
+        });
 
+        // 居住している部屋については状態を変更する
+        // $roomが参照になっている点に注意
+        foreach ($rooms as &$room) {
+            if (in_array($room['roomNum'], $occupiedRooms)) {
 
+                // 空室フラグを切る
+                $room['isVacant'] = false;
 
-        //
+                // 居住者の氏名を挿入する
+                $room['name'] = "John Smith";
+            }
+        };
 
-        // $rooms = array(
-        //     ['roomNum' => 101, 'status' => 'occupied', 'name' => 'ジョン'],
-        //     ['roomNum' => 102, 'status' => 'occupied', 'name' => 'マイケル'],
-        //     ['roomNum' => 103, 'status' => 'vacant',  'name' => ''],
-        //     ['roomNum' => 104, 'status' => 'occupied',  'name' => 'ジェフ'],
-        //     ['roomNum' => 105, 'status' => 'occupied',  'name' => 'ジェフ'],
-        //     ['roomNum' => 106, 'status' => 'occupied',  'name' => 'ジェフ'],
-        //     ['roomNum' => 107, 'status' => 'occupied',  'name' => 'ジェフ'],
-        //     ['roomNum' => 108, 'status' => 'occupied',  'name' => 'ジェフ'],
-        //     ['roomNum' => 109, 'status' => 'occupied',  'name' => 'ジェフ'],
-        //     ['roomNum' => 110, 'status' => 'occupied',  'name' => 'ジェフ'],
-        //     ['roomNum' => 111, 'status' => 'occupied',  'name' => 'ジェフ'],
-        // );
+        // 参照を破壊する（foreachの公式ドキュメントで推奨）
+        unset($room);
 
-        // return $roomStatuses;
         return $rooms;
     }
 

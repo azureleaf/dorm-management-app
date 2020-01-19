@@ -61,6 +61,10 @@ class PaymentCategoriesTableSeeder extends Seeder
                 'cat_title' => "寮費支払（現金払）",
             ],
             [
+                'cat_id' => 203,
+                'cat_title' => "寮費調整のための返金",
+            ],
+            [
                 'cat_id' => 211,
                 'cat_title' => "委員会報酬（委員長）",
             ],
