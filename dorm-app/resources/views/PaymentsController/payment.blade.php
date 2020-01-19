@@ -7,12 +7,14 @@
     <title>Laravel</title>
     <style>
         #paymentTable,
-        #roomsTable {
+        #roomsTable,
+        #leftMembersTable {
             border-collapse: collapse;
         }
 
         #paymentTable,
         #roomsTable,
+        #leftMembersTable,
         td,
         th {
             border: 1px solid black;
@@ -78,10 +80,11 @@
         <h2>会計処理登録</h2>
         <form method="POST" action="/payments/register">
             {{ csrf_field()}}
-            <h3>処理対象</h3>
-            <input type="checkbox" name="checkAll" value="true">在寮生を全て選択
+            <h3>在寮者</h3>
+            <span>件中件が選択されています</span>
+
+            <input type="checkbox" name="checkAll" value="true">全選択
             <input type="checkbox" name="reverseChecks" value="true">選択反転
-            <input type="checkbox" name="showOB" value="true">退寮した滞納者を表示
 
             <table id="roomsTable">
                 {{--テーブル幅の設定--}}
@@ -96,13 +99,11 @@
                         @endif
 
                         {{--空室のチェックボックスは選択できないようにする--}}
-                        <td>
-                            @if (!$room["isVacant"])
-                            <input type="checkbox" name="{{$room['roomNum']}}" value="checked" checked>{{$room["roomNum"]}} {{$room["name"]}}
-                            @else
-                            <input type="checkbox" name="{{$room['roomNum']}}" value="checked" disabled>{{ $room["roomNum"] }}
-                            @endif
-                        </td>
+                        @if (!$room["isVacant"])
+                        <td><input type="checkbox" name="{{$room['roomNum']}}" value="checked" checked>{{$room["roomNum"]}} {{$room["name"]}}</td>
+                        @else
+                        <td style="background-color: silver"><input type="checkbox" name="{{$room['roomNum']}}" value="checked" disabled>{{ $room["roomNum"] }}</td>
+                        @endif
 
                         {{--表の幅を１０列とする（行終了タグ側）--}}
                         @if ($loop->index % 10 == 9)
@@ -112,7 +113,6 @@
                     @endforeach
             </table>
 
-            <h3>処理内容</h3>
             <select>
                 <option value=" choose_cat" selected disabled>処理区分を選択</option>
                 @foreach ($paymentCategories as $paymentCategory)
@@ -122,6 +122,29 @@
             <input type="text" name="amount" placeholder="金額">
             <input type="text" name="description" placeholder="摘要">
             <input type="submit">
+        </form>
+        <h3>退寮者</h3>
+        <form method="POST" action="/payments/register">
+            {{ csrf_field()}}
+
+            <table id="leftMembersTable">
+                <tr>
+                    <th>寮生番号</th>
+                    <th>氏名</th>
+                    <th>退寮日</th>
+                    <th>滞納額</th>
+                    <th>支払額</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>あああ</td>
+                    <td>あああ</td>
+                    <td>あああ</td>
+                    <td><input type="text" name="amount" placeholder="金額"></td>
+                </tr>
+            </table>
+
+            <input type="submit" value="登録">
         </form>
     </div>
 </body>
