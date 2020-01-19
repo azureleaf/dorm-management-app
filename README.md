@@ -16,7 +16,7 @@ RPA (Robotic Process Automation) for administration chores at a university board
 - npm
 - MySQL
     - Create database `laravel_dorm`
-    - MySQL must run in the background; check status with `sudo systemctl status mysql` @linux, for example.
+    - MySQL must run in the background; check status with `sudo systemctl status mysql` on linux, for example.
 - config/database.php
     - `'default' => env('DB_CONNECTION', 'mysql'),` (Default value for Laravel)
 - .env
@@ -31,7 +31,8 @@ Run these commands in the root directory of the Laravel application.
 1. `npm install`
 1. `copy .env.example .env`
 1. `php artisan key:gen`
-1. Seeding sample entries (if necessary)
+1. `php artisan migrate`
+1. `php artisan db:seed`
 1. `php artisan serve`
 
 ## Feature Dev Milestones
