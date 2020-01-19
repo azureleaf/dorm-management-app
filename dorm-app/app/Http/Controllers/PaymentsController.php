@@ -95,20 +95,23 @@ class PaymentsController extends Controller
             return $roomA["roomNum"] > $roomB["roomNum"];
         });
 
-        // 居住している部屋については状態を変更する
+        // 居住している部屋については状態を変更
         // $roomが参照になっている点に注意
         foreach ($rooms as &$room) {
             if (in_array($room['roomNum'], $occupiedRooms)) {
 
-                // 空室フラグを切る
+                // 空室フラグを落とす
                 $room['isVacant'] = false;
 
-                // 居住者の氏名を挿入する
-                $room['name'] = "John Smith";
+                // 居住者の氏名を連想配列に追加
+                $targetMember = $occupiedRoomsCollection
+                    ->where('room', $room['roomNum'])
+                    ->first();
+                $room['name'] = $targetMember->last_name . $targetMember->first_name;
             }
         };
 
-        // 参照を破壊する（foreachの公式ドキュメントで推奨）
+        // 参照を破壊する（Recommended to do so in the official PHP doc）
         unset($room);
 
         return $rooms;

@@ -121,7 +121,7 @@
             </select>
             <input type="text" name="amount" placeholder="金額">
             <input type="text" name="description" placeholder="摘要">
-            <input type="submit">
+            <input type="submit" value="会計処理登録">
         </form>
         <h3>退寮者</h3>
         <form method="POST" action="/payments/register">
@@ -144,7 +144,7 @@
                 </tr>
             </table>
 
-            <input type="submit" value="登録">
+            <input type="submit" value="退寮者の支払登録">
         </form>
     </div>
 </body>

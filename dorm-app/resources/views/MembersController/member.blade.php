@@ -55,7 +55,7 @@
                 <input type="checkbox" name="filterCurrentMembers" value="true" checked>在寮者を表示
                 <input type="checkbox" name="filterCurrentMembers" value="true">退寮者を表示
                 <input type="text" name="roomNum" placeholder="部屋番号で絞り込み">
-                <input type="submit" value="絞り込み表示">
+                <input type="submit" value="表示更新">
             </form>
         </div>
         @if(count($members)==0)
