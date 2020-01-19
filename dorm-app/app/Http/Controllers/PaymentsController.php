@@ -17,7 +17,7 @@ class PaymentsController extends Controller
                 ->join('payment_categories', 'payment_category_id', '=', 'payment_categories.cat_id')
                 ->select('payments.*', 'members.last_name', 'members.first_name', 'members.room', 'payment_categories.cat_title')
                 ->get(),
-            'roomStatuses' => $this->getRoomStatuses(),
+            'rooms' => $this->getRooms(),
             'paymentCategories' => $this->getPaymentCategories()
         ];
         return view('PaymentsController.payment', $data);
@@ -38,7 +38,7 @@ class PaymentsController extends Controller
                 ->select('payments.*', 'members.last_name', 'members.first_name', 'members.room', 'payment_categories.cat_title')
                 ->where('member_id', '=', $request->member_id)
                 ->get(),
-            'roomStatuses' => $this->getRoomStatuses(),
+            'rooms' => $this->getRooms(),
             'paymentCategories' => $this->getPaymentCategories()
         ];
         return view('PaymentsController.payment', $data);
@@ -65,25 +65,54 @@ class PaymentsController extends Controller
         return redirect()->action('PaymentsController@showAll');
     }
 
-    // 部屋が空室なのか、入居中なのかを全部屋分について連想配列にして返す（viewは返さない）
-    public function getRoomStatuses()
+    // 部屋が空室なのか、入居中なのか、その状態全ての部屋について連想配列で返す（viewは返さない）
+    public function getRooms()
     {
-        // $rooms = DB::table('members')
-        // ->get()
+        $occupiedRoomsCollection = DB::table('members')
+            ->select('room')
+            ->get();
 
-        $rooms = array(
-            ['roomNum' => 101, 'status' => 'occupied', 'name' => 'ジョン'],
-            ['roomNum' => 102, 'status' => 'occupied', 'name' => 'マイケル'],
-            ['roomNum' => 103, 'status' => 'vacant',  'name' => ''],
-            ['roomNum' => 104, 'status' => 'occupied',  'name' => 'ジェフ'],
-            ['roomNum' => 105, 'status' => 'occupied',  'name' => 'ジェフ'],
-            ['roomNum' => 106, 'status' => 'occupied',  'name' => 'ジェフ'],
-            ['roomNum' => 107, 'status' => 'occupied',  'name' => 'ジェフ'],
-            ['roomNum' => 108, 'status' => 'occupied',  'name' => 'ジェフ'],
-            ['roomNum' => 109, 'status' => 'occupied',  'name' => 'ジェフ'],
-            ['roomNum' => 110, 'status' => 'occupied',  'name' => 'ジェフ'],
-            ['roomNum' => 111, 'status' => 'occupied',  'name' => 'ジェフ'],
-        );
+        // Collectionから通常の配列に返還
+        $occupiedRooms = array();
+        foreach ($occupiedRoomsCollection as $occupiedRoom) {
+            array_push($occupiedRooms, $occupiedRoom->room);
+        };
+
+        // 空き部屋を含めた全部屋の連想配列を作成
+        // １階と２階のそれぞれに40号室まで存在することを前提とする
+        $rooms = array();
+        for ($i = 0; $i < 40; $i++) {
+            array_push(
+                $rooms,
+                array('roomNum' => 101 + $i, 'isVacant' => true)
+            );
+        }
+
+        foreach ($rooms as $room) {
+            // if (in_array($room['roomNum'], $occupiedRooms)) {
+            $room['isVacant'] = false;
+            // }
+        }
+
+
+
+        //
+
+        // $rooms = array(
+        //     ['roomNum' => 101, 'status' => 'occupied', 'name' => 'ジョン'],
+        //     ['roomNum' => 102, 'status' => 'occupied', 'name' => 'マイケル'],
+        //     ['roomNum' => 103, 'status' => 'vacant',  'name' => ''],
+        //     ['roomNum' => 104, 'status' => 'occupied',  'name' => 'ジェフ'],
+        //     ['roomNum' => 105, 'status' => 'occupied',  'name' => 'ジェフ'],
+        //     ['roomNum' => 106, 'status' => 'occupied',  'name' => 'ジェフ'],
+        //     ['roomNum' => 107, 'status' => 'occupied',  'name' => 'ジェフ'],
+        //     ['roomNum' => 108, 'status' => 'occupied',  'name' => 'ジェフ'],
+        //     ['roomNum' => 109, 'status' => 'occupied',  'name' => 'ジェフ'],
+        //     ['roomNum' => 110, 'status' => 'occupied',  'name' => 'ジェフ'],
+        //     ['roomNum' => 111, 'status' => 'occupied',  'name' => 'ジェフ'],
+        // );
+
+        // return $roomStatuses;
         return $rooms;
     }
 

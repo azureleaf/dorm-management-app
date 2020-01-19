@@ -87,35 +87,37 @@
             <table id="roomsTable">
                 @for ($i=0;$i < 10; $i++) <col width="120px">
                     @endfor
-                    @foreach ($roomStatuses as $roomStatus)
+                    @foreach ($rooms as $room)
+
                     @if ($loop->index % 10 == 0)
                     <tr>
                         @endif
 
                         <td>
-                            @if ($roomStatus["status"] == 'occupied')
-                            <input type="checkbox" name="vehicle1" value="Ah" checked>{{$roomStatus["roomNum"]}}
-                            {{$roomStatus['name']}}
+                            @if (!$room["isVacant"])
+                            <input type="checkbox" name="{{$room['roomNum']}}" value="checked" checked>{{$room["roomNum"]}} 氏名
                             @else
-                            <input type="checkbox" name="vehicle3" value="Boat" disabled>{{ $roomStatus["roomNum"] }}
+                            <input type="checkbox" name="{{$room['roomNum']}}" value="checked" disabled>{{ $room["roomNum"] }}
                             @endif
                         </td>
 
                         @if ($loop->index % 10 == 9)
                     </tr>
                     @endif
+
                     @endforeach
             </table>
+
             <h3>処理内容</h3>
             <select>
-                <option value="choose_cat" selected disabled>処理区分を選択</option>
-                @foreach ($paymentCategories as $paymentCategory)
-                <option value="{{$paymentCategory->cat_id}}">{{$paymentCategory->cat_id}}：{{$paymentCategory->cat_title}}</option>
-                @endforeach
-            </select>
-            <input type="text" name="amount" placeholder="金額">
-            <input type="text" name="description" placeholder="摘要">
-            <input type="submit">
+                <option value=" choose_cat" selected disabled>処理区分を選択</option>
+                            @foreach ($paymentCategories as $paymentCategory)
+                            <option value="{{$paymentCategory->cat_id}}">{{$paymentCategory->cat_id}}：{{$paymentCategory->cat_title}}</option>
+                            @endforeach
+                            </select>
+                            <input type="text" name="amount" placeholder="金額">
+                            <input type="text" name="description" placeholder="摘要">
+                            <input type="submit">
         </form>
     </div>
 </body>
