@@ -71,7 +71,7 @@
         <h1>学生寮電子基盤</h1>
         <div class="links">
             <a href="payments">寮費請求</a>
-            <a href="members">寮生一覧</a>
+            <a href="members">寮生名簿</a>
             <a href="accounting">寮会計</a>
             <a href="duties">当番管理</a>
             <a href="stats">統計情報</a>

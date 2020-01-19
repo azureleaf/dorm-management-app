@@ -42,6 +42,7 @@
             <th>寮生番号</th>
             <th>部屋番号</th>
             <th>氏名</th>
+            <th>寮費種別</th>
             <th>摘要</th>
             <th>請求額</th>
             <th>支払額</th>
@@ -52,8 +53,9 @@
             <td>{{$payment->id}}</td>
             <td>{{$payment->date}}</td>
             <td>{{$payment->member_id}}</td>
-            <td>部屋番号がここ</td>
-            <td>氏名はここ</td>
+            <td>{{$payment->room}}</td>
+            <td>{{$payment->last_name}} {{$payment->first_name}}</td>
+            <td>{{$payment->payment_category_id}}：{{$payment->cat_title}}</td>
             <td>{{$payment->description}}</td>
             @if ($payment->amount >= 0)
             <td>{{$payment->amount}}</td>
@@ -108,7 +110,7 @@
             <select>
                 <option value="choose_cat" selected disabled>処理区分を選択</option>
                 @foreach ($paymentCategories as $paymentCategory)
-                <option value="cat{{$paymentCategory->cat_id}}">{{$paymentCategory->cat_id}}：{{$paymentCategory->cat_title}}</option>
+                <option value="{{$paymentCategory->cat_id}}">{{$paymentCategory->cat_id}}：{{$paymentCategory->cat_title}}</option>
                 @endforeach
             </select>
             <input type="text" name="amount" placeholder="金額">

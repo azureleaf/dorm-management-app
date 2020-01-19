@@ -17,7 +17,8 @@ class CreatePaymentsTable extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->dateTime('date')->default(Carbon::create(2000, 1, 1, 0, 0, 0, 'Asia/Tokyo'));
-            $table->integer('member_id');
+            $table->integer('member_id')->references('id')->on('members');
+            $table->integer('payment_category_id')->references('cat_id')->on('payment_categories')->default(199);
             $table->string('description');
             $table->integer('amount');
             $table->integer('balance');

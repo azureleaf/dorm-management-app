@@ -15,7 +15,7 @@ class CreatePaymentCategoriesTable extends Migration
     {
         Schema::create('payment_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('cat_id');
+            $table->integer('cat_id')->unique();
             $table->string('cat_title');
             $table->timestamps();
         });

@@ -11,7 +11,11 @@ class PaymentsController extends Controller
     public function showAll()
     {
         $data = [
+            // payments表から、members表とpayment_categories表にそれぞれidで関連付けているのでjoinする
             'payments' => DB::table('payments')
+                ->join('members', 'member_id', '=', 'members.id')
+                ->join('payment_categories', 'payment_category_id', '=', 'payment_categories.cat_id')
+                ->select('payments.*', 'members.last_name', 'members.first_name', 'members.room', 'payment_categories.cat_title')
                 ->get(),
             'roomStatuses' => $this->getRoomStatuses(),
             'paymentCategories' => $this->getPaymentCategories()
@@ -19,7 +23,7 @@ class PaymentsController extends Controller
         return view('PaymentsController.payment', $data);
     }
 
-    // Show all the payments
+    // Show the payments for the specified user
     public function showFiltered(Request $request)
     {
         if ($request->member_id == '') {
@@ -27,7 +31,11 @@ class PaymentsController extends Controller
             return redirect()->action('PaymentsController@showAll');
         }
         $data = [
+            // payments表から、members表とpayment_categories表にそれぞれidで関連付けているのでjoinする
             'payments' => DB::table('payments')
+                ->join('members', 'member_id', '=', 'members.id')
+                ->join('payment_categories', 'payment_category_id', '=', 'payment_categories.cat_id')
+                ->select('payments.*', 'members.last_name', 'members.first_name', 'members.room', 'payment_categories.cat_title')
                 ->where('member_id', '=', $request->member_id)
                 ->get(),
             'roomStatuses' => $this->getRoomStatuses(),

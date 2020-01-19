@@ -19,10 +19,10 @@
 </head>
 
 <body>
-    <h1>寮生管理</h1>
+    <h1>寮生名簿</h1>
     <div>
         <a href="/">Top</a>
-        <h2>寮生記録一覧</h2>
+        <h2>寮生履歴一覧</h2>
         <div>
             <form method="POST" action="/members">
                 {{ csrf_field()}}
@@ -66,8 +66,8 @@
 
             <select name="changeMemberInfo">
                 <option value="default" disabled selected>編集種別を選択</option>
-                <option value="joinDorm">入寮</option>
-                <option value="leaveDorm">退寮</option>
+                <option value="joinDorm">入寮処理</option>
+                <option value="leaveDorm">退寮処理</option>
                 <option value="changeRoom">部屋替え</option>
                 <option value="leaveRole">役職修正</option>
                 <option value="changeName">氏名修正</option>
