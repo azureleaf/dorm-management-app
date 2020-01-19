@@ -81,37 +81,6 @@
         <form method="POST" action="/payments/register">
             {{ csrf_field()}}
             <h3>在寮者</h3>
-            <span>件中件が選択されています</span>
-
-            <input type="checkbox" name="checkAll" value="true">全選択
-            <input type="checkbox" name="reverseChecks" value="true">選択反転
-
-            <table id="roomsTable">
-                {{--テーブル幅の設定--}}
-                @for ($i=0;$i < 10; $i++) <col width="120px">
-                    @endfor
-
-                    @foreach ($rooms as $room)
-
-                    {{--表の幅を１０列とする（行開始タグ側）--}}
-                    @if ($loop->index % 10 == 0)
-                    <tr>
-                        @endif
-
-                        {{--空室のチェックボックスは選択できないようにする--}}
-                        @if (!$room["isVacant"])
-                        <td><input type="checkbox" name="{{$room['roomNum']}}" value="checked" checked>{{$room["roomNum"]}} {{$room["name"]}}</td>
-                        @else
-                        <td style="background-color: silver"><input type="checkbox" name="{{$room['roomNum']}}" value="checked" disabled>{{ $room["roomNum"] }}</td>
-                        @endif
-
-                        {{--表の幅を１０列とする（行終了タグ側）--}}
-                        @if ($loop->index % 10 == 9)
-                    </tr>
-                    @endif
-
-                    @endforeach
-            </table>
 
             <select>
                 <option value=" choose_cat" selected disabled>処理区分を選択</option>
@@ -121,7 +90,46 @@
             </select>
             <input type="text" name="amount" placeholder="金額">
             <input type="text" name="description" placeholder="摘要">
-            <input type="submit" value="会計処理登録">
+            <input type="submit" value="下表の内容で処理登録"><br>
+
+            <span>在寮者**人中**人が選択されています</span>
+
+            <input type="checkbox" name="checkAll" value="true">全選択
+            <input type="checkbox" name="reverseChecks" value="true">選択反転
+            <input type="checkbox" name="applyCommitteeRewards" value="true">委員会負担率を適用
+
+            <table id="roomsTable">
+                <tr>
+                    <th>寮生</th>
+                    <th>満額</th>
+                    <th>負担率</th>
+                    <th>負担額</th>
+                </tr>
+                @foreach ($rooms as $room)
+
+                {{--空室のチェックボックスは選択できないようにする--}}
+                @if (!$room["isVacant"])
+                <tr>
+                    <td><input type="checkbox" name="{{$room['roomNum']}}" value="checked">{{$room["roomNum"]}} {{$room["name"]}}</td>
+                    <td><input type="text" name="amount" placeholder="金額" value="12345"></td>
+                    <td>1.0</td>
+                    <td style="font-weight: bold">12345</td>
+                </tr>
+                @else
+                <tr style="background-color:silver">
+                    <td><input type="checkbox" name="{{$room['roomNum']}}" value="checked" disabled>{{ $room["roomNum"] }}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                @endif
+
+                </tr>
+
+                @endforeach
+            </table>
+
+
         </form>
         <h3>退寮者</h3>
         <form method="POST" action="/payments/register">
