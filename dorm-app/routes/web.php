@@ -47,3 +47,7 @@ Route::post('/members', 'MembersController@showOne');
 
 // Page to accept the new member addition
 Route::post('/members/add', 'MembersController@add');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
