@@ -49,6 +49,8 @@
     </div>
     <div>
         <h2>寮生一覧</h2>
+        @if (Auth::check())
+        <p>あなたは、{{ $user->name }}さんとしてログインしています。</p>
         <div>
             <form method="POST" action="/members">
                 {{ csrf_field()}}
@@ -85,6 +87,9 @@
             @endforeach
             @endif
         </table>
+        @else
+        <p>寮生一覧を見るには、<a href="/register">ログイン</a>してください。</p>
+        @endif
 
     </div>
 

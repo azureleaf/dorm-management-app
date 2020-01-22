@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class MembersController extends Controller
 {
@@ -29,9 +30,14 @@ class MembersController extends Controller
     // Show all the members
     public function showAll()
     {
+        // Get the instance for User model
+        // Returns null if the user isn't logged in
+        $user = Auth::user();
+
         $data = [
             'members' => DB::table('members')
-            ->get()
+            ->get(),
+            'user' => $user
         ];
         return view('MembersController.member', $data);
     }
