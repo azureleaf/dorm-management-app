@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <v-app>
+    <!-- <v-app> -->
       <h1>Example Vue Component</h1>
       <p>I'm an example component.</p>
       <h2>v-for</h2>
@@ -10,7 +10,7 @@
           :key="i"
         >Capital city of {{ country.name }} is {{ country.capital }}</li>
       </ul>
-    </v-app>
+    <!-- </v-app> -->
   </div>
 </template>
 

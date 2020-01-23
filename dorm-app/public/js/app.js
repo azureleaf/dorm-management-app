@@ -37420,35 +37420,28 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { attrs: { id: "app" } },
-    [
-      _c("v-app", [
-        _c("h1", [_vm._v("Example Vue Component")]),
-        _vm._v(" "),
-        _c("p", [_vm._v("I'm an example component.")]),
-        _vm._v(" "),
-        _c("h2", [_vm._v("v-for")]),
-        _vm._v(" "),
-        _c(
-          "ul",
-          _vm._l(_vm.countries, function(country, i) {
-            return _c("li", { key: i }, [
-              _vm._v(
-                "Capital city of " +
-                  _vm._s(country.name) +
-                  " is " +
-                  _vm._s(country.capital)
-              )
-            ])
-          }),
-          0
-        )
-      ])
-    ],
-    1
-  )
+  return _c("div", { attrs: { id: "app" } }, [
+    _c("h1", [_vm._v("Example Vue Component")]),
+    _vm._v(" "),
+    _c("p", [_vm._v("I'm an example component.")]),
+    _vm._v(" "),
+    _c("h2", [_vm._v("v-for")]),
+    _vm._v(" "),
+    _c(
+      "ul",
+      _vm._l(_vm.countries, function(country, i) {
+        return _c("li", { key: i }, [
+          _vm._v(
+            "Capital city of " +
+              _vm._s(country.name) +
+              " is " +
+              _vm._s(country.capital)
+          )
+        ])
+      }),
+      0
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
