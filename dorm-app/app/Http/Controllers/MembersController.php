@@ -52,31 +52,26 @@ class MembersController extends Controller
             $request->currMembers=="shown" and
             $request->pastMembers=="shown"
         ) {
-            // 検索条件が空欄の場合には、全ての寮生を表示する
             return redirect()->action('MembersController@showAll');
         } elseif ($request->pastMembers=="shown") {
             $data = [
                 'members' => DB::table('members')
                 ->where('is_living', '=', 0)
                 ->get(),
-                'user' => $user
             ];
         } elseif ($request->currMembers=="shown") {
             $data = [
                 'members' => DB::table('members')
                 ->where('is_living', '=', 1)
                 ->get(),
-                'user' => $user
+            ];
+        } else {
+            $data = [
+                'members' => [],
             ];
         }
-        
-        // $data = [
-        //     'members' => DB::table('members')
-        //     ->where('room', '=', $request->roomNum)
-        //     ->get(),
-        //     'user' => $user
-        // ];
-        
+
+        $data['user'] = $user;
         return view('MembersController.member', $data);
     }
 

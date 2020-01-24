@@ -28,7 +28,6 @@
         <a href="/">Top</a>
         <p>あなたは、{{ $user->name }}さんとしてログインしています。</p>
 
-
         {{--Embed Vue file for test--}}
         {{--
         <!-- <members-table :userName="{{ $user->name }}"></members-table> -->--}}
@@ -66,7 +65,6 @@
                     {{ csrf_field()}}
                     <input type="checkbox" name="currMembers" value="shown">在寮者を表示
                     <input type="checkbox" name="pastMembers" value="shown">退寮者を表示
-                    <input type="text" name="roomNum" placeholder="部屋番号で絞り込み">
                     <input type="submit" value="表示更新">
                 </form>
             </div>
@@ -86,7 +84,11 @@
                 @foreach($members as $member)
                 <tr>
                     <td>{{$member->id}}</td>
+                    @if ($member->room)
                     <td>{{$member->room}}</td>
+                    @else
+                    <td>退寮者</td>
+                    @endif
                     <td>{{$member->last_name}} {{$member->first_name}}</td>
                     <td>{{$member->last_name_reading}} {{$member->first_name_reading}}</td>
                     <td>{{$member->date_join}}</td>
