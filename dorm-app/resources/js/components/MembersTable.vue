@@ -10,12 +10,16 @@
           :key="i"
         >Capital city of {{ country.name }} is {{ country.capital }}</li>
       </ul>
+      <!-- <p>
+        こんにちは、{{ userName }}さん
+      </p> -->
     <!-- </v-app> -->
   </div>
 </template>
 
 <script>
 export default {
+  props: ['userName'],
   data: () => {
     return {
       countries: [

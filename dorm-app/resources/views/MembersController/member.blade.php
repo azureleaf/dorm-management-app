@@ -27,8 +27,8 @@
         <h1>寮生名簿</h1>
         <a href="/">Top</a>
 
-        <p>Vue components:</p>
-        <members-table></members-table>
+        {{--Embed Vue file for test--}}
+        <!-- <members-table :userName="{{ $user->name }}"></members-table> -->
 
         <div>
             <h2>名簿編集</h2>
