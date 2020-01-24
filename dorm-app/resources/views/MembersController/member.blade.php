@@ -26,7 +26,6 @@
 
         <h1>寮生名簿</h1>
         <a href="/">Top</a>
-        <p>あなたは、{{ $user->name }}さんとしてログインしています。</p>
 
         {{--Embed Vue file for test--}}
         {{--
@@ -60,6 +59,7 @@
         <div>
             <h2>寮生一覧</h2>
             @if (Auth::check())
+            <p>あなたは、{{ $user->name }}さんとしてログインしています。</p>
             <div>
                 <form method="POST" action="/members">
                     {{ csrf_field()}}
