@@ -17,7 +17,9 @@ class CreatePaymentCategoriesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('cat_id')->unique();
             $table->string('cat_title');
-            $table->timestamps();
+            // $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
     }
 

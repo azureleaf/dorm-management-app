@@ -97,7 +97,7 @@ class MembersTableSeeder extends Seeder
                 "last_name" => "青柳",
                 "first_name" => "敬",
                 "last_name_reading" => "アオヤギ",
-                "first_name_reading" => "サトシ",
+                "first_name_reading" => "タカシ",
                 'room' => 118,
 
             ], [
@@ -130,9 +130,9 @@ class MembersTableSeeder extends Seeder
 
             ], [
                 "last_name" => "大野",
-                "first_name" => "弘春",
+                "first_name" => "信介",
                 "last_name_reading" => "オオノ",
-                "first_name_reading" => "ヒロハル",
+                "first_name_reading" => "ノブスケ",
                 'room' => 129,
 
             ], [
@@ -214,9 +214,9 @@ class MembersTableSeeder extends Seeder
 
             ], [
                 "last_name" => "畠山",
-                "first_name" => "拓夫",
+                "first_name" => "成彦",
                 "last_name_reading" => "ハタケヤマ",
-                "first_name_reading" => "タクオ",
+                "first_name_reading" => "ナルヒコ",
                 'room' => 222,
 
             ], [

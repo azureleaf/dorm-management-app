@@ -23,7 +23,9 @@ class CreateMembersTable extends Migration
             $table->datetime('date_join')->default(Carbon::create(2000, 1, 1, 0, 0, 0, 'Asia/Tokyo'));
             $table->datetime('date_leave')->default(Carbon::create(2000, 1, 1, 0, 0, 0, 'Asia/Tokyo'));
             $table->integer('room');
-            $table->timestamps();
+            // $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
     }
 
