@@ -43,7 +43,7 @@ Route::post('/payments/register', 'PaymentsController@register');
 Route::get('/members', 'MembersController@showAll');
 
 // Show a specified member
-Route::post('/members', 'MembersController@showOne');
+Route::post('/members', 'MembersController@showFiltered');
 
 // Page to accept the new member addition
 Route::post('/members/add', 'MembersController@add');

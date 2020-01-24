@@ -3,7 +3,6 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-
 class MembersTableSeeder extends Seeder
 {
     /**
@@ -115,6 +114,13 @@ class MembersTableSeeder extends Seeder
                 'room' => 120,
 
             ], [
+                "last_name" => "高畑",
+                "first_name" => "裕次郎",
+                "last_name_reading" => "タカハタ",
+                "first_name_reading" => "ユウジロウ",
+                'is_living' => false,
+
+            ], [
                 "last_name" => "中嶋",
                 "first_name" => "康次",
                 "last_name_reading" => "ナカシマ",
@@ -163,7 +169,13 @@ class MembersTableSeeder extends Seeder
                 "first_name_reading" => "マサアキ",
                 'room' => 135,
 
-            ], [
+            ],  [
+                "last_name" => "佐々木",
+                "first_name" => "涼",
+                "last_name_reading" => "ササキ",
+                "first_name_reading" => "リョウ",
+                'is_living' => false,
+            ],  [
                 "last_name" => "菊地",
                 "first_name" => "信也",
                 "last_name_reading" => "キクチ",

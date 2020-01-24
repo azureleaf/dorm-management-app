@@ -20,9 +20,10 @@ class CreateMembersTable extends Migration
             $table->string('first_name');
             $table->string('last_name_reading');
             $table->string('first_name_reading');
+            $table->boolean('is_living')->default(1);
+            $table->integer('room')->nullable();
             $table->datetime('date_join')->default(Carbon::create(2000, 1, 1, 0, 0, 0, 'Asia/Tokyo'));
-            $table->datetime('date_leave')->default(Carbon::create(2000, 1, 1, 0, 0, 0, 'Asia/Tokyo'));
-            $table->integer('room');
+            $table->datetime('date_leave')->default(Carbon::create(2099, 12, 31, 23, 59, 59, 'Asia/Tokyo'));
             // $table->timestamps();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();

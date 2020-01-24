@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class MembersController extends Controller
 {
+    // URLからパラメータを抜き出すテスト
     public function index($id = 'noid')
     {
         if ($id == 'noid') {
@@ -43,17 +44,39 @@ class MembersController extends Controller
     }
 
     // Show the single member specified by the form input
-    public function showOne(Request $request)
+    public function showFiltered(Request $request)
     {
-        if ($request->roomNum=='') {
+        $user = Auth::user();
+     
+        if (
+            $request->currMembers=="shown" and
+            $request->pastMembers=="shown"
+        ) {
             // 検索条件が空欄の場合には、全ての寮生を表示する
             return redirect()->action('MembersController@showAll');
+        } elseif ($request->pastMembers=="shown") {
+            $data = [
+                'members' => DB::table('members')
+                ->where('is_living', '=', 0)
+                ->get(),
+                'user' => $user
+            ];
+        } elseif ($request->currMembers=="shown") {
+            $data = [
+                'members' => DB::table('members')
+                ->where('is_living', '=', 1)
+                ->get(),
+                'user' => $user
+            ];
         }
-        $data = [
-            'members' => DB::table('members')
-            ->where('room', '=', $request->roomNum)
-            ->get()
-        ];
+        
+        // $data = [
+        //     'members' => DB::table('members')
+        //     ->where('room', '=', $request->roomNum)
+        //     ->get(),
+        //     'user' => $user
+        // ];
+        
         return view('MembersController.member', $data);
     }
 

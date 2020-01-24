@@ -26,9 +26,12 @@
 
         <h1>寮生名簿</h1>
         <a href="/">Top</a>
+        <p>あなたは、{{ $user->name }}さんとしてログインしています。</p>
+
 
         {{--Embed Vue file for test--}}
-        <!-- <members-table :userName="{{ $user->name }}"></members-table> -->
+        {{--
+        <!-- <members-table :userName="{{ $user->name }}"></members-table> -->--}}
 
         <div>
             <h2>名簿編集</h2>
@@ -58,12 +61,11 @@
         <div>
             <h2>寮生一覧</h2>
             @if (Auth::check())
-            <p>あなたは、{{ $user->name }}さんとしてログインしています。</p>
             <div>
                 <form method="POST" action="/members">
                     {{ csrf_field()}}
-                    <input type="checkbox" name="filterCurrentMembers" value="true" checked>在寮者を表示
-                    <input type="checkbox" name="filterCurrentMembers" value="true">退寮者を表示
+                    <input type="checkbox" name="currMembers" value="shown">在寮者を表示
+                    <input type="checkbox" name="pastMembers" value="shown">退寮者を表示
                     <input type="text" name="roomNum" placeholder="部屋番号で絞り込み">
                     <input type="submit" value="表示更新">
                 </form>
