@@ -15,9 +15,11 @@ class CreateCommitteeRewardTable extends Migration
     {
         Schema::create('committee_reward', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('role');
-            $table->int('reduction_ratio');
-            $table->timestamps();
+            $table->string('committee_role');
+            $table->integer('payment_percentages');
+            $table->integer('number_of_people');
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
     }
 
