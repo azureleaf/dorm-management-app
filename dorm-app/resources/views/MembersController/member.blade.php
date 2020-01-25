@@ -63,7 +63,11 @@
             <div>
                 <form method="POST" action="/members">
                     {{ csrf_field()}}
-                    <input type="checkbox" name="currMembers" value="shown">在寮者を表示
+                    @if (Session::get('currMembers') == 'shown')
+                    <input type="checkbox" name="currMembers" value="shown" checked>在寮者を表示 
+                    @else
+                    <input type="checkbox" name="currMembers" value="shown">在寮者を表示 {{Session::get('currMembers')}}
+                    @endif
                     <input type="checkbox" name="pastMembers" value="shown">退寮者を表示
                     <input type="submit" value="表示更新">
                 </form>

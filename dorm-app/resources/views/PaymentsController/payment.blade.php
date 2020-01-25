@@ -8,13 +8,13 @@
     <style>
         #paymentTable,
         #roomsTable,
-        #leftMembersTable {
+        #pastMembersTable {
             border-collapse: collapse;
         }
 
         #paymentTable,
         #roomsTable,
-        #leftMembersTable,
+        #pastMembersTable,
         td,
         th {
             border: 1px solid black;
@@ -135,7 +135,7 @@
         <form method="POST" action="/payments/register">
             {{ csrf_field()}}
 
-            <table id="leftMembersTable">
+            <table id="pastMembersTable">
                 <tr>
                     <th>寮生番号</th>
                     <th>氏名</th>
