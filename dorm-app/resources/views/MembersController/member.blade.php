@@ -106,10 +106,7 @@
             @else
             <p>寮生一覧を見るには、<a href="/register">ログイン</a>してください。</p>
             @endif
-
         </div>
-
-
     </div>
     <script src=" {{ mix('js/app.js') }} "></script>
 
