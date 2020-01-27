@@ -51,3 +51,10 @@ Route::post('/members/add', 'MembersController@add');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+/**
+ * Duties
+ */
+
+ Route::get('/duties', 'DutiesController@index');
+ 
