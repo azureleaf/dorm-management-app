@@ -53,8 +53,18 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 /**
+ * temp
+ */
+
+Route::get('/test', function() {
+    return view('layouts.test_index');
+}
+);
+ 
+
+
+/**
  * Duties
  */
 
  Route::get('/duties', 'DutiesController@index');
- 
