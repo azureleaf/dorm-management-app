@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -59,7 +62,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/test', function() {
     return view('layouts.test_index');
 }
-);
+)->middleware('auth');
  
 
 
