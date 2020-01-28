@@ -30,6 +30,11 @@
         <form>
             <input type="date"></input>
         </form>
+
+        @foreach($days as $day)
+        <p>{{$day}} </p>
+        @endforeach
+
 </body>
 
 </html>
