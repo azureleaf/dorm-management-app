@@ -11,7 +11,7 @@ class DutiesController extends Controller
     {
         // 取得したい月を指定
         $year = 2020;
-        $month = 2;
+        $month = 5;
 
         // 当月の初日
         $date = Carbon::create($year, $month, 1, 0, 0, 0, 'Asia/Tokyo');
