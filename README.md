@@ -66,3 +66,17 @@ Run these commands in the root directory of the Laravel application.
 - Google calendar integration
 - Dockerize
 - Deploy to the cloud server
+
+
+## Dev History
+
+1. `composer create-project --prefer-dist laravel/laravel my-app`
+2. `cd my-app`
+4. `composer require laravel/ui`
+    - This updates composer.json
+5. `php artisan ui vue --auth`
+    - This updates package.json; e.g. adds `vue` to `devDependencies`
+    - This adds some auth-related directories / files
+    - This adds a sample Vue component, and alters `app.js`
+6. `npm install`
+7. 
