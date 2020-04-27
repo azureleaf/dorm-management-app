@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,12 +14,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+use App\User;
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/users',function(){
-	return ['Ken','Mike','John','Lisa'];	
+Route::get('/users', function () {
+    return User::all();
+});
+
+
+Route::get('/test', function () {
+    $users = DB::table('users')->get();
+    foreach ($users as $user) {
+        var_dump($user);
+        return;
+    }
 });
 
 Auth::routes();

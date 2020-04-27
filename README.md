@@ -15,6 +15,7 @@
   - [Start to connect Vue to Laravel](#start-to-connect-vue-to-laravel)
   - [Set up Postgres](#set-up-postgres)
   - [Test to seed to Postgres](#test-to-seed-to-postgres)
+  - [Create Eloquent model](#create-eloquent-model)
 - [Troubleshooting](#troubleshooting)
   - [Error `could not find driver` on `php artisan migrate`](#error-could-not-find-driver-on-php-artisan-migrate)
   - [Error `password authentication failed for user "postgres"` on `php artisan migrate`](#error-password-authentication-failed-for-user-%22postgres%22-on-php-artisan-migrate)
@@ -149,12 +150,18 @@ Run these commands in the root directory of the Laravel application.
 1. `$user2->save()`
 1. Check if the 2 person are inserted in Postgres with `SELECT * from users`
    - Seemingly, objects from `App\User` are automatically linked to `users` table
-1. Try to get these DB from Axios
+1. Get these DB from Axios
    ```php
+   use App\User
    Route::get('/users',function(){
-      return App\User::all();
+      return User::all();
    });
    ```
+
+## Create Eloquent model
+
+1. `php artisan make:model Billing -m`
+2. Add billing data with tinker
 
 # Troubleshooting
 
