@@ -15,22 +15,28 @@ use Illuminate\Support\Facades\Route;
 */
 
 use App\User;
+use App\Billing;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+
+Route::get('/userlist', function () {
+    return view('user-list');
+});
+
+
+Route::get('/personalbook', function () {
+    return view('personal-book');
 });
 
 Route::get('/users', function () {
     return User::all();
 });
 
-
-Route::get('/test', function () {
-    $users = DB::table('users')->get();
-    foreach ($users as $user) {
-        var_dump($user);
-        return;
-    }
+Route::get('/billings', function () {
+    return Billing::all();
 });
 
 Auth::routes();

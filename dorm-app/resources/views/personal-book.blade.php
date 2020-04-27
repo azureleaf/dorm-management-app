@@ -18,7 +18,8 @@
 
 <body>
     <div id="app">
-        Welcome to the dorm management system!
+        <h1>支払履歴</h1>
+        <billing-table></billing-table>
     </div>
     <script src="{{ mix('js/app.js') }}"></script>
 </body>

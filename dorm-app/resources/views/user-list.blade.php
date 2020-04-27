@@ -18,7 +18,8 @@
 
 <body>
     <div id="app">
-        Welcome to the dorm management system!
+        <h1>寮生一覧</h1>
+        <user-table></user-table>
     </div>
     <script src="{{ mix('js/app.js') }}"></script>
 </body>
