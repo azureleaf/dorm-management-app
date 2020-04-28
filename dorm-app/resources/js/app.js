@@ -22,6 +22,7 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('user-table', require('./components/UserTable.vue').default);
 Vue.component('billing-table', require('./components/BillingTable.vue').default);
+Vue.component('accounting-processor', require('./components/AccountingProcessor.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

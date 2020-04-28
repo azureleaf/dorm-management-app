@@ -5,24 +5,14 @@
         <div class="card">
           <table>
             <tr>
-              <th>会計処理ID</th>
-              <th>対象寮生ID</th>
               <th>摘要</th>
               <th>請求額</th>
               <th>支払額</th>
-              <th>支払残高</th>
-              <th>処理日</th>
-              <th>更新日</th>
             </tr>
-            <tr v-for="(billItem, index) in billItems" :key="index">
-              <td>{{billItem.id}}</td>
+            <tr>
+              <td>５月分寮費</td>
+              <td>25000</td>
               <td></td>
-              <td>{{billItem.abstract}}</td>
-              <td>{{billItem.billing}}</td>
-              <td>{{billItem.payment}}</td>
-              <td>{{billItem.balance}}</td>
-              <td>{{billItem.created_at}}</td>
-              <td>{{billItem.updated_at}}</td>
             </tr>
           </table>
         </div>
