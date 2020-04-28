@@ -16,6 +16,7 @@
   - [Set up Postgres](#set-up-postgres)
   - [Test to seed to Postgres](#test-to-seed-to-postgres)
   - [Create Eloquent model](#create-eloquent-model)
+  - [Add a column to existing table](#add-a-column-to-existing-table)
 - [Troubleshooting](#troubleshooting)
   - [Error `could not find driver` on `php artisan migrate`](#error-could-not-find-driver-on-php-artisan-migrate)
   - [Error `password authentication failed for user "postgres"` on `php artisan migrate`](#error-password-authentication-failed-for-user-%22postgres%22-on-php-artisan-migrate)
@@ -162,6 +163,11 @@ Run these commands in the root directory of the Laravel application.
 
 1. `php artisan make:model Billing -m`
 2. Add billing data with tinker
+
+## Add a column to existing table
+
+1. `php artisan make:migration add_user_id_to_billing`
+   - Seemingly, the word "billing" is correctly recognized by Laravel as the target table name
 
 # Troubleshooting
 
