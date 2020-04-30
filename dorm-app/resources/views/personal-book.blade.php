@@ -8,10 +8,11 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css">
     <title>Laravel</title>
 </head>
+
 <body>
     <div id="app">
-        <app-header avatarurl="{{ asset('/img/rubber_ducky_material.png') }}"></app-header>
         <v-app>
+            <app-header avatarurl="{{ asset('/img/rubber_ducky_material.png') }}"></app-header>
             <billing-table></billing-table>
         </v-app>
     </div>

@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-app-bar class="teal darken-4" dense dark app>
+    <v-app-bar class="cyan darken-4" dense dark app>
       <v-avatar>
         <v-img class="mx-2" :src="avatarurl" max-height="50" max-width="50" contain></v-img>
       </v-avatar>
@@ -16,11 +16,11 @@
         <v-divider vertical></v-divider>
         <v-btn text href="/personalbook" class="px-5">会計履歴</v-btn>
         <v-divider vertical></v-divider>
-        <v-btn text href="/" class="px-5">会計処理</v-btn>
+        <v-btn text href="/process" class="px-5">会計処理</v-btn>
         <v-divider vertical></v-divider>
-        <v-btn text href="/" class="px-5">当番申請</v-btn>
+        <v-btn text href="/dutyform" class="px-5">当番申請</v-btn>
         <v-divider vertical></v-divider>
-        <v-btn text href="/" class="px-5">当番表</v-btn>
+        <v-btn text href="/dutylist" class="px-5">当番表</v-btn>
         <v-divider vertical></v-divider>
         <v-btn text href="/login" class="px-6">ログイン</v-btn>
         <v-divider vertical></v-divider>
