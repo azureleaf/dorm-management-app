@@ -5,8 +5,12 @@
  */
 
 require('./bootstrap');
+import Vuetify from 'vuetify';
 
 window.Vue = require('vue');
+
+Vue.use(Vuetify);
+
 
 /**
  * The following block of code may be used to automatically register your
@@ -32,4 +36,5 @@ Vue.component('accounting-processor', require('./components/AccountingProcessor.
 
 const app = new Vue({
     el: '#app',
+    vuetify: new Vuetify({}),
 });

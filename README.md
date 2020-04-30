@@ -19,6 +19,7 @@
   - [Add a column to existing table](#add-a-column-to-existing-table)
   - [Seeding (with factory)](#seeding-with-factory)
   - [Seeding (without factory)](#seeding-without-factory)
+  - [Add vuetify](#add-vuetify)
   - [File locations](#file-locations)
 - [Troubleshooting](#troubleshooting)
   - [Error `could not find driver` on `php artisan migrate`](#error-could-not-find-driver-on-php-artisan-migrate)
@@ -188,10 +189,29 @@ Run these commands in the root directory of the Laravel application.
 3. `composer dump-autoload` Regenerate the composer autoloader
 4. Call seeders in `DatabaseSeeder.php`
 5. Run seeder with either of these 2:
-    - `php artisan db:seed --class=BillingSeeder` To keep existing data
-    - `php artisan db:seed` To keep existing data, run all the seeders
-    - `php artisan migrate:fresh --seed` Drop all the existing data
+   - `php artisan db:seed --class=BillingSeeder` To keep existing data
+   - `php artisan db:seed` To keep existing data, run all the seeders
+   - `php artisan migrate:fresh --seed` Drop all the existing data
 
+## Add vuetify
+
+1. Install dependencies:
+   - `npm install vuetify`
+   - `npm install @mdi/font -D`
+2. Edit `resources/js/app.js`
+   - `import Vuetify from 'vuetify';`
+   - `Vue.use(Vuetify);` after the line of `require('vue');`
+   - Add Vuetify to the Vue constructor: `const app = new Vue({ el: '#app', vuetify: new Vuetify({}),});`
+   - Modify Vue components to use Vuetify components
+3. Edit `resources/sass/app.scss`: Seemingly the result will be generated into `public/css` and `public/fonts`
+   - `@import '~vuetify/dist/vuetify.min.css';`
+   - `@import '~@mdi/font/css/materialdesignicons.min.css';`
+   - Remove default CSS settings: `Bootstrap` and `Nunito` font
+4. Add `sourceMap()` to `/webpack.mix.js`:
+   - `mix.js('resources/js/app.js', 'public/js').sass('resources/sass/app.scss', 'public/css').sourceMaps();`
+   - Without this, Google Chrome console shows alert
+5. Make sure that Sass-processed CSS is called in each blade file
+   - `<link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" >`
 
 ## File locations
 
