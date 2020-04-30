@@ -17,6 +17,9 @@
   - [Test to seed to Postgres](#test-to-seed-to-postgres)
   - [Create Eloquent model](#create-eloquent-model)
   - [Add a column to existing table](#add-a-column-to-existing-table)
+  - [Seeding (with factory)](#seeding-with-factory)
+  - [Seeding (without factory)](#seeding-without-factory)
+  - [File locations](#file-locations)
 - [Troubleshooting](#troubleshooting)
   - [Error `could not find driver` on `php artisan migrate`](#error-could-not-find-driver-on-php-artisan-migrate)
   - [Error `password authentication failed for user "postgres"` on `php artisan migrate`](#error-password-authentication-failed-for-user-%22postgres%22-on-php-artisan-migrate)
@@ -162,12 +165,42 @@ Run these commands in the root directory of the Laravel application.
 ## Create Eloquent model
 
 1. `php artisan make:model Billing -m`
-2. Add billing data with tinker
+1. Alternatively, `php artisan make:model Billing -m -f` creates the factory as well
+1. Add billing data with tinker
 
 ## Add a column to existing table
 
-1. `php artisan make:migration add_user_id_to_billing`
-   - Seemingly, the word "billing" is correctly recognized by Laravel as the target table name
+1. `php artisan make:migration add_user_id_to_billings`
+   - Seemingly, the word "billings" is correctly recognized by Laravel as the target table name
+1. Edit migration: Add new column with foreign key, delete existing records (because of non-nullable constraint for the new col), then migrate
+
+## Seeding (with factory)
+
+1. `php artisan make:seeder BillingsTableSeeder`
+2. Edit the seeder `run()`: `$users = factory(App\User::class, 10)->create();`
+3. `php artisan make:factory BillingFactory`
+4. ~~Edit the factory `$factory->define()`~~ I decided not to use factory this time.
+
+## Seeding (without factory)
+
+1. `php artisan make:seeder BillingSeeder`
+2. Edit the `run()` of the seeder
+3. `composer dump-autoload` Regenerate the composer autoloader
+4. Call seeders in `DatabaseSeeder.php`
+5. Run seeder with either of these 2:
+    - `php artisan db:seed --class=BillingSeeder` To keep existing data
+    - `php artisan db:seed` To keep existing data, run all the seeders
+    - `php artisan migrate:fresh --seed` Drop all the existing data
+
+
+## File locations
+
+- `/app/` Billing.php
+- `/database/factories` BillingFactory.php
+- `/database/migrations` blahblah_create_billings_table.php (plural)
+- `/database/seeds` UsersTableSeeder.php (plural)
+- `/resources/js/components`
+- `/resources/views`
 
 # Troubleshooting
 
