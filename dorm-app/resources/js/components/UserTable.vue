@@ -3,20 +3,23 @@
     <div class="row justify-content-center">
       <div class="col-md-8">
         <div class="card">
-          <table>
-            <tr>
-              <th>ID</th>
-              <th>名前</th>
-              <th>メールアドレス</th>
-              <th>パスワードハッシュ</th>
-            </tr>
-            <tr v-for="(user, index) in users" :key="index">
-              <td>{{user.id}}</td>
-              <td>{{user.name}}</td>
-              <td>{{user.email}}</td>
-              <td>{{user.password}}</td>
-            </tr>
-          </table>
+          <v-card-title>寮生一覧</v-card-title>
+          <v-card-text>
+            <table>
+              <tr>
+                <th>ID</th>
+                <th>名前</th>
+                <th>メールアドレス</th>
+                <th>パスワードハッシュ</th>
+              </tr>
+              <tr v-for="(user, index) in users" :key="index">
+                <td>{{user.id}}</td>
+                <td>{{user.name}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.password}}</td>
+              </tr>
+            </table>
+          </v-card-text>
         </div>
       </div>
     </div>
@@ -43,7 +46,9 @@ table {
   border-collapse: collapse;
 }
 
-table, th, td {
+table,
+th,
+td {
   border: 1px solid black;
 }
 </style>

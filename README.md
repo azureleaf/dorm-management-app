@@ -202,7 +202,7 @@ Run these commands in the root directory of the Laravel application.
    - `import Vuetify from 'vuetify';`
    - `Vue.use(Vuetify);` after the line of `require('vue');`
    - Add Vuetify to the Vue constructor: `const app = new Vue({ el: '#app', vuetify: new Vuetify({}),});`
-   - Modify Vue components to use Vuetify components
+   - Modify Vue components to use Vuetify components; make sure that the Vue component is wrapped by `<v-app>`
 3. Edit `resources/sass/app.scss`: Seemingly the result will be generated into `public/css` and `public/fonts`
    - `@import '~vuetify/dist/vuetify.min.css';`
    - `@import '~@mdi/font/css/materialdesignicons.min.css';`

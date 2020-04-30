@@ -1,7 +1,12 @@
 <template>
   <v-content>
     <v-container>
-      <v-data-table :headers="billingHeaders" :items="billItems" :items-per-page="20"></v-data-table>
+      <v-card>
+        <v-card-title>会計処理履歴</v-card-title>
+        <v-card-text>
+          <v-data-table :headers="billingHeaders" :items="billItems" :items-per-page="20"></v-data-table>
+        </v-card-text>
+      </v-card>
     </v-container>
   </v-content>
 </template>
@@ -66,13 +71,4 @@ export default {
 };
 </script>
 <style scoped>
-table {
-  border-collapse: collapse;
-}
-
-table,
-th,
-td {
-  border: 1px solid black;
-}
 </style>
