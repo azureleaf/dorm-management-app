@@ -1,31 +1,33 @@
 # Dorm Management App
 
-# ToC
+## ToC
 
 - [Dorm Management App](#dorm-management-app)
-- [ToC](#toc)
-  - [Purpose](#purpose)
-- [Installation](#installation)
-  - [Requirements](#requirements)
-  - [Installation](#installation-1)
-- [Feature Milestones](#feature-milestones)
-  - [Must have](#must-have)
-  - [Optional Features](#optional-features)
-- [Dev History](#dev-history)
-  - [Start to connect Vue to Laravel](#start-to-connect-vue-to-laravel)
-  - [Set up Postgres](#set-up-postgres)
-  - [Test to seed to Postgres](#test-to-seed-to-postgres)
-  - [Create Eloquent model](#create-eloquent-model)
-  - [Add a column to existing table](#add-a-column-to-existing-table)
-  - [Seeding (with factory)](#seeding-with-factory)
-  - [Seeding (without factory)](#seeding-without-factory)
-  - [Add vuetify](#add-vuetify)
-  - [File locations](#file-locations)
-- [Troubleshooting](#troubleshooting)
-  - [Error `could not find driver` on `php artisan migrate`](#error-could-not-find-driver-on-php-artisan-migrate)
-  - [Error `password authentication failed for user "postgres"` on `php artisan migrate`](#error-password-authentication-failed-for-user-%22postgres%22-on-php-artisan-migrate)
+  - [ToC](#toc)
+    - [Purpose](#purpose)
+  - [Installation](#installation)
+    - [Requirements](#requirements)
+    - [Installation](#installation-1)
+  - [Feature Milestones](#feature-milestones)
+    - [Must have](#must-have)
+    - [Optional Features](#optional-features)
+  - [Dev History](#dev-history)
+    - [Start to connect Vue to Laravel](#start-to-connect-vue-to-laravel)
+    - [Set up Postgres](#set-up-postgres)
+    - [Test to seed to Postgres](#test-to-seed-to-postgres)
+    - [Create migration](#create-migration)
+    - [Create Eloquent model](#create-eloquent-model)
+    - [Add a column to existing table](#add-a-column-to-existing-table)
+    - [Seeding (with factory)](#seeding-with-factory)
+    - [Seeding (without factory)](#seeding-without-factory)
+    - [Add vuetify](#add-vuetify)
+    - [File locations](#file-locations)
+    - [Database](#database)
+  - [Troubleshooting](#troubleshooting)
+    - [Error `could not find driver` on `php artisan migrate`](#error-could-not-find-driver-on-php-artisan-migrate)
+    - [Error `password authentication failed for user "postgres"` on `php artisan migrate`](#error-password-authentication-failed-for-user-%22postgres%22-on-php-artisan-migrate)
 
-## Purpose
+### Purpose
 
 RPA (Robotic Process Automation) for administration chores at a university boarding hall. This app will be deployed to the on-premise physical server (Perhaps Apache + CentOS) inside the dorm for 24/7.
 
@@ -33,9 +35,9 @@ RPA (Robotic Process Automation) for administration chores at a university board
 - Automatically assign housekeeping chores to every boarder
 - Share documents: Meeting minutes, Financial report, etc.
 
-# Installation
+## Installation
 
-## Requirements
+### Requirements
 
 - Composer
 - npm
@@ -48,7 +50,7 @@ RPA (Robotic Process Automation) for administration chores at a university board
   - `DB_DATABSE=laravel_dorm`
   - `APP_KEY` has the value. If not, generate with `php artisan key:generate`
 
-## Installation
+### Installation
 
 Run these commands in the root directory of the Laravel application.
 
@@ -60,9 +62,9 @@ Run these commands in the root directory of the Laravel application.
 1. `php artisan db:seed`
 1. `php artisan serve`
 
-# Feature Milestones
+## Feature Milestones
 
-## Must have
+### Must have
 
 - [x] Establish the data flow: Vue - Blade - Laravel - Eloquent - Postgres
 - [ ] Accounting
@@ -82,7 +84,7 @@ Run these commands in the root directory of the Laravel application.
 - [ ] Visualize monthly billing amount with Chart.js
 - [ ] Deploy on Heroku (or AWS)
 
-## Optional Features
+### Optional Features
 
 - [ ] Show the latest info of the dorm
   - Notification to the members
@@ -96,9 +98,9 @@ Run these commands in the root directory of the Laravel application.
 - [ ] Google calendar integration
 - [ ] Dockerize
 
-# Dev History
+## Dev History
 
-## Start to connect Vue to Laravel
+### Start to connect Vue to Laravel
 
 1. `composer create-project --prefer-dist laravel/laravel my-app`
 2. `cd my-app`
@@ -121,7 +123,7 @@ Run these commands in the root directory of the Laravel application.
 8. `php artisan serve`
    - Check if the Vue component is rendered correctly
 
-## Set up Postgres
+### Set up Postgres
 
 1. Install postgres
 2. Edit `.env`
@@ -142,7 +144,7 @@ Run these commands in the root directory of the Laravel application.
 8. `exit`
 9. `php artisan migrate` -> Refer to troubleshooting report below
 
-## Test to seed to Postgres
+### Test to seed to Postgres
 
 1. `php artisan tinker`
 1. `$user1 = new App\User`
@@ -163,26 +165,30 @@ Run these commands in the root directory of the Laravel application.
    });
    ```
 
-## Create Eloquent model
+### Create migration
 
-1. `php artisan make:model Billing -m`
-1. Alternatively, `php artisan make:model Billing -m -f` creates the factory as well
+- `php artisan make:migration create_users_table --create=users`
+
+### Create Eloquent model
+
+1. `php artisan make:model Billing -m` creates model & migration
+1. Alternatively, `php artisan make:model Billing -m -f` create model & factory
 1. Add billing data with tinker
 
-## Add a column to existing table
+### Add a column to existing table
 
 1. `php artisan make:migration add_user_id_to_billings`
    - Seemingly, the word "billings" is correctly recognized by Laravel as the target table name
 1. Edit migration: Add new column with foreign key, delete existing records (because of non-nullable constraint for the new col), then migrate
 
-## Seeding (with factory)
+### Seeding (with factory)
 
 1. `php artisan make:seeder BillingsTableSeeder`
 2. Edit the seeder `run()`: `$users = factory(App\User::class, 10)->create();`
 3. `php artisan make:factory BillingFactory`
 4. ~~Edit the factory `$factory->define()`~~ I decided not to use factory this time.
 
-## Seeding (without factory)
+### Seeding (without factory)
 
 1. `php artisan make:seeder BillingSeeder`
 2. Edit the `run()` of the seeder
@@ -193,7 +199,7 @@ Run these commands in the root directory of the Laravel application.
    - `php artisan db:seed` To keep existing data, run all the seeders
    - `php artisan migrate:fresh --seed` Drop all the existing data
 
-## Add vuetify
+### Add vuetify
 
 1. Install dependencies:
    - `npm install vuetify`
@@ -213,7 +219,7 @@ Run these commands in the root directory of the Laravel application.
 5. Make sure that Sass-processed CSS is called in each blade file
    - `<link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" >`
 
-## File locations
+### File locations
 
 - `/app/` Billing.php
 - `/database/factories` BillingFactory.php
@@ -222,13 +228,65 @@ Run these commands in the root directory of the Laravel application.
 - `/resources/js/components`
 - `/resources/views`
 
-# Troubleshooting
+### Database
 
-## Error `could not find driver` on `php artisan migrate`
+columns except for `id`, `created_at`, `updated_at`
+
+- `users`
+  - name
+  - email
+  - password
+  - move_in_at
+  - move_out_at
+- `billings`: account book of a user
+  - user_id (many2one with `users`)
+  - abstract
+  - billing
+  - payment
+  - balance
+  - billing_cat_id (many2one with `billing_cats`)
+  - comment
+- `billing_cats`
+  - name
+  - default_reward_rate
+  - default_reward_amount
+- `payments`: account book of the dorm
+  - user_id: (many2one with `users`), nullable
+  - abstract
+  - billing
+  - payment
+  - balance
+  - payment_cat_id (many2one with `payment_cats`)
+  - comment
+- `payment_cats`
+  - name
+- `rooms`
+  - number
+  - comment
+- `room_records`
+  - room_id (many2one with `rooms`)
+  - user_id (many2one with `users`)
+  - move_in_at
+  - move_out_at: nullable
+- `roles`
+  - name
+  - default_reward
+- `role_records`: Committee member, chairperson, cleaning chores
+  - user_id (many2one with `users`)
+  - role_id (many2one with `roles`)
+  - reward_rate
+  - reward_amount
+  - start_at
+  - end_at
+  - repoted_at: nullable
+
+## Troubleshooting
+
+### Error `could not find driver` on `php artisan migrate`
 
 1. `sudo apt install php-pgsql`
 
-## Error `password authentication failed for user "postgres"` on `php artisan migrate`
+### Error `password authentication failed for user "postgres"` on `php artisan migrate`
 
 1. Modify auth method: Open `pg_haba.conf`, then modify `local all all peer` row into `local all all md5`
 1. `sudo su - psql`
