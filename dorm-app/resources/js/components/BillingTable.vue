@@ -2,7 +2,7 @@
   <v-content>
     <v-container>
       <v-card>
-        <v-card-title>会計処理履歴</v-card-title>
+        <v-card-title>個人会計履歴</v-card-title>
         <v-card-text>
           <v-data-table :headers="billingHeaders" :items="billItems" :items-per-page="20"></v-data-table>
         </v-card-text>
@@ -18,14 +18,24 @@ export default {
       billItems: [],
       billingHeaders: [
         {
-          text: "会計処理ID",
+          text: "個人会計処理ID",
           sortable: true,
           value: "id"
         },
         {
           text: "対象寮生ID",
           sortable: true,
-          value: "userId"
+          value: "user_id"
+        },
+         {
+          text: "処理登録日",
+          sortable: true,
+          value: "created_at"
+        },
+         {
+          text: "区分",
+          sortable: true,
+          value: "category"
         },
         {
           text: "摘要",
@@ -49,16 +59,7 @@ export default {
           value: "balance"
         },
 
-        {
-          text: "処理登録日",
-          sortable: true,
-          value: "created_at"
-        },
-        {
-          text: "処理更新額",
-          sortable: true,
-          value: "updated_at"
-        }
+       
       ]
     };
   },

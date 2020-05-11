@@ -1,36 +1,62 @@
 <template>
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div class="card">
-          <v-card-title>寮生一覧</v-card-title>
-          <v-card-text>
-            <table>
-              <tr>
-                <th>ID</th>
-                <th>名前</th>
-                <th>メールアドレス</th>
-                <th>パスワードハッシュ</th>
-              </tr>
-              <tr v-for="(user, index) in users" :key="index">
-                <td>{{user.id}}</td>
-                <td>{{user.name}}</td>
-                <td>{{user.email}}</td>
-                <td>{{user.password}}</td>
-              </tr>
-            </table>
-          </v-card-text>
-        </div>
-      </div>
-    </div>
-  </div>
+  <v-content>
+    <v-container>
+      <v-card>
+        <v-card-title>寮生一覧</v-card-title>
+        <v-card-text>
+          <v-data-table :headers="userHeaders" :items="users" :items-per-page="20"></v-data-table>
+          <!-- <v-data-table>
+            <tr>
+              <th>ID</th>
+              <th>名前</th>
+              <th>メールアドレス</th>
+              <th>パスワードハッシュ</th>
+            </tr>
+            <tr v-for="(user, index) in users" :key="index">
+              <td>{{user.id}}</td>
+              <td>{{user.name}}</td>
+              <td>{{user.email}}</td>
+              <td>{{user.password}}</td>
+            </tr>
+          </v-data-table> -->
+        </v-card-text>
+      </v-card>
+    </v-container>
+  </v-content>
 </template>
 
 <script>
 export default {
   data: function() {
     return {
-      users: ""
+      users: "",
+      userHeaders: [
+         {
+          text: "ID",
+          sortable: true,
+          value: "id"
+        },
+          {
+          text: "名前",
+          sortable: true,
+          value: "name"
+        },
+        {
+          text: "メールアドレス",
+          sortable: false,
+          value: "email"
+        },
+         {
+          text: "部屋番号",
+          sortable: true,
+          value: ""
+        },
+         {
+          text: "役職",
+          sortable: true,
+          value: ""
+        },
+      ]
     };
   },
   mounted: async function() {

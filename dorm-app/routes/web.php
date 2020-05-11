@@ -31,6 +31,14 @@ Route::get('/personalbook', function () {
     return view('personal-book');
 });
 
+Route::get('/dormbook', function () {
+    return view('dorm-book');
+});
+
+Route::get('/duty', function () {
+    return view('duty');
+});
+
 Route::get('/users', function () {
     return User::all();
 });
@@ -38,6 +46,8 @@ Route::get('/users', function () {
 Route::get('/billings', function () {
     return Billing::all();
 });
+
+
 
 Auth::routes();
 
