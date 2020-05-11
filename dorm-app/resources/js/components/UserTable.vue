@@ -5,20 +5,6 @@
         <v-card-title>寮生一覧</v-card-title>
         <v-card-text>
           <v-data-table :headers="userHeaders" :items="users" :items-per-page="20"></v-data-table>
-          <!-- <v-data-table>
-            <tr>
-              <th>ID</th>
-              <th>名前</th>
-              <th>メールアドレス</th>
-              <th>パスワードハッシュ</th>
-            </tr>
-            <tr v-for="(user, index) in users" :key="index">
-              <td>{{user.id}}</td>
-              <td>{{user.name}}</td>
-              <td>{{user.email}}</td>
-              <td>{{user.password}}</td>
-            </tr>
-          </v-data-table> -->
         </v-card-text>
       </v-card>
     </v-container>
@@ -52,7 +38,7 @@ export default {
           value: ""
         },
          {
-          text: "役職",
+          text: "現在の役職",
           sortable: true,
           value: ""
         },

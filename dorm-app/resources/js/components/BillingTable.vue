@@ -3,6 +3,7 @@
     <v-container>
       <v-card>
         <v-card-title>個人会計履歴</v-card-title>
+        <v-card-subtitle>全寮生の履歴一覧です。個人で絞り込むには、寮生一覧ページから開いてください。</v-card-subtitle>
         <v-card-text>
           <v-data-table :headers="billingHeaders" :items="billItems" :items-per-page="20"></v-data-table>
         </v-card-text>
@@ -27,12 +28,12 @@ export default {
           sortable: true,
           value: "user_id"
         },
-         {
+        {
           text: "処理登録日",
           sortable: true,
           value: "created_at"
         },
-         {
+        {
           text: "区分",
           sortable: true,
           value: "category"
@@ -57,9 +58,7 @@ export default {
           text: "支払残高",
           sortable: true,
           value: "balance"
-        },
-
-       
+        }
       ]
     };
   },

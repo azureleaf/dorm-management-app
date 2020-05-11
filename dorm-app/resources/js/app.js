@@ -43,7 +43,12 @@ Vue.component('billing-table', require('./components/BillingTable.vue').default)
 
 // dorm accounting page
 Vue.component('payment-table', require('./components/PaymentTable.vue').default);
+Vue.component('payment-chart', require('./components/PaymentChart.vue').default);
 Vue.component('closing-table', require('./components/ClosingTable.vue').default);
+
+// dorm accounting page: closing
+Vue.component('income-table', require('./components/closing/IncomeTable.vue').default);
+Vue.component('expenditure-table', require('./components/closing/ExpenditureTable.vue').default);
 
 Vue.component('accounting-processor', require('./components/AccountingProcessor.vue').default);
 

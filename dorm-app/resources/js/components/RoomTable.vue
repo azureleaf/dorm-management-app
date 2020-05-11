@@ -2,7 +2,7 @@
   <v-content>
     <v-container>
       <v-card>
-        <v-card-title>部屋移動履歴</v-card-title>
+        <v-card-title>居室履歴</v-card-title>
         <v-card-text>
           <v-data-table :headers="userHeaders" :items="users" :items-per-page="20"></v-data-table>
         </v-card-text>
@@ -17,31 +17,37 @@ export default {
     return {
       users: "",
       userHeaders: [
-         {
+        {
           text: "ID",
           sortable: true,
           value: "id"
         },
-          {
-          text: "名前",
-          sortable: true,
-          value: "name"
-        },
         {
-          text: "メールアドレス",
-          sortable: false,
-          value: "email"
-        },
-         {
           text: "部屋番号",
           sortable: true,
           value: ""
         },
-         {
-          text: "役職",
+        {
+          text: "居住者",
+          sortable: true,
+          value: "name"
+        },
+
+        {
+          text: "更新事由",
           sortable: true,
           value: ""
         },
+        {
+          text: "更新日",
+          sortable: true,
+          value: ""
+        },
+        {
+          text: "居室状態",
+          sortable: true,
+          value: ""
+        }
       ]
     };
   },

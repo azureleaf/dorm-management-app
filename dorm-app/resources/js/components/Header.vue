@@ -4,9 +4,11 @@
       <v-avatar>
         <v-img class="mx-2" :src="avatarurl" max-height="50" max-width="50" contain></v-img>
       </v-avatar>
-      <v-toolbar-title class="ml-5">
-        <span>Hirosegawa Digital Service</span>
-      </v-toolbar-title>
+      <v-toolbar-title class="ml-5 headline" style="font-family: 'Titillium Web' !important;">
+        <span class="font-weight-black">Aobaryo</span>
+        <span class="font-weight-light">Cloud</span>
+        
+        </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items id="tb-items">
         <v-divider vertical></v-divider>
@@ -19,6 +21,8 @@
         <v-btn text href="/dormbook" class="px-5">寮会計</v-btn>
         <v-divider vertical></v-divider>
         <v-btn text href="/duty" class="px-5">当番処理</v-btn>
+        <v-divider vertical></v-divider>
+        <v-btn text href="/document" class="px-5">書庫</v-btn>
         <v-divider vertical></v-divider>
         <v-btn text href="/logout" class="px-6">ログアウト</v-btn>
         <v-divider vertical></v-divider>

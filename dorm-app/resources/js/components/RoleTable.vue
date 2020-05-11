@@ -17,31 +17,36 @@ export default {
     return {
       users: "",
       userHeaders: [
-         {
-          text: "ID",
+        {
+          text: "役職履歴ID",
           sortable: true,
           value: "id"
         },
-          {
+        {
+          text: "職名",
+          sortable: true,
+          value: ""
+        },
+        {
           text: "名前",
           sortable: true,
           value: "name"
         },
         {
-          text: "メールアドレス",
+          text: "開始日",
+          sortable: true,
+          value: ""
+        },
+        {
+          text: "終了日",
+          sortable: true,
+          value: ""
+        },
+         {
+          text: "特記事項",
           sortable: false,
-          value: "email"
-        },
-         {
-          text: "部屋番号",
-          sortable: true,
           value: ""
-        },
-         {
-          text: "役職",
-          sortable: true,
-          value: ""
-        },
+        }
       ]
     };
   },

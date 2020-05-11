@@ -18,26 +18,24 @@
               <v-data-table :headers="billingHeaders" :items="billItems" :items-per-page="20"></v-data-table>
             </v-card-text>
           </v-card>
+
          
+          <income-table></income-table>
+          <expenditure-table></expenditure-table>
           <v-card outlined>
-            <v-card-title>収入の部</v-card-title>
-            <v-card-text>
-              <v-data-table :headers="billingHeaders" :items="billItems" :items-per-page="20"></v-data-table>
-            </v-card-text>
-          </v-card>
-            <v-card outlined>
-            <v-card-title>支出の部</v-card-title>
-            <v-card-text>
-              <v-data-table :headers="billingHeaders" :items="billItems" :items-per-page="20"></v-data-table>
-            </v-card-text>
-          </v-card>
-            <v-card outlined>
             <v-card-title>資産内訳</v-card-title>
             <v-card-text>
+              滞納者未払金, 他寮未払金
               <v-data-table :headers="billingHeaders" :items="billItems" :items-per-page="20"></v-data-table>
             </v-card-text>
           </v-card>
-            <v-card outlined>
+          <v-card outlined>
+            <v-card-title>会計別残高</v-card-title>
+            <v-card-text>
+              <v-data-table :headers="billingHeaders" :items="billItems" :items-per-page="20"></v-data-table>
+            </v-card-text>
+          </v-card>
+          <v-card outlined>
             <v-card-title>総収支</v-card-title>
             <v-card-text>
               <v-data-table :headers="billingHeaders" :items="billItems" :items-per-page="20"></v-data-table>
