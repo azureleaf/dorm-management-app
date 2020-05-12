@@ -1,5 +1,5 @@
 <template>
-  <v-card outlined>
+  <v-card outlined class="mb-4">
     <v-card-title>総収支</v-card-title>
     <v-card-text>
       <v-data-table :headers="billingHeaders" :items="billItems" :items-per-page="20"></v-data-table>

@@ -1,7 +1,7 @@
 <template>
   <v-content>
     <v-container>
-      <v-card>
+      <v-card elevation="10">
         <v-card-title>決算</v-card-title>
         <v-card-text>
           <p>報告者：201 田中太郎（会計委員）, 202 鈴木太郎（会計委員）, 203 岡本太郎（監査委員）</p>

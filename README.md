@@ -262,6 +262,7 @@ columns except for `id`, `created_at`, `updated_at`
   - name
 - `rooms`
   - number
+  - block
   - comment
 - `room_records`
   - room_id (many2one with `rooms`)

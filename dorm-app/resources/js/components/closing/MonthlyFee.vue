@@ -1,5 +1,5 @@
 <template>
-  <v-card outlined>
+  <v-card outlined class="mb-4">
     <v-card-title>基本金</v-card-title>
     <v-card-subtitle>翌月の各寮生からの徴収予定額です。</v-card-subtitle>
     <v-card-text>

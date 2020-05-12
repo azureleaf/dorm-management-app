@@ -1,8 +1,11 @@
 <template>
   <v-content>
     <v-container>
-      <v-card>
+      <v-card elevation="10">
         <v-card-title>滞納者番付</v-card-title>
+        <v-card-subtitle>寮費滞納は最も重大な規定違反です。債権回収措置が取られる前に速やかに返済してください。</v-card-subtitle>
+        <!-- <v-toolbar flat class="white--text" color="grey darken-3" dense dark>滞納者番付</v-toolbar> -->
+        <!-- <v-toolbar flat color="yellow lighten-5" dense>滞納者番付</v-toolbar> -->
         <v-card-text>
           <v-data-table :headers="userHeaders" :items="users" :items-per-page="20"></v-data-table>
         </v-card-text>

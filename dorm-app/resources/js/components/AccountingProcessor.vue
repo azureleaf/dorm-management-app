@@ -1,7 +1,7 @@
 <template>
   <v-content>
     <v-container>
-      <v-card>
+      <v-card elevation="10">
         <v-card-title>個人会計履歴</v-card-title>
         <v-card-text>
           <v-data-table :headers="billingHeaders" :items="billItems" :items-per-page="20"></v-data-table>

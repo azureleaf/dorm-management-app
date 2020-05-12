@@ -1,8 +1,8 @@
 <template>
   <v-content>
     <v-container>
-      <v-card>
-        <v-card-title>現金出納帳</v-card-title>
+      <v-card elevation="10">
+        <v-card-title>現金出納</v-card-title>
         <v-card-text>
           <v-data-table :headers="billingHeaders" :items="billItems" :items-per-page="20"></v-data-table>
         </v-card-text>

@@ -1,8 +1,8 @@
 <template>
   <v-content>
     <v-container>
-      <v-card>
-        <v-card-title>支出傾向図解</v-card-title>
+      <v-card elevation="10">
+        <v-card-title>支出推移</v-card-title>
         <v-card-text>
         </v-card-text>
       </v-card>

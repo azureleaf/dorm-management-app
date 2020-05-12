@@ -11,19 +11,19 @@
       <v-spacer></v-spacer>
       <v-toolbar-items id="tb-items">
         <v-divider vertical></v-divider>
-        <v-btn text href="/" class="px-5">寮紹介</v-btn>
+        <v-btn text href="/" class="px-4">寮紹介</v-btn>
         <v-divider vertical></v-divider>
-        <v-btn text href="/personalbook" class="px-5">個人会計</v-btn>
+        <v-btn text href="/personalbook" class="px-4">個人会計</v-btn>
         <v-divider vertical></v-divider>
-        <v-btn text href="/dormbook" class="px-5">寮会計</v-btn>
+        <v-btn text href="/dormbook" class="px-4">寮会計</v-btn>
         <v-divider vertical></v-divider>
-        <v-btn text href="/duty" class="px-5">当番</v-btn>
+        <v-btn text href="/duty" class="px-4">申請</v-btn>
         <v-divider vertical></v-divider>
-        <v-btn text href="/userlist" class="px-5">寮生名簿</v-btn>
+        <v-btn text href="/userlist" class="px-4">名簿</v-btn>
         <v-divider vertical></v-divider>
-        <v-btn text href="/document" class="px-5">書庫</v-btn>
+        <v-btn text href="/document" class="px-4">書庫</v-btn>
         <v-divider vertical></v-divider>
-        <v-btn text href="/logout" class="px-6">ログアウト</v-btn>
+        <v-btn text href="/logout" class="px-4">Logout</v-btn>
         <v-divider vertical></v-divider>
       </v-toolbar-items>
     </v-app-bar>

@@ -1,9 +1,9 @@
 <template>
   <v-content>
     <v-container>
-      <v-card>
-        <v-card-title>個人会計履歴</v-card-title>
-        <v-card-subtitle>全寮生の履歴一覧です。個人で絞り込むには、寮生一覧ページから開いてください。</v-card-subtitle>
+      <v-card elevation="10">
+        <v-card-title>支払記録</v-card-title>
+        <v-card-subtitle>各寮生の寮費の請求と支払の履歴一覧です。</v-card-subtitle>
         <v-card-text>
           <v-data-table :headers="billingHeaders" :items="billItems" :items-per-page="20"></v-data-table>
         </v-card-text>
@@ -55,7 +55,7 @@ export default {
         },
 
         {
-          text: "支払残高",
+          text: "債務残高",
           sortable: true,
           value: "balance"
         }

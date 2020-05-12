@@ -1,6 +1,6 @@
 <template>
-  <v-card outlined>
-    <v-card-title>会計別収支表</v-card-title>
+  <v-card outlined class="mb-4">
+    <v-card-title>会計別収支</v-card-title>
     <v-card-text>
       <v-data-table :headers="accountHeaders" :items="accounts" :items-per-page="20"></v-data-table>
     </v-card-text>

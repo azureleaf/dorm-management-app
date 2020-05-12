@@ -1,7 +1,7 @@
 <template>
   <v-content>
     <v-container>
-      <v-card>
+      <v-card elevation="10">
         <v-card-title>役職履歴</v-card-title>
         <v-card-text>
           <v-data-table :headers="userHeaders" :items="users" :items-per-page="20"></v-data-table>

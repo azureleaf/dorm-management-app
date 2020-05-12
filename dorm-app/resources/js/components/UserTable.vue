@@ -1,7 +1,7 @@
 <template>
   <v-content>
     <v-container>
-      <v-card>
+      <v-card elevation="10">
         <v-card-title>寮生一覧</v-card-title>
         <v-card-text>
           <v-data-table :headers="userHeaders" :items="users" :items-per-page="20"></v-data-table>
@@ -31,6 +31,11 @@ export default {
           text: "メールアドレス",
           sortable: false,
           value: "email"
+        },
+         {
+          text: "所属ブロック",
+          sortable: true,
+          value: ""
         },
          {
           text: "部屋番号",

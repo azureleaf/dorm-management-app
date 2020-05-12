@@ -1,5 +1,5 @@
 <template>
-  <v-card outlined>
+  <v-card outlined class="mb-4">
     <v-card-title>資産内訳</v-card-title>
     <v-card-text>
       滞納者未払金, 他寮未払金

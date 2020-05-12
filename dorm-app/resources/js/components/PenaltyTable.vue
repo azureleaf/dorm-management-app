@@ -1,9 +1,9 @@
 <template>
   <v-content>
     <v-container>
-      <v-card>
-        <v-card-title>罰金者番付</v-card-title>
-        <v-card-subtitle>直近三ヶ月に寮生に課せられた罰金です。</v-card-subtitle>
+      <v-card elevation="10">
+        <v-card-title>罰金履歴</v-card-title>
+        <v-card-subtitle>直近三ヶ月の罰金です。</v-card-subtitle>
         <v-card-text>
           <v-data-table :headers="userHeaders" :items="users" :items-per-page="20"></v-data-table>
         </v-card-text>
@@ -29,7 +29,12 @@ export default {
           value: "name"
         },
         {
-          text: "罰金事由",
+          text: "罰金区分",
+          sortable: true,
+          value: ""
+        },
+         {
+          text: "特記事項",
           sortable: true,
           value: ""
         },
@@ -48,14 +53,4 @@ export default {
   }
 };
 </script>
-<style scoped>
-table {
-  border-collapse: collapse;
-}
-
-table,
-th,
-td {
-  border: 1px solid black;
-}
-</style>
+<style scoped></style>
