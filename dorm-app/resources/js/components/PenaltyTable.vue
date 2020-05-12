@@ -2,7 +2,8 @@
   <v-content>
     <v-container>
       <v-card>
-        <v-card-title>最近の罰金加算</v-card-title>
+        <v-card-title>罰金者番付</v-card-title>
+        <v-card-subtitle>直近三ヶ月に寮生に課せられた罰金です。</v-card-subtitle>
         <v-card-text>
           <v-data-table :headers="userHeaders" :items="users" :items-per-page="20"></v-data-table>
         </v-card-text>
@@ -17,31 +18,26 @@ export default {
     return {
       users: "",
       userHeaders: [
-         {
-          text: "ID",
+        {
+          text: "部屋番号",
           sortable: true,
-          value: "id"
+          value: ""
         },
-          {
+        {
           text: "名前",
           sortable: true,
           value: "name"
         },
         {
-          text: "メールアドレス",
-          sortable: false,
-          value: "email"
-        },
-         {
-          text: "部屋番号",
+          text: "罰金事由",
           sortable: true,
           value: ""
         },
-         {
-          text: "役職",
+        {
+          text: "罰金額",
           sortable: true,
           value: ""
-        },
+        }
       ]
     };
   },

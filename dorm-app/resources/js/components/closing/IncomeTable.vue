@@ -24,7 +24,7 @@ export default {
           sortable: true,
           value: "accrued_at"
         },
-         {
+        {
           text: "収入種別",
           sortable: true,
           value: "category"
@@ -44,6 +44,11 @@ export default {
           sortable: true,
           value: "billing"
         },
+        {
+          text: "特記事項",
+          sortable: true,
+          value: "comment"
+        }
       ]
     };
   },

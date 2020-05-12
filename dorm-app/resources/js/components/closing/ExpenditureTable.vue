@@ -39,6 +39,11 @@ export default {
           sortable: true,
           value: "payment"
         },
+        {
+          text: "特記事項",
+          sortable: true,
+          value: "comment"
+        },
       ]
     };
   },

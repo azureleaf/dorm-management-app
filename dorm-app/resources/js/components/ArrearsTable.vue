@@ -17,31 +17,31 @@ export default {
     return {
       users: "",
       userHeaders: [
-         {
-          text: "ID",
+        {
+          text: "部屋番号",
           sortable: true,
-          value: "id"
+          value: ""
         },
-          {
+        {
           text: "名前",
           sortable: true,
           value: "name"
         },
         {
-          text: "メールアドレス",
-          sortable: false,
-          value: "email"
-        },
-         {
-          text: "部屋番号",
+          text: "滞納額",
           sortable: true,
           value: ""
         },
-         {
-          text: "役職",
+        {
+          text: "滞納期間",
           sortable: true,
           value: ""
         },
+        {
+          text: "特記事項",
+          sortable: true,
+          value: ""
+        }
       ]
     };
   },

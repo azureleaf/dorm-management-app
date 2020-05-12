@@ -13,7 +13,10 @@
     <div id="app">
         <v-app>
             <app-header avatarurl="{{ asset('/img/rubber_ducky_material.png') }}"></app-header>
+            <outline></outline>
             <billing-table></billing-table>
+            <arrears-table></arrears-table>
+            <penalty-table></penalty-table>
         </v-app>
     </div>
     <script src="{{ mix('js/app.js') }}"></script>

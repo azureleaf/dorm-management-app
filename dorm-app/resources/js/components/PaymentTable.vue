@@ -2,7 +2,7 @@
   <v-content>
     <v-container>
       <v-card>
-        <v-card-title>寮会計出納帳</v-card-title>
+        <v-card-title>現金出納帳</v-card-title>
         <v-card-text>
           <v-data-table :headers="billingHeaders" :items="billItems" :items-per-page="20"></v-data-table>
         </v-card-text>

@@ -4,43 +4,18 @@
       <v-card>
         <v-card-title>決算</v-card-title>
         <v-card-text>
+          <p>報告者：201 田中太郎（会計委員）, 202 鈴木太郎（会計委員）, 203 岡本太郎（監査委員）</p>
           <v-row>
             <v-col cols="2">
               <v-select :items="periods" v-model="periodSelected" label="決算期"></v-select>
             </v-col>
           </v-row>
-          <v-card outlined>
-            <v-card-title>基本金</v-card-title>
-            <v-card-subtitle>翌月の各寮生からの徴収額です。</v-card-subtitle>
-            <v-card-text>
-              <p>12,345</p>
-              <p>委員会免除分</p>
-              <v-data-table :headers="billingHeaders" :items="billItems" :items-per-page="20"></v-data-table>
-            </v-card-text>
-          </v-card>
-
-         
+          <monthly-fee></monthly-fee>
           <income-table></income-table>
           <expenditure-table></expenditure-table>
-          <v-card outlined>
-            <v-card-title>資産内訳</v-card-title>
-            <v-card-text>
-              滞納者未払金, 他寮未払金
-              <v-data-table :headers="billingHeaders" :items="billItems" :items-per-page="20"></v-data-table>
-            </v-card-text>
-          </v-card>
-          <v-card outlined>
-            <v-card-title>会計別残高</v-card-title>
-            <v-card-text>
-              <v-data-table :headers="billingHeaders" :items="billItems" :items-per-page="20"></v-data-table>
-            </v-card-text>
-          </v-card>
-          <v-card outlined>
-            <v-card-title>総収支</v-card-title>
-            <v-card-text>
-              <v-data-table :headers="billingHeaders" :items="billItems" :items-per-page="20"></v-data-table>
-            </v-card-text>
-          </v-card>
+          <assets-table></assets-table>
+          <account-table></account-table>
+          <total-balance-table></total-balance-table>
         </v-card-text>
       </v-card>
     </v-container>

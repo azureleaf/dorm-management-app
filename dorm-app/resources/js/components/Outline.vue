@@ -2,7 +2,7 @@
   <v-content>
     <v-container>
       <v-card>
-        <v-card-title>Dashboard</v-card-title>
+        <v-card-title>早見表</v-card-title>
         <v-card-text>
           <p>請求予定額</p>
           <p>前回の引き落し結果</p>

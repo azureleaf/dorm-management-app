@@ -7,20 +7,19 @@
       <v-toolbar-title class="ml-5 headline" style="font-family: 'Titillium Web' !important;">
         <span class="font-weight-black">Aobaryo</span>
         <span class="font-weight-light">Cloud</span>
-        
-        </v-toolbar-title>
+      </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items id="tb-items">
         <v-divider vertical></v-divider>
-        <v-btn text href="/" class="px-5">早見表</v-btn>
-        <v-divider vertical></v-divider>
-        <v-btn text href="/userlist" class="px-5">寮生名簿</v-btn>
+        <v-btn text href="/" class="px-5">寮紹介</v-btn>
         <v-divider vertical></v-divider>
         <v-btn text href="/personalbook" class="px-5">個人会計</v-btn>
         <v-divider vertical></v-divider>
         <v-btn text href="/dormbook" class="px-5">寮会計</v-btn>
         <v-divider vertical></v-divider>
-        <v-btn text href="/duty" class="px-5">当番処理</v-btn>
+        <v-btn text href="/duty" class="px-5">当番</v-btn>
+        <v-divider vertical></v-divider>
+        <v-btn text href="/userlist" class="px-5">寮生名簿</v-btn>
         <v-divider vertical></v-divider>
         <v-btn text href="/document" class="px-5">書庫</v-btn>
         <v-divider vertical></v-divider>
