@@ -37,7 +37,7 @@ export default {
     return {};
   },
   mounted: function() {
-    console.log("URL:", this.avatarurl);
+    // console.log("URL:", this.avatarurl);
   }
 };
 </script>

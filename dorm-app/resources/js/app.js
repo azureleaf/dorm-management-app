@@ -40,5 +40,9 @@ files.keys().map(key =>
 
 const app = new Vue({
     el: "#app",
-    vuetify: new Vuetify({})
+    vuetify: new Vuetify({
+        icons: {
+            iconfont: "mdi" // 'mdi' || 'mdiSvg' || 'md' || 'fa' || 'fa4' || 'faSvg'
+        }
+    })
 });
