@@ -30,9 +30,13 @@
                       <v-list-item-title>
                         <v-row align="center">
                           <v-col>前回の引落結果：</v-col>
-                          <v-col>
+                          <v-col align="center" v-if="isDebitSuccess">
                             <v-icon>mdi-check-circle</v-icon>
                             <span class="ml-1">成功</span>
+                          </v-col>
+                          <v-col align="center" v-else>
+                            <v-icon>mdi-close-circle</v-icon>
+                            <span class="ml-1">失敗</span>
                           </v-col>
                         </v-row>
                       </v-list-item-title>
@@ -86,6 +90,7 @@ export default {
   data: function() {
     return {
       users: "",
+      isDebitSuccess: false,
       userHeaders: [
         {
           text: "ID",
