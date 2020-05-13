@@ -2,7 +2,6 @@
   <v-content>
     <v-container>
       <v-card elevation="10">
-        <v-card-title>状態一覧</v-card-title>
         <v-card-text>
           <v-row>
             <v-col cols="12" md="4">
@@ -30,13 +29,15 @@
                       <v-list-item-title>
                         <v-row align="center">
                           <v-col>前回の引落結果：</v-col>
-                          <v-col align="center" v-if="isDebitSuccess">
-                            <v-icon>mdi-check-circle</v-icon>
-                            <span class="ml-1">成功</span>
-                          </v-col>
-                          <v-col align="center" v-else>
-                            <v-icon>mdi-close-circle</v-icon>
-                            <span class="ml-1">失敗</span>
+                          <v-col>
+                            <div v-if="isDebitSuccess" class="px-4">
+                              <v-icon class="vmid">mdi-check-circle</v-icon>
+                              <span class="vmid">成功</span>
+                            </div>
+                            <div v-else class="px-4">
+                              <v-icon class="vmid">mdi-close-circle</v-icon>
+                              <span class="vmid">失敗</span>
+                            </div>
                           </v-col>
                         </v-row>
                       </v-list-item-title>
@@ -90,7 +91,7 @@ export default {
   data: function() {
     return {
       users: "",
-      isDebitSuccess: false,
+      isDebitSuccess: true,
       userHeaders: [
         {
           text: "ID",
@@ -128,4 +129,7 @@ export default {
 };
 </script>
 <style scoped>
+.vmid {
+  vertical-align: middle;
+}
 </style>
