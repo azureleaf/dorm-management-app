@@ -15,7 +15,7 @@
     - [Start to connect Vue to Laravel](#start-to-connect-vue-to-laravel)
     - [Set up Postgres](#set-up-postgres)
     - [Test to seed to Postgres](#test-to-seed-to-postgres)
-    - [Create migration](#create-migration)
+    - [Migration](#migration)
     - [Create Eloquent model](#create-eloquent-model)
     - [Add a column to existing table](#add-a-column-to-existing-table)
     - [Seeding (with factory)](#seeding-with-factory)
@@ -135,6 +135,7 @@ Run these commands in the root directory of the Laravel application.
    DB_USERNAME=postgres
    DB_PASSWORD=mypw1234
    ```
+1. Edit `config/app.php` and set timezone to `Asia/Tokyo`
 3. `sudo su postgres`
 4. `psql`
 5. `CREATE DATABSE my_db`
@@ -165,9 +166,11 @@ Run these commands in the root directory of the Laravel application.
    });
    ```
 
-### Create migration
+### Migration
 
 - `php artisan make:migration create_users_table --create=users`
+- Edit migration file
+- `php artisan migrate`
 
 ### Create Eloquent model
 
@@ -197,7 +200,7 @@ Run these commands in the root directory of the Laravel application.
 5. Run seeder with either of these 2:
    - `php artisan db:seed --class=BillingSeeder` To keep existing data
    - `php artisan db:seed` To keep existing data, run all the seeders
-   - `php artisan migrate:fresh --seed` Drop all the existing data
+   - `php artisan migrate:fresh --seed` Drop all the existing data & newly seed
 
 ### Add vuetify
 
