@@ -35,8 +35,13 @@ Route::get('/dormbook', function () {
     return view('dorm-book');
 });
 
-Route::get('/duty', function () {
-    return view('duty');
+Route::get('/application', function () {
+    return view('application');
+});
+
+
+Route::get('/archive', function () {
+    return view('archive');
 });
 
 Route::get('/users', function () {
