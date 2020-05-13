@@ -2,7 +2,6 @@
   <v-card outlined class="mb-4">
     <v-card-title>資産内訳</v-card-title>
     <v-card-text>
-      滞納者未払金, 他寮未払金
       <v-data-table :headers="assetHeaders" :items="assetItems" :items-per-page="20"></v-data-table>
     </v-card-text>
   </v-card>
@@ -26,11 +25,11 @@ export default {
           amount: 555555
         },
         {
-          name: "寮費滞納者未払金",
+          name: "寮費滞納者未収金",
           amount: 555555
         },
         {
-          name: "三寮会計未徴収金",
+          name: "三寮会計未収金",
           amount: 555555
         },
         {
@@ -43,11 +42,6 @@ export default {
         }
       ],
       assetHeaders: [
-        {
-          text: "資産区分ID",
-          sortable: true,
-          value: "id"
-        },
         {
           text: "資産種別",
           sortable: true,

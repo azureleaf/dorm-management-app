@@ -2,20 +2,38 @@
   <v-content>
     <v-container>
       <v-card elevation="10">
-        <v-card-title>決算</v-card-title>
+        <v-card-title>決算報告</v-card-title>
         <v-card-text>
-          <p>報告者：201 田中太郎（会計委員）, 202 鈴木太郎（会計委員）, 203 岡本太郎（監査委員）</p>
           <v-row>
-            <v-col cols="2">
+            <v-col cols="12" md="2">
               <v-select :items="periods" v-model="periodSelected" label="決算期"></v-select>
             </v-col>
           </v-row>
+          <div>決算日：　2020年5月10日</div>
+          <div class="mt-2">
+            報告者：
+            <v-chip class="ma-1" color="grey" text-color="white" label>
+              <v-avatar left>
+                <v-icon>mdi-account-circle</v-icon>
+              </v-avatar>201 田中（会計）
+            </v-chip>
+            <v-chip class="ma-1" color="grey" text-color="white" label>
+              <v-avatar left>
+                <v-icon>mdi-account-circle</v-icon>
+              </v-avatar>202 鈴木（会計）
+            </v-chip>
+            <v-chip class="ma-1" color="grey" text-color="white" label>
+              <v-avatar left>
+                <v-icon>mdi-account-circle</v-icon>
+              </v-avatar>203 岡本（監査）
+            </v-chip>
+          </div>
           <monthly-fee></monthly-fee>
           <income-table></income-table>
           <expenditure-table></expenditure-table>
           <assets-table></assets-table>
           <account-table></account-table>
-          <total-balance-table></total-balance-table>
+          <!-- <total-balance-table></total-balance-table> -->
         </v-card-text>
       </v-card>
     </v-container>
@@ -26,7 +44,7 @@
 export default {
   data: function() {
     return {
-      periods: ["2020-05", "2020-06", "2020-07"],
+      periods: ["2020年05月期", "2020年06月期", "2020年07月期"],
       billItems: [],
       billingHeaders: [
         {

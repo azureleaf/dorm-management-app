@@ -15,11 +15,6 @@ export default {
       billItems: [],
       billingHeaders: [
         {
-          text: "寮会計処理ID",
-          sortable: true,
-          value: "id"
-        },
-        {
           text: "発生日",
           sortable: true,
           value: "accrued_at"

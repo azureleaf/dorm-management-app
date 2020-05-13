@@ -15,22 +15,17 @@ export default {
       billItems: [],
       billingHeaders: [
         {
-          text: "寮会計処理ID",
-          sortable: true,
-          value: "id"
-        },
-        {
           text: "発生日",
           sortable: true,
           value: "accrued_at"
         },
         {
-          text: "収入種別",
+          text: "収入科目",
           sortable: true,
           value: "category"
         },
         {
-          text: "会計区分",
+          text: "会計",
           sortable: true,
           value: ""
         },
