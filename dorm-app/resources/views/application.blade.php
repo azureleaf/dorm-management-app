@@ -15,6 +15,7 @@
             <app-header avatarurl="{{ asset('/img/rubber_ducky_material.png') }}"></app-header>
             <schedule-table></schedule-table>
             <scheduler></scheduler>
+            <trade-duty></trade-duty>
             <reporting></reporting>
         </v-app>
     </div>
