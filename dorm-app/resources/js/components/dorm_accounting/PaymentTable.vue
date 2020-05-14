@@ -20,7 +20,7 @@
                     <v-container>
                       <v-row>
                         <v-col>
-                          <v-radio-group v-model="isExpenditure">
+                          <v-radio-group v-model="isExpenditure" row>
                             <v-radio
                               v-for="isEx in [false, true]"
                               :key="isEx"
@@ -32,7 +32,12 @@
                       </v-row>
                       <v-row>
                         <v-col cols="12" md="6">
-                          <v-select :items="paymentCats" v-model="paymentCatSelected" label="科目 *"></v-select>
+                          <v-select
+                            :items="paymentCats"
+                            item-text="name"
+                            v-model="paymentCatSelected"
+                            label="科目 *"
+                          ></v-select>
                         </v-col>
                       </v-row>
                       <v-row>
@@ -45,7 +50,7 @@
                       </v-row>
                       <v-row>
                         <v-col cols="12" md="6">
-                          <v-text-field label="摘要 *" v-model="abstract" required></v-text-field>
+                          <v-text-field label="摘要 *" v-model="abstract" :disabled="isPaymentMonthly" required></v-text-field>
                         </v-col>
                         <v-col cols="12" md="6">
                           <v-text-field label="金額 *" v-model="amount" required></v-text-field>
@@ -61,7 +66,7 @@
                   <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="blue darken-1" text @click="isDialogOpen = false">Cancel</v-btn>
-                    <v-btn color="blue darken-1" text @click="isDialogOpen = false">Save</v-btn>
+                    <v-btn color="blue darken-1" text @click="saveInput">Save</v-btn>
                   </v-card-actions>
                 </v-card>
               </v-dialog>
@@ -83,23 +88,26 @@ export default {
   data: function() {
     return {
       comment: "",
+      abstractEdited: "",
       amount: "",
       isExpenditure: true,
       monthSelected: new Date().getMonth() + 1 + "月分",
       yearSelected: new Date().getFullYear() + "年",
       paymentCats: [
-        "寄宿料",
-        "電気料金",
-        "水道料金",
-        "ガス料金",
-        "議長手当",
-        "灯油料金",
-        "新聞代",
-        "新聞料金",
-        "重油代",
-        "コンパ代",
-        "寮費返還",
-        "雑支出"
+        { name: "寄宿料", isMonthly: true },
+        { name: "電気料金", isMonthly: true },
+        { name: "水道料金", isMonthly: true },
+        { name: "ガス料金", isMonthly: true },
+        { name: "議長手当", isMonthly: true },
+        { name: "灯油料金", isMonthly: true },
+        { name: "銀行手数料", isMonthly: true },
+        { name: "新聞料金", isMonthly: true },
+        { name: "ネット管理代", isMonthly: true },
+        { name: "共通棟重油代", isMonthly: true },
+        { name: "共通棟ガス代", isMonthly: true },
+        { name: "コンパ代", isMonthly: false },
+        { name: "寮費返還", isMonthly: false },
+        { name: "雑支出", isMonthly: false }
       ],
       paymentCatSelected: "",
       isDialogOpen: false,
@@ -145,6 +153,18 @@ export default {
       ]
     };
   },
+  methods: {
+    saveInput() {
+      this.initForms();
+      this.isDialogOpen = false;
+    },
+    initForms() {
+      this.comment = "";
+      this.abstractEdited = "";
+      this.amount = "";
+      this.paymentCatSelected = "";
+    }
+  },
   computed: {
     months() {
       // return list of formatted 12 months
@@ -158,9 +178,35 @@ export default {
         return `${new Date().getFullYear() - 2 + num}年`;
       });
     },
-    abstract() {
-      // this string works as the default text for the text field
-      return this.yearSelected + this.monthSelected + this.paymentCatSelected;
+    isPaymentMonthly() {
+      // tell if the payment category selected is monthly or not
+
+      // when the category isn't selected yet
+      if (!this.paymentCatSelected) return true;
+
+      // get the index of the selected category in the original categories array
+      const catIndex = this.paymentCats
+        .map(cat => cat.name)
+        .indexOf(this.paymentCatSelected);
+
+      return this.paymentCats[catIndex].isMonthly;
+    },
+    abstract: {
+      // default text for the "abstract" text field
+      get: function() {
+        if (this.isPaymentMonthly) {
+          // for montly payments, fill with default string
+          return (
+            this.yearSelected + this.monthSelected + this.paymentCatSelected
+          );
+        } else {
+          // for irregular payments, leave the field blank and let the user fill
+          return "";
+        }
+      },
+      set: function(newVal) {
+        this.abstractEdited = newVal;
+      }
     }
   },
   mounted: async function() {
