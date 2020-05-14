@@ -4,7 +4,74 @@
       <v-card elevation="10">
         <v-card-title>現金出納</v-card-title>
         <v-card-text>
-          <v-data-table :headers="billingHeaders" :items="billItems" :items-per-page="20"></v-data-table>
+          <v-row>
+            <v-col>
+              <v-dialog v-model="isDialogOpen" persistent max-width="600px">
+                <template v-slot:activator="{ on }">
+                  <v-btn color="error" depressed right absolute dark v-on="on">
+                    <v-icon class="mr-1">mdi-security</v-icon>現金出納登録
+                  </v-btn>
+                </template>
+                <v-card>
+                  <v-card-title>
+                    <span class="headline">現金の出入りを登録します</span>
+                  </v-card-title>
+                  <v-card-text>
+                    <v-container>
+                      <v-row>
+                        <v-col>
+                          <v-radio-group v-model="isExpenditure">
+                            <v-radio
+                              v-for="isEx in [false, true]"
+                              :key="isEx"
+                              :label="isEx ? '支出' : '収入'"
+                              :value="isEx"
+                            ></v-radio>
+                          </v-radio-group>
+                        </v-col>
+                      </v-row>
+                      <v-row>
+                        <v-col cols="12" md="6">
+                          <v-select :items="paymentCats" v-model="paymentCatSelected" label="科目 *"></v-select>
+                        </v-col>
+                      </v-row>
+                      <v-row>
+                        <v-col cols="12" md="6">
+                          <v-select :items="years" v-model="yearSelected" label="年 *"></v-select>
+                        </v-col>
+                        <v-col cols="12" md="6">
+                          <v-select :items="months" v-model="monthSelected" label="月 *"></v-select>
+                        </v-col>
+                      </v-row>
+                      <v-row>
+                        <v-col cols="12" md="6">
+                          <v-text-field label="摘要 *" v-model="abstract" required></v-text-field>
+                        </v-col>
+                        <v-col cols="12" md="6">
+                          <v-text-field label="金額 *" v-model="amount" required></v-text-field>
+                        </v-col>
+                      </v-row>
+                      <v-row>
+                        <v-col cols="12">
+                          <v-text-field label="特記事項" v-model="comment"></v-text-field>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue darken-1" text @click="isDialogOpen = false">Cancel</v-btn>
+                    <v-btn color="blue darken-1" text @click="isDialogOpen = false">Save</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-data-table :headers="billingHeaders" :items="billItems" :items-per-page="20"></v-data-table>
+            </v-col>
+          </v-row>
         </v-card-text>
       </v-card>
     </v-container>
@@ -15,6 +82,27 @@
 export default {
   data: function() {
     return {
+      comment: "",
+      amount: "",
+      isExpenditure: true,
+      monthSelected: new Date().getMonth() + 1 + "月分",
+      yearSelected: new Date().getFullYear() + "年",
+      paymentCats: [
+        "寄宿料",
+        "電気料金",
+        "水道料金",
+        "ガス料金",
+        "議長手当",
+        "灯油料金",
+        "新聞代",
+        "新聞料金",
+        "重油代",
+        "コンパ代",
+        "寮費返還",
+        "雑支出"
+      ],
+      paymentCatSelected: "",
+      isDialogOpen: false,
       billItems: [],
       billingHeaders: [
         {
@@ -57,9 +145,25 @@ export default {
       ]
     };
   },
+  computed: {
+    months() {
+      // return list of formatted 12 months
+      return [...Array(12).keys()].map(num => {
+        return `${num + 1}月分`;
+      });
+    },
+    years() {
+      // when current year is 2020, return 2018, 2019, 2020
+      return [...Array(3).keys()].map(num => {
+        return `${new Date().getFullYear() - 2 + num}年`;
+      });
+    },
+    abstract() {
+      // this string works as the default text for the text field
+      return this.yearSelected + this.monthSelected + this.paymentCatSelected;
+    }
+  },
   mounted: async function() {
-    console.log("Component mounted.");
-    // You don't have to require axios; it's already loaded
     const res = await axios.get("./billings");
     this.billItems = res.data;
   }
