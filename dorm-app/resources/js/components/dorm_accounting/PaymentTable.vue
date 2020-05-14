@@ -39,18 +39,21 @@
                             label="科目 *"
                           ></v-select>
                         </v-col>
-                      </v-row>
-                      <v-row>
-                        <v-col cols="12" md="6">
+                        <v-col cols="12" md="3">
                           <v-select :items="years" v-model="yearSelected" label="年 *"></v-select>
                         </v-col>
-                        <v-col cols="12" md="6">
+                        <v-col cols="12" md="3">
                           <v-select :items="months" v-model="monthSelected" label="月 *"></v-select>
                         </v-col>
                       </v-row>
                       <v-row>
                         <v-col cols="12" md="6">
-                          <v-text-field label="摘要 *" v-model="abstract" :disabled="isPaymentMonthly" required></v-text-field>
+                          <v-text-field
+                            label="摘要 *"
+                            v-model="abstract"
+                            :disabled="isPaymentMonthly"
+                            required
+                          ></v-text-field>
                         </v-col>
                         <v-col cols="12" md="6">
                           <v-text-field label="金額 *" v-model="amount" required></v-text-field>
@@ -70,6 +73,10 @@
                   </v-card-actions>
                 </v-card>
               </v-dialog>
+              <v-snackbar v-model="isSnackbarOpen">
+                入出金を登録しました
+                <v-btn color="pink" text @click="isSnackbarOpen = false">Close</v-btn>
+              </v-snackbar>
             </v-col>
           </v-row>
           <v-row>
@@ -87,6 +94,7 @@
 export default {
   data: function() {
     return {
+      isSnackbarOpen: false,
       comment: "",
       abstractEdited: "",
       amount: "",
@@ -155,6 +163,7 @@ export default {
   },
   methods: {
     saveInput() {
+      this.isSnackbarOpen = true;
       this.initForms();
       this.isDialogOpen = false;
     },
