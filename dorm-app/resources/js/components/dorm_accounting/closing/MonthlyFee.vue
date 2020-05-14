@@ -4,9 +4,9 @@
     <v-card-subtitle>翌月の各寮生からの徴収予定額です。</v-card-subtitle>
     <v-card-text>
       <v-card class="pa-3 formula" flat outlined>
-        <v-chip outlined label large>一般会計支出： 200000</v-chip>
+        <v-chip outlined label large color="green darken-2">一般会計支出： 200000</v-chip>
         <span class="display-1">÷</span>
-        <v-chip outlined label large>負担人数： 45.2</v-chip>
+        <v-chip outlined label large color="green darken-2">負担人数： 45.2</v-chip>
         <span class="display-1">=</span>
         <v-chip outlined label large color="red">寮費（端数切り上げ）： 12345</v-chip>
       </v-card>

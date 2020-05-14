@@ -17,11 +17,11 @@
         <v-divider vertical></v-divider>
         <v-btn text href="/dormbook" class="px-4">寮会計</v-btn>
         <v-divider vertical></v-divider>
-        <v-btn text href="/application" class="px-4">申請処理</v-btn>
+        <v-btn text href="/application" class="px-4">当番日程</v-btn>
         <v-divider vertical></v-divider>
         <v-btn text href="/userlist" class="px-4">寮生名簿</v-btn>
         <v-divider vertical></v-divider>
-        <v-btn text href="/archive" class="px-4">書庫</v-btn>
+        <v-btn text href="/archive" class="px-4">寮文書</v-btn>
         <v-divider vertical></v-divider>
         <v-btn text href="/logout" class="px-4">Logout</v-btn>
         <v-divider vertical></v-divider>
