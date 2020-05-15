@@ -14,7 +14,7 @@
           </v-row>
           <v-row>
             <v-col cols="12" md="2">
-              <v-select :items="formTypes" v-model="formTypeSelected" label="申請内容"></v-select>
+              <v-select :items="formTypes" v-model="formTypeSelected" label="受付中の日程希望調査"></v-select>
             </v-col>
           </v-row>
           <v-card outlined>

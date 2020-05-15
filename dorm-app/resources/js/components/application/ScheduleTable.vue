@@ -2,16 +2,19 @@
   <v-content>
     <v-container>
       <v-card elevation="10">
-        <v-card-title>当番日程表</v-card-title>
+        <v-card-title>報告提出</v-card-title>
+        <v-card-subtitle>「当番実施報告」「当番交代報告」「寮生大会委任状」「クリーンデー欠席届」を出すには、下のカレンダーから該当箇所をクリックしてください。</v-card-subtitle>
         <v-card-text>
-          <v-col>
-            <v-btn color="error" depressed absolute right>
-              <v-icon class="mr-1">mdi-security</v-icon>日程編集
-            </v-btn>
-          </v-col>
+          <v-row class="pb-5 mb-2">
+            <v-col>
+              <v-btn color="error" depressed absolute right>
+                <v-icon class="mr-1">mdi-security</v-icon>寮行事日程編集
+              </v-btn>
+            </v-col>
+          </v-row>
           <v-row>
-            <v-col cols="12" md="2">
-              <v-select :items="formTypes" v-model="formTypeSelected" label="日程の種類"></v-select>
+            <v-col cols="12" md="4">
+              <v-select :items="formTypes" v-model="formTypeSelected" label="表示する日程" outlined></v-select>
             </v-col>
           </v-row>
           <v-sheet tile height="54" color="grey lighten-3" class="d-flex">

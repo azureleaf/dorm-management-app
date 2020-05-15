@@ -12,14 +12,9 @@
               </v-btn>
             </v-col>
           </v-row>
-          <v-row>
+          <v-row v-if="!isOutsidePeriod">
             <v-col>
-              状態：
-              <span v-if="isSubmitted">提出済</span>
-              <span v-else-if="isOverLimit">提出不可（提出可能回数を超えています）</span>
-              <span v-else-if="isOutsidePeriod">提出不可（次回の寮生大会日程が公示されていません）</span>
-              <span v-else>提出可</span>
-              <v-btn v-if="isSubmitted" color="primary" outlined @click="cancelAbsence()">取り消す</v-btn>
+              次回寮生大会：　年月日を欠席し、出席する寮生に私の議決権を移譲します。
             </v-col>
           </v-row>
           <v-row>
@@ -48,7 +43,12 @@
                 color="primary"
                 :disabled="!isHonestyConfirmed || isSubmitted || isOutsidePeriod || isOverLimit"
                 @click="isSubmitted = true"
+                class="mr-2"
               >提出</v-btn>
+              <span v-if="isOutsidePeriod">提出不可（次回の寮生大会日程が公示されていません）</span>
+              <span v-else-if="isSubmitted">提出済</span>
+              <span v-else-if="isOverLimit">提出不可（提出可能回数を超えています）</span>
+              <v-btn v-if="isSubmitted" color="primary" outlined @click="cancelAbsence()">取り消す</v-btn>
             </v-col>
           </v-row>
         </v-card-text>
@@ -61,8 +61,8 @@
 export default {
   data: function() {
     return {
-      isOutsidePeriod: false,
-      isOverLimit: true,
+      isOutsidePeriod: true,
+      isOverLimit: false,
       isSubmitted: false,
       isHonestyConfirmed: false,
       absenceReason: ""
