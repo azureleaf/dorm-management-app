@@ -2,7 +2,8 @@
   <v-content>
     <v-container>
       <v-card elevation="10">
-        <v-card-title>居室状態</v-card-title>
+        <v-card-title>行事記録</v-card-title>
+        <v-card-subtitle>各寮生の当番や寮生大会出席の履歴です。</v-card-subtitle>
         <v-card-text>
           <v-data-table :headers="userHeaders" :items="users" :items-per-page="20"></v-data-table>
         </v-card-text>
@@ -15,42 +16,35 @@
 export default {
   data: function() {
     return {
-      users: "",
+      users: [],
       userHeaders: [
         {
-          text: "ID",
-          sortable: true,
-          value: "id"
-        },
-        {
-          text: "部屋番号",
+          text: "日付",
           sortable: true,
           value: ""
         },
         {
-          text: "居室状態",
+          text: "行事名",
           sortable: true,
           value: ""
-        }
+        },
+        {
+          text: "実施結果（欠席届受理、罰金、成功）",
+          sortable: true,
+          value: "result"
+        },
+        {
+          text: "特記事項",
+          sortable: true,
+          value: ""
+        },
       ]
     };
   },
   mounted: async function() {
-    console.log("Component mountead.");
-    // You don't have to require axios; it's already loaded
     const res = await axios.get("./users");
     this.users = res.data;
   }
 };
 </script>
-<style scoped>
-table {
-  border-collapse: collapse;
-}
-
-table,
-th,
-td {
-  border: 1px solid black;
-}
-</style>
+<style scoped></style>

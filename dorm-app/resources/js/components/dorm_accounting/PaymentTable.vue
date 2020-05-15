@@ -122,9 +122,9 @@ export default {
       billItems: [],
       billingHeaders: [
         {
-          text: "処理登録日",
+          text: "発生日",
           sortable: true,
-          value: "created_at"
+          value: "accrued_at"
         },
         {
           text: "決算期",

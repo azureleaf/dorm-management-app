@@ -13,11 +13,11 @@
         <v-divider vertical></v-divider>
         <v-btn text href="/" class="px-4">寮紹介</v-btn>
         <v-divider vertical></v-divider>
-        <v-btn text href="/personalbook" class="px-4">個人会計</v-btn>
+        <v-btn text href="/personalbook" class="px-4">個人記録</v-btn>
         <v-divider vertical></v-divider>
         <v-btn text href="/dormbook" class="px-4">寮会計</v-btn>
         <v-divider vertical></v-divider>
-        <v-btn text href="/application" class="px-4">当番日程</v-btn>
+        <v-btn text href="/application" class="px-4">日程管理</v-btn>
         <v-divider vertical></v-divider>
         <v-btn text href="/userlist" class="px-4">寮生名簿</v-btn>
         <v-divider vertical></v-divider>

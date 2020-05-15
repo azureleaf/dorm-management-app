@@ -16,6 +16,7 @@
             <user-table></user-table>
             <role-table></role-table>
             <room-table></room-table>
+            <room-history-table></room-history-table>
         </v-app>
     </div>
     <script src="{{ mix('js/app.js') }}"></script>

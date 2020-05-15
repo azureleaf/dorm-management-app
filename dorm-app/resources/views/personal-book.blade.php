@@ -17,6 +17,7 @@
             <billing-table></billing-table>
             <arrears-table></arrears-table>
             <penalty-table></penalty-table>
+            <event-table></event-table>
         </v-app>
     </div>
     <script src="{{ mix('js/app.js') }}"></script>

@@ -4,12 +4,42 @@
       <v-card elevation="10">
         <v-card-title>決算報告</v-card-title>
         <v-card-text>
+          <v-row class="pb-5">
+            <v-col>
+              <v-btn color="error" depressed absolute right>
+                <v-icon class="mr-1">mdi-security</v-icon>決算報告の新規作成
+              </v-btn>
+            </v-col>
+          </v-row>
+           <v-row class="pb-5">
+            <v-col>
+              <v-btn color="error" depressed absolute right>
+                <v-icon class="mr-1">mdi-security</v-icon>決算を確定して寮費請求
+              </v-btn>
+            </v-col>
+          </v-row>
+           <v-row class="pb-5">
+            <v-col>
+              <v-btn color="error" depressed absolute right>
+                <v-icon class="mr-1">mdi-security</v-icon>引落依頼CSVデータ作成
+              </v-btn>
+            </v-col>
+          </v-row>
+           <v-row class="pb-5">
+            <v-col>
+              <v-btn color="error" depressed absolute right>
+                <v-icon class="mr-1">mdi-security</v-icon>引落結果の登録
+              </v-btn>
+            </v-col>
+          </v-row>
+          
           <v-row>
             <v-col cols="12" md="2">
               <v-select :items="periods" v-model="periodSelected" label="決算期"></v-select>
             </v-col>
           </v-row>
-          <div>決算日：　2020年5月10日</div>
+
+          <div>決算日： 2020年5月10日</div>
           <div class="mt-2">
             報告者：
             <v-chip class="ma-1" color="grey" text-color="white" label>

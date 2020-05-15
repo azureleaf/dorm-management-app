@@ -2,7 +2,7 @@
   <v-content>
     <v-container>
       <v-card elevation="10">
-        <v-card-title>手順書</v-card-title>
+        <v-card-title>文書</v-card-title>
         <v-card-text>
           <v-data-table :headers="manualsHeaders" :items="manuals" :items-per-page="20"></v-data-table>
         </v-card-text>
@@ -59,6 +59,12 @@ export default {
           size: "",
         },
         {
+          title: "情報システムマニュアル",
+          last_author: "",
+          updated_at: "",
+          size: "",
+        },
+        {
           title: "寮則",
           last_author: "",
           updated_at: "",
@@ -88,6 +94,11 @@ export default {
           text: "題名",
           sortable: true,
           value: "title"
+        },
+        {
+          text: "分類",
+          sortable: true,
+          value: "cat"
         },
         {
           text: "更新日時",

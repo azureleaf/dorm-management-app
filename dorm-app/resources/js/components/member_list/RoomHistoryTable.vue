@@ -1,8 +1,8 @@
 <template>
   <v-content>
     <v-container>
-      <v-card elevation="10">
-        <v-card-title>居室状態</v-card-title>
+      <v-card elevation="10" color="red lighten-4">
+        <v-card-title>居室履歴</v-card-title>
         <v-card-text>
           <v-data-table :headers="userHeaders" :items="users" :items-per-page="20"></v-data-table>
         </v-card-text>
@@ -28,10 +28,21 @@ export default {
           value: ""
         },
         {
-          text: "居室状態",
+          text: "居住者",
+          sortable: true,
+          value: "name"
+        },
+
+        {
+          text: "更新事由",
           sortable: true,
           value: ""
-        }
+        },
+        {
+          text: "更新日",
+          sortable: true,
+          value: ""
+        },
       ]
     };
   },
