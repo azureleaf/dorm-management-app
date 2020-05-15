@@ -1,10 +1,24 @@
 <template>
   <v-content>
     <v-container>
-      <v-card elevation="10" color="red lighten-4">
+      <v-card elevation="10">
         <v-card-title>居室履歴</v-card-title>
         <v-card-text>
-          <v-data-table :headers="roomHeaders" :items="rooms" :items-per-page="10"></v-data-table>
+          <v-text-field
+            v-model="searchKeyword"
+            append-icon="mdi-magnify"
+            label="Search"
+            single-line
+            outlined
+            dense
+            hide-details
+          ></v-text-field>
+          <v-data-table
+            :headers="roomHeaders"
+            :items="rooms"
+            :items-per-page="10"
+            :search="searchKeyword"
+          ></v-data-table>
         </v-card-text>
       </v-card>
     </v-container>
@@ -15,6 +29,7 @@
 export default {
   data: function() {
     return {
+      searchKeyword: "",
       rooms: [],
       roomHeaders: [
         {
@@ -42,7 +57,7 @@ export default {
           text: "更新日",
           sortable: true,
           value: "created_at"
-        },
+        }
       ]
     };
   },
