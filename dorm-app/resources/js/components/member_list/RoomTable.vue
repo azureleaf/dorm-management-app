@@ -15,7 +15,7 @@
 export default {
   data: function() {
     return {
-      users: "",
+      users: [],
       userHeaders: [
         {
           text: "ID",
@@ -36,8 +36,6 @@ export default {
     };
   },
   mounted: async function() {
-    console.log("Component mountead.");
-    // You don't have to require axios; it's already loaded
     const res = await axios.get("./users");
     this.users = res.data;
   }

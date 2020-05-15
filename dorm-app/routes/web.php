@@ -16,7 +16,9 @@ use Illuminate\Support\Facades\Route;
 
 use App\User;
 use App\Billing;
+use App\Room;
 
+// routes for view
 Route::get('/', function () {
     return view('welcome');
 });
@@ -44,6 +46,8 @@ Route::get('/archive', function () {
     return view('archive');
 });
 
+
+// routes for axios
 Route::get('/users', function () {
     return User::all();
 });
@@ -52,8 +56,12 @@ Route::get('/billings', function () {
     return Billing::all();
 });
 
+Route::get('/rooms', function () {
+    return Room::all();
+});
 
 
+// routes for auth
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

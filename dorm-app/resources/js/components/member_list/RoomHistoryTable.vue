@@ -4,7 +4,7 @@
       <v-card elevation="10" color="red lighten-4">
         <v-card-title>居室履歴</v-card-title>
         <v-card-text>
-          <v-data-table :headers="userHeaders" :items="users" :items-per-page="20"></v-data-table>
+          <v-data-table :headers="roomHeaders" :items="rooms" :items-per-page="10"></v-data-table>
         </v-card-text>
       </v-card>
     </v-container>
@@ -15,42 +15,40 @@
 export default {
   data: function() {
     return {
-      users: "",
-      userHeaders: [
+      rooms: [],
+      roomHeaders: [
         {
-          text: "ID",
+          text: "居室履歴ID",
           sortable: true,
           value: "id"
         },
         {
           text: "部屋番号",
           sortable: true,
-          value: ""
+          value: "room"
         },
         {
           text: "居住者",
           sortable: true,
-          value: "name"
+          value: "user_id"
         },
 
         {
           text: "更新事由",
           sortable: true,
-          value: ""
+          value: "update_type"
         },
         {
           text: "更新日",
           sortable: true,
-          value: ""
+          value: "created_at"
         },
       ]
     };
   },
   mounted: async function() {
-    console.log("Component mountead.");
-    // You don't have to require axios; it's already loaded
-    const res = await axios.get("./users");
-    this.users = res.data;
+    const res = await axios.get("./rooms");
+    this.rooms = res.data;
   }
 };
 </script>
