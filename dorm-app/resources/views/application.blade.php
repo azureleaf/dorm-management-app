@@ -17,6 +17,7 @@
             <scheduler></scheduler>
             <trade-duty></trade-duty>
             <reporting></reporting>
+            <absence-form></absence-form>
         </v-app>
     </div>
     <script src="{{ mix('js/app.js') }}"></script>
