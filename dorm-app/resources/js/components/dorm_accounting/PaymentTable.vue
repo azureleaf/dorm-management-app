@@ -107,8 +107,6 @@ export default {
     return {
       account: "一般会計",
       accounts: ["一般会計", "コンパ積立金", "罰金会計"],
-      form: "現金",
-      forms: ["現金", "七十七銀行口座", "ゆうちょ銀行口座"],
       picker: new Date().toISOString().substr(0, 10),
       isSnackbarOpen: false,
       comment: "",

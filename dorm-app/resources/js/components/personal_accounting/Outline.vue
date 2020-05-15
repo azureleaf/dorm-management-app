@@ -21,7 +21,10 @@
                           </v-col>
                         </v-row>
                       </v-list-item-title>
-                      <v-list-item-subtitle>2020-03-01</v-list-item-subtitle>
+                      <v-list-item-subtitle>
+                        2020-03-01
+                        <br />2020年2月分 + 2020年3月分
+                      </v-list-item-subtitle>
                     </v-list-item-content>
                   </v-list-item>
                   <v-list-item two-line>
@@ -41,7 +44,10 @@
                           </v-col>
                         </v-row>
                       </v-list-item-title>
-                      <v-list-item-subtitle>2020-02-10</v-list-item-subtitle>
+                      <v-list-item-subtitle>
+                        2020-02-10
+                        <br />2020年1月分
+                      </v-list-item-subtitle>
                     </v-list-item-content>
                   </v-list-item>
                 </v-card-text>
