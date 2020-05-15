@@ -2,6 +2,13 @@
   <v-card outlined class="mb-4">
     <v-card-title>資産内訳</v-card-title>
     <v-card-text>
+      <v-row class="pb-5">
+        <v-col>
+          <v-btn color="error" depressed absolute right>
+            <v-icon class="mr-1">mdi-security</v-icon>資産変動の登録
+          </v-btn>
+        </v-col>
+      </v-row>
       <v-data-table :headers="assetHeaders" :items="assetItems" :items-per-page="20"></v-data-table>
     </v-card-text>
   </v-card>
@@ -33,10 +40,6 @@ export default {
           amount: 555555
         },
         {
-          name: "三寮会計未払金",
-          amount: -12355
-        },
-         {
           name: "切手",
           amount: 500
         }
@@ -48,7 +51,12 @@ export default {
           value: "name"
         },
         {
-          text: "金額",
+          text: "期首残高",
+          sortable: true,
+          value: "amount"
+        },
+        {
+          text: "期末残高",
           sortable: true,
           value: "amount"
         }
@@ -61,8 +69,6 @@ export default {
     }
   },
   mounted: async function() {
-    console.log("Component mounted.");
-    // You don't have to require axios; it's already loaded
     const res = await axios.get("./billings");
     this.billItems = res.data;
   }

@@ -3,6 +3,13 @@
     <v-card-title>基本金</v-card-title>
     <v-card-subtitle>翌月の各寮生からの徴収予定額です。</v-card-subtitle>
     <v-card-text>
+      <v-row class="pb-5 mb-2">
+        <v-col>
+          <v-btn color="error" depressed absolute right>
+            <v-icon class="mr-1">mdi-security</v-icon>負担人数の編集
+          </v-btn>
+        </v-col>
+      </v-row>
       <v-card class="pa-3 formula" flat outlined>
         <v-chip outlined label large color="green darken-2">一般会計支出： 200000</v-chip>
         <span class="display-1">÷</span>
@@ -129,8 +136,6 @@ export default {
     }
   },
   mounted: async function() {
-    console.log("Component mounted.");
-    // You don't have to require axios; it's already loaded
     const res = await axios.get("./billings");
     this.billItems = res.data;
   }

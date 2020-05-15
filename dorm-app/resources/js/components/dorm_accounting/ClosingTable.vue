@@ -11,28 +11,20 @@
               </v-btn>
             </v-col>
           </v-row>
-           <v-row class="pb-5">
+          <v-row class="pb-5">
             <v-col>
               <v-btn color="error" depressed absolute right>
                 <v-icon class="mr-1">mdi-security</v-icon>決算を確定して寮費請求
               </v-btn>
             </v-col>
           </v-row>
-           <v-row class="pb-5">
+          <v-row class="pb-5">
             <v-col>
               <v-btn color="error" depressed absolute right>
                 <v-icon class="mr-1">mdi-security</v-icon>引落依頼CSVデータ作成
               </v-btn>
             </v-col>
           </v-row>
-           <v-row class="pb-5">
-            <v-col>
-              <v-btn color="error" depressed absolute right>
-                <v-icon class="mr-1">mdi-security</v-icon>引落結果の登録
-              </v-btn>
-            </v-col>
-          </v-row>
-          
           <v-row>
             <v-col cols="12" md="2">
               <v-select :items="periods" v-model="periodSelected" label="決算期"></v-select>
@@ -40,6 +32,7 @@
           </v-row>
 
           <div>決算日： 2020年5月10日</div>
+          <div>寮生大会承認日： 承認待ち</div>
           <div class="mt-2">
             報告者：
             <v-chip class="ma-1" color="grey" text-color="white" label>
@@ -122,8 +115,6 @@ export default {
     }
   },
   mounted: async function() {
-    console.log("Component mounted.");
-    // You don't have to require axios; it's already loaded
     const res = await axios.get("./billings");
     this.billItems = res.data;
   }

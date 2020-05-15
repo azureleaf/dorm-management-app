@@ -2,6 +2,13 @@
   <v-card outlined class="mb-4">
     <v-card-title>会計別収支</v-card-title>
     <v-card-text>
+      <v-row class="pb-5">
+        <v-col>
+          <v-btn color="error" depressed absolute right>
+            <v-icon class="mr-1">mdi-security</v-icon>会計別収支の登録
+          </v-btn>
+        </v-col>
+      </v-row>
       <v-data-table :headers="accountHeaders" :items="accounts" :items-per-page="20"></v-data-table>
     </v-card-text>
   </v-card>
@@ -39,12 +46,21 @@ export default {
           start_at: "2020-01",
           end_at: "2021-12"
         },
-         {
-          name: "合計額（D）",
+        {
+          name: "罰金会計",
           beginningBalance: "12345",
           income: "1000",
           expenditure: "5000",
           finalBalance: "8345",
+          start_at: "",
+          end_at: ""
+        },
+        {
+          name: "合計額（D）",
+          beginningBalance: "12345",
+          income: "1000",
+          expenditure: "5000",
+          finalBalance: "8345"
         }
       ],
       accountHeaders: [
@@ -53,7 +69,7 @@ export default {
           sortable: true,
           value: "name"
         },
-         {
+        {
           text: "開始年月",
           sortable: true,
           value: "start_at"
@@ -92,8 +108,6 @@ export default {
     }
   },
   mounted: async function() {
-    console.log("Component mounted.");
-    // You don't have to require axios; it's already loaded
     const res = await axios.get("./billings");
     this.billItems = res.data;
   }

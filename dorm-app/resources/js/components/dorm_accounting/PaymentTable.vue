@@ -2,66 +2,70 @@
   <v-content>
     <v-container>
       <v-card elevation="10">
-        <v-card-title>現金出納</v-card-title>
+        <v-card-title>出納帳</v-card-title>
         <v-card-text>
-          <v-row>
+          <v-row class="pb-5">
             <v-col>
               <v-dialog v-model="isDialogOpen" persistent max-width="600px">
                 <template v-slot:activator="{ on }">
                   <v-btn color="error" depressed right absolute dark v-on="on">
-                    <v-icon class="mr-1">mdi-security</v-icon>現金出納登録
+                    <v-icon class="mr-1">mdi-security</v-icon>出納登録
                   </v-btn>
                 </template>
                 <v-card>
                   <v-card-title>
-                    <span class="headline">現金の出入りを登録します</span>
+                    <span class="headline">収支項目登録</span>
                   </v-card-title>
+                  <v-card-subtitle>寮費収入はここではなく「徴収結果の登録」から。</v-card-subtitle>
                   <v-card-text>
                     <v-container>
-                      <v-row>
-                        <v-col>
-                          <v-radio-group v-model="isExpenditure" row>
-                            <v-radio
-                              v-for="isEx in [false, true]"
-                              :key="isEx"
-                              :label="isEx ? '支出' : '収入'"
-                              :value="isEx"
-                            ></v-radio>
-                          </v-radio-group>
-                        </v-col>
+                      <v-row justify="center">
+                        <v-date-picker
+                          v-model="picker"
+                          landscape
+                          locale="ja-jp"
+                          :day-format="date => new Date(date).getDate()"
+                          style="box-shadow: 0 0 0; border: solid 1px gainsboro"
+                        ></v-date-picker>
+                      </v-row>
+                      <v-row justify="center">
+                        <v-radio-group v-model="isExpenditure" row>
+                          <v-radio
+                            v-for="isEx in [false, true]"
+                            :key="isEx"
+                            :label="isEx ? '支出' : '収入'"
+                            :value="isEx"
+                          ></v-radio>
+                        </v-radio-group>
                       </v-row>
                       <v-row>
+                        <v-col cols="12" md="6">
+                          <v-select :items="accounts" v-model="account" label="会計区分 *" dense></v-select>
+                        </v-col>
                         <v-col cols="12" md="6">
                           <v-select
                             :items="paymentCats"
                             item-text="name"
                             v-model="paymentCatSelected"
                             label="科目 *"
+                            dense
                           ></v-select>
                         </v-col>
+                      </v-row>
+                      <v-row>
                         <v-col cols="12" md="3">
-                          <v-select :items="years" v-model="yearSelected" label="年 *"></v-select>
+                          <v-select :items="years" v-model="yearSelected" label="年 *" dense></v-select>
                         </v-col>
                         <v-col cols="12" md="3">
-                          <v-select :items="months" v-model="monthSelected" label="月 *"></v-select>
+                          <v-select :items="months" v-model="monthSelected" label="月 *" dense></v-select>
+                        </v-col>
+                        <v-col cols="12" md="6">
+                          <v-text-field label="摘要 *" v-model="abstract" dense required></v-text-field>
                         </v-col>
                       </v-row>
                       <v-row>
-                        <v-col cols="12" md="6">
-                          <v-text-field
-                            label="摘要 *"
-                            v-model="abstract"
-                            :disabled="isPaymentMonthly"
-                            required
-                          ></v-text-field>
-                        </v-col>
                         <v-col cols="12" md="6">
                           <v-text-field label="金額 *" v-model="amount" required></v-text-field>
-                        </v-col>
-                      </v-row>
-                      <v-row>
-                        <v-col cols="12">
-                          <v-text-field label="特記事項" v-model="comment"></v-text-field>
                         </v-col>
                       </v-row>
                     </v-container>
@@ -79,6 +83,13 @@
               </v-snackbar>
             </v-col>
           </v-row>
+          <v-row class="pb-5">
+            <v-col>
+              <v-btn color="error" depressed absolute right>
+                <v-icon class="mr-1">mdi-security</v-icon>徴収結果の登録
+              </v-btn>
+            </v-col>
+          </v-row>
           <v-row>
             <v-col>
               <v-data-table :headers="billingHeaders" :items="billItems" :items-per-page="20"></v-data-table>
@@ -94,6 +105,11 @@
 export default {
   data: function() {
     return {
+      account: "一般会計",
+      accounts: ["一般会計", "コンパ積立金", "罰金会計"],
+      form: "現金",
+      forms: ["現金", "七十七銀行口座", "ゆうちょ銀行口座"],
+      picker: new Date().toISOString().substr(0, 10),
       isSnackbarOpen: false,
       comment: "",
       abstractEdited: "",
@@ -132,6 +148,11 @@ export default {
           value: ""
         },
         {
+          text: "会計",
+          sortable: true,
+          value: ""
+        },
+        {
           text: "科目",
           sortable: true,
           value: "category"
@@ -157,6 +178,16 @@ export default {
           text: "残高",
           sortable: true,
           value: "balance"
+        },
+        {
+          text: "訂正",
+          sortable: true,
+          value: ""
+        },
+        {
+          text: "削除",
+          sortable: true,
+          value: ""
         }
       ]
     };
