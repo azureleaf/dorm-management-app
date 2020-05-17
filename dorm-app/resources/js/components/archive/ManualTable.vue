@@ -41,37 +41,38 @@ export default {
           size: "",
         },
         {
-          title: "風呂掃除マニュアル",
+          title: "風呂掃除手順書",
+          last_author: "",
+          updated_at: "",
+          category: "manual",
+          size: "",
+        },
+        {
+          title: "議長手順書",
           last_author: "",
           updated_at: "",
           size: "",
         },
         {
-          title: "議長マニュアル",
+          title: "補食場清掃手順書",
           last_author: "",
           updated_at: "",
           size: "",
         },
         {
-          title: "ブロック清掃マニュアル",
+          title: "情報システム操作手順書",
           last_author: "",
           updated_at: "",
           size: "",
         },
         {
-          title: "情報システムマニュアル",
+          title: "情報システム管理者要領",
           last_author: "",
           updated_at: "",
           size: "",
         },
         {
           title: "寮則",
-          last_author: "",
-          updated_at: "",
-          size: "",
-        },
-        {
-          title: "寮事件簿",
           last_author: "",
           updated_at: "",
           size: "",
@@ -109,11 +110,6 @@ export default {
           text: "最終更新者",
           sortable: true,
           value: "last_author"
-        },
-        {
-          text: "文字数",
-          sortable: true,
-          value: "size"
         },
       ]
     };

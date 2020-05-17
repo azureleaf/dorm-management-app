@@ -16,7 +16,7 @@
           :key="page.title"
           text
           :href="page.uri"
-          :title="page.uri"
+          :title="page.title"
           class="mx-0 px-0 d-none d-sm-flex"
         >
           <v-icon>{{page.icon}}</v-icon>
@@ -51,7 +51,7 @@ export default {
         { title: "個人記録", uri: "/personalbook", icon: "mdi-account-circle" },
         { title: "寮会計", uri: "/dormbook", icon: "mdi-currency-jpy" },
         { title: "日程管理", uri: "/application", icon: "mdi-clock" },
-        { title: "寮生名簿", uri: "/userlist", icon: "mdi-view-list" },
+        { title: "寮生一覧", uri: "/userlist", icon: "mdi-account-group" },
         { title: "寮文書", uri: "/archive", icon: "mdi-file-document" },
         { title: "ログアウト", uri: "/logout", icon: "mdi-lock-open" }
       ],

@@ -28,7 +28,7 @@ export default {
           value: ""
         },
         {
-          text: "居室状態",
+          text: "居室状態・コメント更新",
           sortable: true,
           value: ""
         }

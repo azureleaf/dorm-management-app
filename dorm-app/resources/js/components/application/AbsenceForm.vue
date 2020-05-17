@@ -56,12 +56,11 @@
     </v-container>
   </v-content>
 </template>
-
 <script>
 export default {
   data: function() {
     return {
-      isOutsidePeriod: true,
+      isOutsidePeriod: false,
       isOverLimit: false,
       isSubmitted: false,
       isHonestyConfirmed: false,

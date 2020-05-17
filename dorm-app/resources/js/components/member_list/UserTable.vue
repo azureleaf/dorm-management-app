@@ -38,12 +38,12 @@ export default {
           value: ""
         },
          {
-          text: "部屋番号",
+          text: "部屋番号・移動処理・退寮処理",
           sortable: true,
           value: ""
         },
          {
-          text: "現在の役職",
+          text: "役職・役職編集",
           sortable: true,
           value: ""
         },
