@@ -2,51 +2,38 @@
   <v-content>
     <v-container>
       <v-card elevation="10">
-        <v-card-title>居室履歴</v-card-title>
+        <v-card-title>居室状況履歴</v-card-title>
         <v-card-text>
           <v-row class="mb-5 pb-5">
             <v-col>
-              <v-dialog v-model="isDialogOpen" persistent max-width="600px">
-                <template v-slot:activator="{ on }">
-                  <v-btn color="error" depressed right absolute dark v-on="on">
-                    <v-icon class="mr-1">mdi-security</v-icon>居室履歴登録
-                  </v-btn>
+              <dialog-box
+                cardtitle="居室履歴登録"
+                cardsubtitle="入寮・退寮の場合は寮生一覧を編集してください。その際の居室履歴は自動で更新されます。"
+              >
+                <template v-slot:dialogcontent>
+                  <v-row>
+                    <v-col cols="12" md="6">
+                      <v-select :items="uniqueRooms" v-model="uniqueRoom" label="対象部屋番号 *" dense></v-select>
+                    </v-col>
+                    <v-col cols="12" md="6">
+                      <v-select :items="updateTypes" v-model="updateType" label="更新事由 *" dense></v-select>
+                    </v-col>
+                  </v-row>
+                  <v-row v-if="updateType == '部屋移動'">
+                    <v-col cols="12" md="6">
+                      <v-select :items="users" v-model="user" label="対象寮生 *" dense></v-select>
+                    </v-col>
+                    <v-col cols="12" md="6">
+                      <v-select :items="uniqueRooms" v-model="uniqueRoom" label="移動先部屋番号 *" dense></v-select>
+                    </v-col>
+                  </v-row>
+                  <v-row v-if="updateType == '点検'">
+                    <v-col cols="12">
+                      <v-text-field label="部屋の状態 *" v-model="comment" dense required></v-text-field>
+                    </v-col>
+                  </v-row>
                 </template>
-                <v-card>
-                  <v-card-title>
-                    <span class="headline">居室履歴登録</span>
-                  </v-card-title>
-                  <v-card-subtitle>入寮・退寮の場合は寮生一覧を編集してください。その際の居室履歴は自動で更新されます。</v-card-subtitle>
-                  <v-card-text>
-                    <v-row>
-                      <v-col cols="12" md="6">
-                        <v-select :items="uniqueRooms" v-model="uniqueRoom" label="対象部屋番号 *" dense></v-select>
-                      </v-col>
-                      <v-col cols="12" md="6">
-                        <v-select :items="updateTypes" v-model="updateType" label="更新事由 *" dense></v-select>
-                      </v-col>
-                    </v-row>
-                    <v-row v-if="updateType == '部屋移動'">
-                      <v-col cols="12" md="6">
-                        <v-select :items="users" v-model="user" label="対象寮生 *" dense></v-select>
-                      </v-col>
-                      <v-col cols="12" md="6">
-                        <v-select :items="uniqueRooms" v-model="uniqueRoom" label="移動先部屋番号 *" dense></v-select>
-                      </v-col>
-                    </v-row>
-                    <v-row v-if="updateType == '点検'">
-                      <v-col cols="12">
-                        <v-text-field label="部屋の状態 *" v-model="comment" dense required></v-text-field>
-                      </v-col>
-                    </v-row>
-                  </v-card-text>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="isDialogOpen = false">Cancel</v-btn>
-                    <v-btn color="blue darken-1" text>Save</v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
+              </dialog-box>
             </v-col>
           </v-row>
           <v-row>
