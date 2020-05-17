@@ -10,7 +10,8 @@
                 cardtitle="居室履歴登録"
                 cardsubtitle="入寮・退寮の場合は寮生一覧を編集してください。その際の居室履歴は自動で更新されます。"
               >
-                <template v-slot:dialogcontent>
+                <!-- # is shorthand for "v-slot:" -->
+                <template #dialogcontent>
                   <v-row>
                     <v-col cols="12" md="6">
                       <v-select :items="uniqueRooms" v-model="uniqueRoom" label="対象部屋番号 *" dense></v-select>
@@ -32,6 +33,10 @@
                       <v-text-field label="部屋の状態 *" v-model="comment" dense required></v-text-field>
                     </v-col>
                   </v-row>
+                </template>
+                <template #dialogaction>
+                  <v-btn color="blue darken-1" text>Cancel</v-btn>
+                  <v-btn color="blue darken-1" text @click="submitRoomHistory">Save</v-btn>
                 </template>
               </dialog-box>
             </v-col>
@@ -66,7 +71,6 @@ export default {
   data: function() {
     return {
       comment: "",
-      isDialogOpen: false,
       searchKeyword: "",
       rooms: [],
       uniqueRooms: [101, 102, 103],
@@ -104,6 +108,11 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    submitRoomHistory(){
+      console.log("submitted!");
+    }
   },
   mounted: async function() {
     const res = await axios.get("./rooms");

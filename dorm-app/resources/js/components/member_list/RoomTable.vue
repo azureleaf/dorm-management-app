@@ -2,7 +2,7 @@
   <v-content>
     <v-container>
       <v-card elevation="10">
-        <v-card-title>居室状態</v-card-title>
+        <v-card-title>居室状況</v-card-title>
         <v-card-text>
           <v-data-table :headers="userHeaders" :items="users" :items-per-page="20"></v-data-table>
         </v-card-text>
