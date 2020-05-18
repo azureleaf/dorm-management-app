@@ -14,6 +14,8 @@
         <v-app>
             <app-header avatarurl="{{ asset('/img/rubber_ducky_material.png') }}"></app-header>
             <manual-table></manual-table>
+            <minutes-table></minutes-table>
+            <misc-table></misc-table>
         </v-app>
     </div>
     <script src="{{ mix('js/app.js') }}"></script>

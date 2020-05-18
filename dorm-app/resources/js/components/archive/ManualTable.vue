@@ -2,9 +2,9 @@
   <v-content>
     <v-container>
       <v-card elevation="10">
-        <v-card-title>文書</v-card-title>
+        <v-card-title>定型文書</v-card-title>
         <v-card-text>
-          <v-data-table :headers="manualsHeaders" :items="manuals" :items-per-page="20"></v-data-table>
+          <v-data-table :headers="docHeaders" :items="docs" :items-per-page="20"></v-data-table>
         </v-card-text>
       </v-card>
     </v-container>
@@ -15,7 +15,7 @@
 export default {
   data: function() {
     return {
-      manuals: [
+      docs: [
         {
           title: "委員長引継書",
           last_author: "",
@@ -59,6 +59,12 @@ export default {
           updated_at: "",
           size: "",
         },
+          {
+          title: "トイレ清掃手順書",
+          last_author: "",
+          updated_at: "",
+          size: "",
+        },
         {
           title: "情報システム操作手順書",
           last_author: "",
@@ -83,14 +89,8 @@ export default {
           updated_at: "",
           size: "",
         },
-        {
-          title: "寮生大会議事録",
-          last_author: "",
-          updated_at: "",
-          size: "",
-        },
       ],
-      manualsHeaders: [
+      docHeaders: [
         {
           text: "題名",
           sortable: true,
@@ -100,6 +100,11 @@ export default {
           text: "分類",
           sortable: true,
           value: "cat"
+        },
+         {
+          text: "編集権限",
+          sortable: true,
+          value: "auth"
         },
         {
           text: "更新日時",
