@@ -73,6 +73,7 @@
                   <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="blue darken-1" text @click="isDialogOpen = false">Cancel</v-btn>
+                    <v-btn color="blue darken-1" text @click="saveInput">Delete</v-btn>
                     <v-btn color="blue darken-1" text @click="saveInput">Save</v-btn>
                   </v-card-actions>
                 </v-card>
@@ -92,7 +93,12 @@
           </v-row>
           <v-row>
             <v-col>
-              <v-data-table :headers="billingHeaders" :items="billItems" :items-per-page="20"></v-data-table>
+              <v-data-table :headers="billingHeaders" :items="billItems" :items-per-page="20">
+                <template v-slot:item.abstract="{item}">
+                  <a v-if="isAdmin" :href="editorURL(item.id)">{{item.abstract}}</a>
+                  <span v-else>{{item.abstract}}</span>
+                </template>
+              </v-data-table>
             </v-col>
           </v-row>
         </v-card-text>
@@ -105,6 +111,7 @@
 export default {
   data: function() {
     return {
+      isAdmin: true,
       account: "一般会計",
       accounts: ["一般会計", "コンパ積立金", "罰金会計"],
       picker: new Date().toISOString().substr(0, 10),
@@ -135,6 +142,11 @@ export default {
       isDialogOpen: false,
       billItems: [],
       billingHeaders: [
+        {
+          text: "出納ID",
+          sortable: true,
+          value: "id"
+        },
         {
           text: "発生日",
           sortable: true,
@@ -176,16 +188,6 @@ export default {
           text: "残高",
           sortable: true,
           value: "balance"
-        },
-        {
-          text: "訂正",
-          sortable: true,
-          value: ""
-        },
-        {
-          text: "削除",
-          sortable: true,
-          value: ""
         }
       ]
     };
@@ -201,6 +203,10 @@ export default {
       this.abstractEdited = "";
       this.amount = "";
       this.paymentCatSelected = "";
+    },
+    editorURL(paymentId) {
+      // create link URL to edit clicked payment item
+      return `/edit/payment/${paymentId}`;
     }
   },
   computed: {

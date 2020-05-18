@@ -9,7 +9,7 @@
           </v-btn>
         </v-col>
       </v-row>
-      <v-data-table :headers="assetHeaders" :items="assetItems" :items-per-page="20"></v-data-table>
+      <v-data-table :headers="assetHeaders" :items="assetItems" :items-per-page="20" :hide-default-footer="true"></v-data-table>
     </v-card-text>
   </v-card>
 </template>
@@ -42,22 +42,26 @@ export default {
         {
           name: "切手",
           amount: 500
+        },
+        {
+          name: "合計額（C）",
+          amount: 500
         }
       ],
       assetHeaders: [
         {
           text: "資産種別",
-          sortable: true,
+          sortable: false,
           value: "name"
         },
         {
           text: "期首残高",
-          sortable: true,
+          sortable: false,
           value: "amount"
         },
         {
           text: "期末残高",
-          sortable: true,
+          sortable: false,
           value: "amount"
         }
       ]

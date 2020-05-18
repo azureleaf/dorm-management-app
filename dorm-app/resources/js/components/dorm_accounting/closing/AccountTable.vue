@@ -4,12 +4,15 @@
     <v-card-text>
       <v-row class="pb-5">
         <v-col>
-          <v-btn color="error" depressed absolute right>
-            <v-icon class="mr-1">mdi-security</v-icon>会計別収支の登録
-          </v-btn>
+          <dialog-box cardtitle="会計別収支の登録" cardsubtitle="会計ごとの現在の残高を入力してください">
+            <template #dialogaction>
+              <v-btn color="blue darken-1" text>Cancel</v-btn>
+              <v-btn color="blue darken-1" text>Save</v-btn>
+            </template>
+          </dialog-box>
         </v-col>
       </v-row>
-      <v-data-table :headers="accountHeaders" :items="accounts" :items-per-page="20"></v-data-table>
+      <v-data-table :headers="accountHeaders" :items="accounts" :items-per-page="20" :hide-default-footers="true"></v-data-table>
     </v-card-text>
   </v-card>
 </template>
@@ -66,37 +69,37 @@ export default {
       accountHeaders: [
         {
           text: "会計区分",
-          sortable: true,
+          sortable: false,
           value: "name"
         },
         {
           text: "開始年月",
-          sortable: true,
+          sortable: false,
           value: "start_at"
         },
         {
           text: "終了年月",
-          sortable: true,
+          sortable: false,
           value: "end_at"
         },
         {
           text: "期首残高",
-          sortable: true,
+          sortable: false,
           value: "beginningBalance"
         },
         {
           text: "収入額",
-          sortable: true,
+          sortable: false,
           value: "income"
         },
         {
           text: "支出額",
-          sortable: true,
+          sortable: false,
           value: "expenditure"
         },
         {
           text: "期末残高",
-          sortable: true,
+          sortable: false,
           value: "finalBalance"
         }
       ]
