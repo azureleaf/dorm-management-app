@@ -31,7 +31,7 @@
       <v-card elevation="10" class="card-section">
         <v-card-title>設備</v-card-title>
         <v-card-text>
-           <v-data-table
+          <v-data-table
             :headers="facilityHeaders"
             :items="facilities"
             :items-per-page="facilities.length"
@@ -75,8 +75,16 @@ export default {
   data: function() {
     return {
       contacts: [
-        { title: "連絡先", desc: "hoge@gmail.com<br>返信まで数日かかる場合がありますが、ご了承ください。" },
-        { title: "所在地", desc: "仙台市一番町<br>当寮と同じ住所に寮が複数ありますので、郵便物には寮名・部屋番号まで必ず書いてください。" },
+        {
+          title: "連絡先",
+          desc:
+            "hoge@gmail.com<br>返信まで数日かかる場合がありますが、ご了承ください。"
+        },
+        {
+          title: "所在地",
+          desc:
+            "仙台市一番町<br>当寮と同じ住所に寮が複数ありますので、郵便物には寮名・部屋番号まで必ず書いてください。"
+        },
         { title: "定員", desc: "100名" },
         { title: "入寮資格", desc: "本学の大学生・大学院生" },
         {
@@ -97,12 +105,31 @@ export default {
           value: "desc"
         }
       ],
-            facilities: [
-        { title: "居室", desc: "全室一人部屋（5.5畳、FF式石油ヒーター、ベランダ）" },
-        { title: "共用自炊設備", desc: "ガスコンロ、冷蔵庫、電子レンジ、給湯器" },
-        { title: "共用生活設備", desc: "風呂、トイレ、洗面所、集会室、洗濯機、乾燥機、自動販売機、駐車場、駐輪場。AED設置済" },
-        { title: "インターネット", desc: "有線/Wifiともに共用回線に接続可能。より高速な接続環境を希望する方は回線を個人契約してください（ FLET'S光マンションタイプ導入工事済）。" },
-        { title: "周辺施設", desc: "銀行・郵便局・コンビニ・飲食店・交番・医院などが徒歩5分圏内です。バス停も近く、仙台駅・八木山動物公園駅・片平キャンパスまで直通バスあり。" },
+      facilities: [
+        {
+          title: "居室",
+          desc: "全室一人部屋（5.5畳、FF式石油ヒーター、ベランダ）"
+        },
+        {
+          title: "共用自炊設備",
+          desc: "ガスコンロ、冷蔵庫、電子レンジ、給湯器"
+        },
+        {
+          title: "共用生活設備",
+          desc:
+            "風呂、トイレ、洗面所、集会室、洗濯機、乾燥機、自動販売機、駐車場、駐輪場"
+        },
+        {
+          title: "インターネット",
+          desc:
+            "有線/Wifiともに共用回線に接続可能。より高速な接続環境を希望する方は回線を個人契約してください（ FLET'S光マンションタイプ導入工事済）。"
+        },
+        {
+          title: "周辺施設",
+          desc:
+            "銀行・郵便局・コンビニ・飲食店・交番・医院などが徒歩5分圏内です。<br>緑地に隣接し、閑静な住宅街の中にあります。<br>バス停が近く、仙台駅・八木山動物公園駅・片平キャンパスまで直通バスあり。"
+        },
+        { title: "その他", desc: "AED設置済・アスベスト検査済・耐震性検査済" }
       ],
       facilityHeaders: [
         {
@@ -244,6 +271,14 @@ export default {
               desc: "あああ"
             },
             {
+              title: "冬寒い？",
+              desc: "あああ"
+            },
+            {
+              title: "坂きつくない？",
+              desc: "あああ"
+            },
+            {
               title: "食事は？",
               desc: "寮運"
             },
@@ -255,8 +290,7 @@ export default {
         },
         {
           sectionTitle: "寮生の仕事",
-          sectionSubtitle:
-            "共同生活では、寮生同士の役割分担が不可欠です。",
+          sectionSubtitle: "共同生活では、寮生同士の役割分担が不可欠です。",
           sectionItems: [
             {
               title: "寮費を納める",

@@ -2,6 +2,7 @@
   <v-content>
     <v-container>
       <v-card elevation="10">
+        <v-card-title>状態一覧</v-card-title>
         <v-card-text>
           <v-row>
             <v-col cols="12" md="4">

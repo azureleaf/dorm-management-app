@@ -18,7 +18,9 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <!-- close the dialog box by any click event inside the slot-->
+            <!-- close the dialog box by any click event inside the slot of card action.
+            Therefore, in the slot, you can't add any clickable DOM element
+            from which you don't want to invoke dialog closing-->
             <div @click="isDialogOpen = false">
               <slot name="dialogaction"></slot>
             </div>

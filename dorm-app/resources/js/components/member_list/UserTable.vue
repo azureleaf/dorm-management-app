@@ -65,14 +65,15 @@ export default {
     };
   },
   methods: {
-    editorURL(id, type) {
-      return `/edit/${type}/${id}`;
+    editorURL(userId, dataType) {
+      return `/edit/${dataType}/${userId}`;
     }
   },
   computed: {
     userHeaders() {
-      // hide some headers to non-admin users
+      // show all the columns for admin
       if (this.isAdmin) return this.userHeadersAll;
+      // hide several columns for non-admins
       else return this.userHeadersAll.filter(header => !header.isAdminItem);
     }
   },

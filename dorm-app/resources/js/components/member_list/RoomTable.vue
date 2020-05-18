@@ -27,6 +27,11 @@ export default {
           sortable: true,
           value: ""
         },
+         {
+          text: "所属ブロック",
+          sortable: true,
+          value: ""
+        },
         {
           text: "居室状態・コメント更新",
           sortable: true,

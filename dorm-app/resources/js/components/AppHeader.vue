@@ -3,7 +3,7 @@
     <v-app-bar class="blue darken-4" dense dark app>
       <!-- <v-avatar>
         <v-img class="mx-2" :src="avatarurl" max-height="50" max-width="50" contain></v-img>
-      </v-avatar> -->
+      </v-avatar>-->
       <v-toolbar-title class="ml-5 headline" style="font-family: 'Titillium Web' !important;">
         <v-icon large class="mr-1" color="orange">mdi-weather-snowy-heavy</v-icon>
         <span class="font-weight-black">Aobaryo</span>
@@ -19,11 +19,11 @@
           :href="page.uri"
           :title="page.title"
           class="mx-0 px-0 d-none d-sm-flex"
+          style="border-right: solid 1px #2266aa;"
         >
           <v-icon>{{page.icon}}</v-icon>
           <!-- <span class="d-none d-lg-flex d-xl-flex">{{ page.title }}</span> -->
         </v-btn>
-        <v-divider vertical></v-divider>
       </v-toolbar-items>
       <v-menu v-model="isNavOpen" :offsetY="true">
         <template v-slot:activator="{ on }">
