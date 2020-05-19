@@ -22,7 +22,6 @@
                       <v-row justify="center">
                         <v-date-picker
                           v-model="picker"
-                          landscape
                           locale="ja-jp"
                           :day-format="date => new Date(date).getDate()"
                           style="box-shadow: 0 0 0; border: solid 1px gainsboro"

@@ -4,7 +4,7 @@
       <!-- <v-avatar>
         <v-img class="mx-2" :src="avatarurl" max-height="50" max-width="50" contain></v-img>
       </v-avatar>-->
-      <v-toolbar-title class="ml-5 headline" style="font-family: 'Titillium Web' !important;">
+      <v-toolbar-title class="headline" style="font-family: 'Titillium Web' !important;">
         <v-icon large class="mr-1" color="orange">mdi-weather-snowy-heavy</v-icon>
         <span class="font-weight-black">Aobaryo</span>
         <span class="font-weight-light">Cloud</span>

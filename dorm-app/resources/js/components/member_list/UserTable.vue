@@ -32,7 +32,7 @@ export default {
       users: [],
       userHeadersAll: [
         {
-          text: "ID",
+          text: "寮生ID",
           sortable: true,
           value: "id",
           isAdminItem: false
