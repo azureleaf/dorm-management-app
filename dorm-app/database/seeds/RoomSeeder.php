@@ -23,7 +23,7 @@ class RoomSeeder extends Seeder
                 DB::table('rooms')->insert([
                     'room' => $floor . $room,
                     // 'comment' => "",
-                    'update_type' => "moveout",
+                    // 'update_type' => "moveout",
                     // 'user_id' => "",
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now()
@@ -32,26 +32,48 @@ class RoomSeeder extends Seeder
         }
 
         // Add comment to a room
-        DB::table('rooms')->insert([
-            'room' => 201,
-            'comment' => "錠前破損、暖房なし",
-            'update_type' => "maintain",
-            // 'user_id' => "",
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ]);
+        // DB::table('room_histories')->insert([
+        //     'room' => 201,
+        //     'comment' => "錠前破損、暖房なし",
+        //     // 'user_id' => "",
+        //     'created_at' => Carbon::now(),
+        //     'updated_at' => Carbon::now()
+        // ]);
 
         // Pick a user randomly
         $userIdIndexRand = rand(0, count($users) - 1);
 
-        // New move into a room
-        DB::table('rooms')->insert([
-            'room' => 202,
-            'comment' => "",
-            'update_type' => "movein",
-            'user_id' => "$users[$userIdIndexRand]",
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ]);
+        // DB::table('rooms')->insert([
+        //     'room' => 203,
+        //     'comment' => "",
+        //     'user_id' => "$users[$userIdIndexRand]",
+        //     'user_id' => "1",
+        //     'created_at' => Carbon::now(),
+        //     'updated_at' => Carbon::now()
+        // ]);
+
+        DB::table('rooms')
+            ->where('room', 211)
+            ->update(
+                [
+                    'user_id' => '1'
+                ]
+            );
+
+        DB::table('rooms')
+            ->where('room', 212)
+            ->update(
+                [
+                    'user_id' => '2'
+                ]
+            );
+
+        DB::table('rooms')
+            ->where('room', 213)
+            ->update(
+                [
+                    'user_id' => '3'
+                ]
+            );
     }
 }
