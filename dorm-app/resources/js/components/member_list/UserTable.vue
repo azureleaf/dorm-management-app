@@ -4,18 +4,29 @@
       <v-card elevation="10">
         <v-card-title>寮生一覧</v-card-title>
         <v-card-text>
-          <v-data-table :headers="userHeaders" :items="users" :items-per-page="20">
-            <template v-slot:item.name="{item}">
-              <a v-if="isAdmin" :href="editorURL(item.id, 'name')">{{ item.name }}</a>
-              <span v-else>{{ item.name }}</span>
-            </template>
-            <template v-slot:item.room="{item}">
-              <a v-if="isAdmin" :href="editorURL(item.id, 'room')">{{ item.room }}</a>
-              <span v-else>{{ item.room }}</span>
-            </template>
-            <template v-slot:item.role="{item}">
-              <a v-if="isAdmin" :href="editorURL(item.id, 'role')">{{ item.role }}</a>
-              <span v-else>{{ item.role }}</span>
+          <v-row class="pb-5">
+            <v-col>
+              <v-dialog v-model="isDialogOpen" persistent max-width="600px">
+                <template v-slot:activator="{ on }">
+                  <v-btn color="error" depressed right absolute dark v-on="on">
+                    <v-icon class="mr-1">mdi-security</v-icon>新入寮生登録
+                  </v-btn>
+                </template>
+                <v-card>
+                  <v-card-title>新入寮生登録</v-card-title>
+                  <v-card-text></v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue darken-1" text @click="isDialogOpen = false">Cancel</v-btn>
+                    <v-btn color="blue darken-1" text @click="isDialogOpen = false">Save</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </v-col>
+          </v-row>
+          <v-data-table :headers="userHeaders" :items="users" :items-per-page="10">
+            <template v-slot:item.edit="{item}">
+              <user-table-dialog :item="item"></user-table-dialog>
             </template>
           </v-data-table>
         </v-card-text>
@@ -29,6 +40,7 @@ export default {
   data: function() {
     return {
       isAdmin: true,
+      isDialogOpen: false,
       users: [],
       userHeadersAll: [
         {
@@ -52,22 +64,23 @@ export default {
         {
           text: "部屋番号",
           sortable: true,
-          value: "roomNum",
+          value: "room.room",
           isAdminItem: false
         },
         {
-          text: "役職",
+          text: "現職",
           sortable: true,
           value: "role",
+          isAdminItem: false
+        },
+        {
+          text: "編集",
+          sortable: false,
+          value: "edit",
           isAdminItem: false
         }
       ]
     };
-  },
-  methods: {
-    editorURL(userId, dataType) {
-      return `/edit/${dataType}/${userId}`;
-    }
   },
   computed: {
     userHeaders() {

@@ -42,7 +42,7 @@ export default {
           sortable: true,
           value: ""
         },
-         {
+        {
           text: "特記事項",
           sortable: false,
           value: ""

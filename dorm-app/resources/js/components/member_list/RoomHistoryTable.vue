@@ -2,45 +2,8 @@
   <v-content>
     <v-container>
       <v-card elevation="10">
-        <v-card-title>居室状況履歴</v-card-title>
+        <v-card-title>居室履歴</v-card-title>
         <v-card-text>
-          <v-row class="mb-5 pb-5">
-            <v-col>
-              <dialog-box
-                cardtitle="居室履歴登録"
-                cardsubtitle="入寮・退寮の場合は寮生一覧を編集してください。その際の居室履歴は自動で更新されます。"
-              >
-                <!-- # is shorthand for "v-slot:" -->
-                <template #dialogcontent>
-                  <v-row>
-                    <v-col cols="12" md="6">
-                      <v-select :items="uniqueRooms" v-model="uniqueRoom" label="対象部屋番号 *" dense></v-select>
-                    </v-col>
-                    <v-col cols="12" md="6">
-                      <v-select :items="updateTypes" v-model="updateType" label="更新事由 *" dense></v-select>
-                    </v-col>
-                  </v-row>
-                  <v-row v-if="updateType == '部屋移動'">
-                    <v-col cols="12" md="6">
-                      <v-select :items="users" v-model="user" label="対象寮生 *" dense></v-select>
-                    </v-col>
-                    <v-col cols="12" md="6">
-                      <v-select :items="uniqueRooms" v-model="uniqueRoom" label="移動先部屋番号 *" dense></v-select>
-                    </v-col>
-                  </v-row>
-                  <v-row v-if="updateType == '点検'">
-                    <v-col cols="12">
-                      <v-text-field label="部屋の状態 *" v-model="comment" dense required></v-text-field>
-                    </v-col>
-                  </v-row>
-                </template>
-                <template #dialogaction>
-                  <v-btn color="blue darken-1" text>Cancel</v-btn>
-                  <v-btn color="blue darken-1" text @click="submitRoomHistory">Save</v-btn>
-                </template>
-              </dialog-box>
-            </v-col>
-          </v-row>
           <v-row>
             <v-col cols="12" md="4">
               <v-text-field
@@ -55,8 +18,8 @@
             </v-col>
           </v-row>
           <v-data-table
-            :headers="roomHeaders"
-            :items="rooms"
+            :headers="roomHxHeaders"
+            :items="roomHxs"
             :items-per-page="10"
             :search="searchKeyword"
           ></v-data-table>
@@ -72,14 +35,8 @@ export default {
     return {
       comment: "",
       searchKeyword: "",
-      rooms: [],
-      uniqueRooms: [101, 102, 103],
-      uniqueRoom: "",
-      updateTypes: ["部屋移動", "点検"],
-      updateType: "",
-      users: ["田中", "鈴木"],
-      user: "",
-      roomHeaders: [
+      roomHxs: [],
+      roomHxHeaders: [
         {
           text: "居室履歴ID",
           sortable: true,
@@ -109,14 +66,9 @@ export default {
       ]
     };
   },
-  methods: {
-    submitRoomHistory(){
-      console.log("submitted!");
-    }
-  },
   mounted: async function() {
     const res = await axios.get("./rooms");
-    this.rooms = res.data;
+    this.roomHxs = res.data;
   }
 };
 </script>

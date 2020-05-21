@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Billing;
 use App\Room;
+use App\RoleTitle;
 
 // routes for view
 Route::get('/', function () {
@@ -78,6 +79,10 @@ Route::get('/rooms', function () {
     return $merged;
 });
 
+
+Route::get('/roletitles', function () {
+    return RoleTitle::all();
+});
 
 Route::post('/edit/room/status/{room_id}', function (Request $req, $room_id) {
     $room = Room::find($room_id);
