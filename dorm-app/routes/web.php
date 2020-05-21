@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+use Illuminate\Http\Request;
 use App\User;
 use App\Billing;
 use App\Room;
@@ -75,6 +76,14 @@ Route::get('/rooms', function () {
         $merged->push($room);
     }
     return $merged;
+});
+
+
+Route::post('/edit/room/status/{room_id}', function (Request $req, $room_id) {
+    $room = Room::find($room_id);
+    $room->comment = $req->comment;
+    $room->status = $req->status;
+    $room->save();
 });
 
 
