@@ -49,7 +49,15 @@ Route::get('/archive', function () {
 
 // routes for axios
 Route::get('/users', function () {
-    return User::all();
+    // error_log(User::find(2)->room->room);
+    // return User::all();
+
+    $merged = collect([]);
+    foreach (User::all() as $user) {
+        $user->room;
+        $merged->push($user);
+    }
+    return $merged;
 });
 
 Route::get('/billings', function () {
@@ -57,7 +65,16 @@ Route::get('/billings', function () {
 });
 
 Route::get('/rooms', function () {
-    return Room::all();
+    $merged = collect([]);
+    foreach (Room::orderBy("room")->get() as $room) {
+        // append "user" key with values
+        // values will be the obj of related user if exists
+        // values will be "null" for no user is related
+        $room->user;
+
+        $merged->push($room);
+    }
+    return $merged;
 });
 
 
