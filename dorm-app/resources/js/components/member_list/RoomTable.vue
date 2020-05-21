@@ -8,7 +8,16 @@
             <template v-slot:item.edit="{item}">
               <room-table-dialog :item="item" @retrieveAgain="retrieve"></room-table-dialog>
             </template>
-            <template v-slot:item.status="{item}">{{ roomStatusJa(item.status) }}</template>
+            <template v-slot:item.status="{item}">
+              <v-icon v-if="item.status == 'vacant'" color="green" class="vmid">mdi-check-circle</v-icon>
+              <v-icon v-else-if="item.status == 'occupied'" color="blue" class="vmid">mdi-account-circle</v-icon>
+              <v-icon
+                v-else-if="item.status == 'unavailable'"
+                color="red"
+                class="vmid"
+              >mdi-close-circle</v-icon>
+              <span class="vmid">{{ roomStatusJa(item.status) }}</span>
+            </template>
           </v-data-table>
         </v-card-text>
       </v-card>
@@ -24,9 +33,9 @@ export default {
       isDialogOpen: false,
       rooms: [],
       statuses: [
-        {en: "occupied", ja: "使用中"},
-        {en: "vacant", ja: "空室"},
-        {en: "unavailable", ja: "使用不能"},
+        { en: "occupied", ja: "使用中" },
+        { en: "vacant", ja: "空室" },
+        { en: "unavailable", ja: "使用不能" }
       ],
       roomHeaders: [
         {
@@ -66,7 +75,8 @@ export default {
     roomStatusJa(roomStatusEn) {
       // translate DB expression to readable Japanese text
       const i = this.statuses.map(word => word.en).indexOf(roomStatusEn);
-      if (i == -1) console.error("Error: room status\'", roomStatusEn, "\' is unknown.");
+      if (i == -1)
+        console.error("Error: room status'", roomStatusEn, "' is unknown.");
       return this.statuses[i].ja;
     },
     async retrieve() {
@@ -87,4 +97,8 @@ export default {
   }
 };
 </script>
-<style scoped></style>
+<style scoped>
+.vmid {
+  vertical-align: middle;
+}
+</style>
