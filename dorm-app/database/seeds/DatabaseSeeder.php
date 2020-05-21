@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             BillingSeeder::class,
             RoomSeeder::class,
+            RoleTitleSeeder::class,
         ]);
     }
 }
