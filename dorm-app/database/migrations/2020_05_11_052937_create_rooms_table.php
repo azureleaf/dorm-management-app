@@ -16,6 +16,8 @@ class CreateRoomsTable extends Migration
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
             $table->integer("room");
+            $table->integer("block");
+            $table->enum('status', ["occupied", "vacant", "unavailable"]);
             $table->string("comment")->nullable();
 
             $table->unsignedBigInteger('user_id')->nullable();
