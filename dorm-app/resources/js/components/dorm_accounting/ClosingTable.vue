@@ -26,8 +26,8 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="12" md="2">
-              <v-select :items="periods" v-model="periodSelected" label="決算期"></v-select>
+            <v-col cols="12" md="4">
+              <v-select :items="periods" v-model="periodSelected" label="決算期" outlined></v-select>
             </v-col>
           </v-row>
 
@@ -68,6 +68,7 @@ export default {
   data: function() {
     return {
       periods: ["2020年05月期", "2020年06月期", "2020年07月期"],
+      periodShown: "",
       billItems: [],
       billingHeaders: [
         {
@@ -110,8 +111,13 @@ export default {
     };
   },
   computed: {
-    periodSelected() {
-      return this.periods[this.periods.length - 1];
+    periodSelected: {
+      get: function() {
+        return this.periods[this.periods.length - 1];
+      },
+      set: function(newVal) {
+        this.periodShown = newVal;
+      }
     }
   },
   mounted: async function() {

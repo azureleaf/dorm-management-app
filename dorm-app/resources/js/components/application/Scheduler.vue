@@ -8,7 +8,7 @@
           <v-row>
             <v-col>
               <v-btn color="error" depressed absolute right>
-                <v-icon class="mr-1">mdi-security</v-icon>日程の作成と削除
+                <v-icon class="mr-1">mdi-security</v-icon>日程希望調査の作成と削除
               </v-btn>
             </v-col>
           </v-row>
@@ -23,7 +23,7 @@
               <v-row>
                 <v-col>
                   <v-btn color="error" depressed absolute right>
-                    <v-icon class="mr-1">mdi-security</v-icon>申請結果の処理
+                    <v-icon class="mr-1">mdi-security</v-icon>調査結果の集計
                   </v-btn>
                 </v-col>
               </v-row>

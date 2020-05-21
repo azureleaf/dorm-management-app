@@ -16,6 +16,7 @@
     - [Set up Postgres](#set-up-postgres)
     - [Test to seed to Postgres](#test-to-seed-to-postgres)
     - [Migration](#migration)
+    - [Migration rollback](#migration-rollback)
     - [Create Eloquent model](#create-eloquent-model)
     - [Add a column to existing table](#add-a-column-to-existing-table)
     - [Seeding (with factory)](#seeding-with-factory)
@@ -168,9 +169,16 @@ Run these commands in the root directory of the Laravel application.
 
 ### Migration
 
-- `php artisan make:migration create_users_table --create=users`
+- `php artisan make:migration create_users_table`
+- If you need to specify table name: `php artisan make:migration create_users_table --create=users`
 - Edit migration file
 - `php artisan migrate`
+
+### Migration rollback
+
+- `php artisan migrate:rollback`
+- `php artisan migrate:rollback --step=5` for multiple rollbacks
+
 
 ### Create Eloquent model
 

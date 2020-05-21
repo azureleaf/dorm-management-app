@@ -66,13 +66,13 @@ export default {
           size: "",
         },
         {
-          title: "情報システム操作手順書",
+          title: "情報システム管理手順書",
           last_author: "",
           updated_at: "",
           size: "",
         },
         {
-          title: "情報システム管理者要領",
+          title: "債務承認弁済契約書",
           last_author: "",
           updated_at: "",
           size: "",
