@@ -12,10 +12,8 @@ class RoomSeeder extends Seeder
      */
     public function run()
     {
-        // List of existing user IDs in the user table
-        $users = App\User::all()->pluck('id')->toArray();
 
-        // Create all the rooms
+        // Seed all the empty rooms
         foreach (range(1, 2) as $floor) {
             foreach (range(1, 40) as $room) {
                 $room = strval($room);
@@ -36,6 +34,7 @@ class RoomSeeder extends Seeder
                     $block = 6;
                 }
 
+                // Create all the rooms
                 DB::table('rooms')->insert([
                     'room' => $floor . $room,
                     'comment' => "",
@@ -47,51 +46,46 @@ class RoomSeeder extends Seeder
             }
         }
 
-        // add unavailable room with a comment
-        DB::table('rooms')
-            ->where('room', 201)
-            ->update([
-                'comment' => "錠前破損、暖房なし",
-                'status' => 'unavailable'
-            ]);
+        // List existing user IDs & room numbers in the DB
+        $userIds = App\User::all()->pluck('id')->toArray();
+        $roomNums = App\Room::all()->pluck('room')->toArray();
 
-        // Pick a user randomly
-        $userIdIndexRand = rand(0, count($users) - 1);
+        $roomNums = $this->randArray($roomNums); // randomize
 
-        // DB::table('rooms')->insert([
-        //     'room' => 203,
-        //     'comment' => "",
-        //     'user_id' => "$users[$userIdIndexRand]",
-        //     'user_id' => "1",
-        //     'created_at' => Carbon::now(),
-        //     'updated_at' => Carbon::now()
-        // ]);
+        // Seed occupied rooms with users in the user table
+        foreach ($userIds as $index => $userId) {
+            DB::table('rooms')
+                ->where('room', $roomNums[$index])
+                ->update(
+                    [
+                        'user_id' => $userId,
+                        'status' => 'occupied'
+                    ]
+                );
+        }
 
-        DB::table('rooms')
-            ->where('room', 103)
-            ->update(
-                [
-                    'user_id' => '1',
-                    'status' => 'occupied'
-                ]
-            );
+        // Seed unavailable rooms
+        for ($i = 0; $i < 8; $i++) {
+            DB::table('rooms')
+                ->where('room', $roomNums[$i + count($userIds)])
+                ->update([
+                    'comment' => "暖房器具なし",
+                    'status' => 'unavailable'
+                ]);
+        }
+    }
 
-        DB::table('rooms')
-            ->where('room', 108)
-            ->update(
-                [
-                    'user_id' => '2',
-                    'status' => 'occupied'
-                ]
-            );
-
-        DB::table('rooms')
-            ->where('room', 115)
-            ->update(
-                [
-                    'user_id' => '3',
-                    'status' => 'occupied'
-                ]
-            );
+    // get an array, randomize the elements order of the array
+    private function randArray($orderedArr, $randomArr = array())
+    {
+        if (count($orderedArr) == 0) {
+            return $randomArr;
+        } else {
+            $keys = array_keys($orderedArr);
+            $i = $keys[rand(0, count($keys) - 1)];
+            array_push($randomArr, $orderedArr[$i]);
+            $diff = array_diff($orderedArr, array($orderedArr[$i]));
+            return $this->randArray($diff, $randomArr);
+        }
     }
 }
