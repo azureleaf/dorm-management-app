@@ -30,7 +30,7 @@ export default {
         {
           text: "職名",
           sortable: false,
-          value: "title"
+          value: "name"
         },
         {
           text: "報酬額の既定値",
@@ -56,10 +56,7 @@ export default {
 
     // Append the new column for readable reward info
     this.titles.forEach(title => {
-      if (title.reward_unit == "jpy")
-        title["reward"] = title.reward_amount + "円";
-      else if (title.reward_unit == "pct")
-        title["reward"] = "寮費の" + title.reward_amount + "％";
+        title["reward"] = "寮費の" + title.default_reward_pct + "％";
     });
   }
 };

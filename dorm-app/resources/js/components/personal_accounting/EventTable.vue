@@ -3,7 +3,7 @@
     <v-container>
       <v-card elevation="10">
         <v-card-title>行事記録</v-card-title>
-        <v-card-subtitle>各寮生の当番や寮生大会出席の履歴です。</v-card-subtitle>
+        <v-card-subtitle>当番や寮生大会出席の履歴です。</v-card-subtitle>
         <v-card-text>
           <v-data-table :headers="userHeaders" :items="users" :items-per-page="20"></v-data-table>
         </v-card-text>

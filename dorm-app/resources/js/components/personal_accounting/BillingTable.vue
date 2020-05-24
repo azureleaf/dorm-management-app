@@ -3,7 +3,7 @@
     <v-container>
       <v-card elevation="10">
         <v-card-title>寮費記録</v-card-title>
-        <v-card-subtitle>各寮生の請求額と支払額の履歴です。</v-card-subtitle>
+        <v-card-subtitle>寮生個人の請求額と支払額の履歴です。</v-card-subtitle>
         <v-card-text>
           <v-data-table :headers="billingHeaders" :items="billItems" :items-per-page="20"></v-data-table>
         </v-card-text>
