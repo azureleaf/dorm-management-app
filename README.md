@@ -23,7 +23,11 @@
     - [Seeding (without factory)](#seeding-without-factory)
     - [Add vuetify](#add-vuetify)
     - [File locations](#file-locations)
-    - [Database](#database)
+  - [Tables](#tables)
+    - [Member tables](#member-tables)
+    - [Finance tables](#finance-tables)
+    - [Event Tables](#event-tables)
+    - [Document Tables](#document-tables)
   - [Troubleshooting](#troubleshooting)
     - [Error `could not find driver` on `php artisan migrate`](#error-could-not-find-driver-on-php-artisan-migrate)
     - [Error `password authentication failed for user "postgres"` on `php artisan migrate`](#error-password-authentication-failed-for-user-%22postgres%22-on-php-artisan-migrate)
@@ -136,15 +140,15 @@ Run these commands in the root directory of the Laravel application.
    DB_USERNAME=postgres
    DB_PASSWORD=mypw1234
    ```
-1. Edit `config/app.php` and set timezone to `Asia/Tokyo`
-3. `sudo su postgres`
-4. `psql`
-5. `CREATE DATABSE my_db`
-6. `\l`
+3. Edit `config/app.php` and set timezone to `Asia/Tokyo`
+4. `sudo su postgres` (`sudo -u postgres psql`)
+5. `psql`
+6. `CREATE DATABSE my_db`
+7. `\l`
    - Ensure the created DB is listed here
-7. `\q`
-8. `exit`
-9. `php artisan migrate` -> Refer to troubleshooting report below
+8. `\q`
+9. `exit`
+10. `php artisan migrate` -> Refer to troubleshooting report below
 
 ### Test to seed to Postgres
 
@@ -178,7 +182,6 @@ Run these commands in the root directory of the Laravel application.
 
 - `php artisan migrate:rollback`
 - `php artisan migrate:rollback --step=5` for multiple rollbacks
-
 
 ### Create Eloquent model
 
@@ -239,58 +242,111 @@ Run these commands in the root directory of the Laravel application.
 - `/resources/js/components`
 - `/resources/views`
 
-### Database
+## Tables
 
 columns except for `id`, `created_at`, `updated_at`
+
+### Member tables
 
 - `users`
   - name
   - email
   - password
   - move_in_at
-  - move_out_at
-- `billings`: account book of a user
-  - user_id (many2one with `users`)
-  - abstract
-  - billing
-  - payment
-  - balance
-  - billing_cat_id (many2one with `billing_cats`)
-  - comment
-- `billing_cats`
+  - move_out_at: nullable
+- `role_titles`
   - name
-  - default_reward_rate
-  - default_reward_amount
-- `payments`: account book of the dorm
-  - user_id: (many2one with `users`), nullable
-  - abstract
-  - billing
-  - payment
-  - balance
-  - payment_cat_id (many2one with `payment_cats`)
-  - comment
-- `payment_cats`
-  - name
+  - default_reward_pct
 - `rooms`
   - number
   - block
+  - status: enum (vacant, unavailable, occupied)
   - comment
-- `room_records`
-  - room_id (many2one with `rooms`)
-  - user_id (many2one with `users`)
+- `room_histories`
+  - room_id (many2one)
+  - user_id (many2one)
   - move_in_at
   - move_out_at: nullable
-- `roles`
-  - name
-  - default_reward
-- `role_records`: Committee member, chairperson, cleaning chores
-  - user_id (many2one with `users`)
-  - role_id (many2one with `roles`)
+- `role_histories`: for board members
+  - user_id (many2one)
+  - role_id (many2one)
   - reward_rate
   - reward_amount
   - start_at
   - end_at
-  - repoted_at: nullable
+
+### Finance tables
+
+- `personal_balances`
+  - user_id (many2one with `users`)
+  - abstract
+  - billing
+  - payment
+  - balance
+  - personal_account_title_id (one2many with `personal_account_titles`)
+  - comment
+- `dorm_balances`
+  - fund_title_id (one2many with `fund_titles`)
+  - dorm_accont_title_id (many2one with `dorm_account_titles`)
+  - abstract
+  - receipt
+  - expense
+  - balances
+  - comment
+- `fund_titles`
+  - name: 一般会計, 罰金会計, コンパ積立金, 通信設備積立金
+  - start_at: nullable
+  - end_at: nullable
+  - monthly_reserve: nullable for 一般会計 & 罰金会計
+- `personal_account_titles`
+  - year:
+  - period
+  - is_payment: Boolean
+  - name: 寮費, 寮費支払, 風呂掃除罰金, 脱衣所掃除罰金, ブロック掃除罰金, 滞納罰金, 寮生総会罰金, 委員会義務罰金, 寮費修正返還, 寮費修正徴収, 議長報酬, 監査報酬, クリーンデー罰金, クリーンデー報酬, ブロック掃除交代報酬, 風呂掃除交代報酬
+  - default_amount
+- `dorm_account_titles`
+  - is_expense: boolean
+  - is_monthly: boolean
+  - name
+- `closing_items`
+  - year
+  - period
+  - abstract
+  - assets: JSON
+  - persons: JSON
+  - funds: JSON
+
+### Event Tables
+
+- `event_titles`
+  - name: 風呂掃除, ブロック掃除, 寮生大会, 飲み会, その他
+  - default_reward
+  - default_penalty
+- `event_histories`:
+  - event_type_id (one2many)
+  - name
+  - start_at:
+  - end_at:
+  - user_id:
+  - reward: 
+  - penalty: 
+  - is_forcibly_assigned: boolean
+  - has_attended: boolean
+  - reported_at: nullable
+- `event_availabilities`
+  - event_title_id (one2many)
+  - event_name
+  - user_id (one2many)
+  - selectable_at: JSON (array of dates)
+  - available_at: JSON (array of dates)
+
+### Document Tables
+
+- `documents`: Keeping all the edit history consume large HDD resources?
+  - name
+  - category
+  - auth: enum (all, boss, sub, )
+  - content: TEXT data type
 
 ## Troubleshooting
 
