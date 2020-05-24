@@ -6,22 +6,40 @@
         <v-card-text>
           <v-row class="pb-5">
             <v-col>
-              <v-btn color="error" depressed absolute right>
-                <v-icon class="mr-1">mdi-security</v-icon>決算報告の新規作成
+              <v-btn
+                color="error"
+                depressed
+                absolute
+                right
+                :disabled="hasPendingReport || !isBillingDone"
+              >
+                <v-icon class="mr-1">mdi-security</v-icon>決算報告の新規作成（寮大前）
               </v-btn>
             </v-col>
           </v-row>
           <v-row class="pb-5">
             <v-col>
-              <v-btn color="error" depressed absolute right>
-                <v-icon class="mr-1">mdi-security</v-icon>決算を確定して寮費請求
+              <v-btn
+                color="error"
+                depressed
+                absolute
+                right
+                :disabled="!hasPendingReport || isBillingDone"
+              >
+                <v-icon class="mr-1">mdi-security</v-icon>決算を確定し寮費請求（寮大後）
               </v-btn>
             </v-col>
           </v-row>
           <v-row class="pb-5">
             <v-col>
-              <v-btn color="error" depressed absolute right>
-                <v-icon class="mr-1">mdi-security</v-icon>引落依頼CSVデータ作成
+              <v-btn
+                color="error"
+                depressed
+                absolute
+                right
+                :disabled="!hasPendingReport || !isBillingDone"
+              >
+                <v-icon class="mr-1">mdi-security</v-icon>引落依頼CSVデータ生成（寮大後）
               </v-btn>
             </v-col>
           </v-row>
@@ -52,6 +70,7 @@
             </v-chip>
           </div>
           <monthly-fee></monthly-fee>
+          <deduction-table></deduction-table>
           <income-table></income-table>
           <expenditure-table></expenditure-table>
           <assets-table></assets-table>
@@ -69,6 +88,8 @@ export default {
     return {
       periods: ["2020年05月期", "2020年06月期", "2020年07月期"],
       periodShown: "",
+      hasPendingReport: false,
+      isBillingDone: true,
       billItems: [],
       billingHeaders: [
         {

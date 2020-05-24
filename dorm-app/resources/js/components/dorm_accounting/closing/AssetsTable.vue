@@ -5,7 +5,7 @@
       <v-row class="pb-5">
         <v-col>
           <v-btn color="error" depressed absolute right>
-            <v-icon class="mr-1">mdi-security</v-icon>資産変動の登録
+            <v-icon class="mr-1">mdi-security</v-icon>資産有高の登録
           </v-btn>
         </v-col>
       </v-row>
@@ -31,14 +31,14 @@ export default {
           name: "ゆうちょ銀行預金",
           amount: 555555
         },
-        {
-          name: "寮費滞納者未収金",
-          amount: 555555
-        },
-        {
-          name: "三寮会計未収金",
-          amount: 555555
-        },
+        // {
+        //   name: "寮費滞納者未収金",
+        //   amount: 555555
+        // },
+        // {
+        //   name: "三寮会計未収金",
+        //   amount: 555555
+        // },
         {
           name: "切手",
           amount: 500

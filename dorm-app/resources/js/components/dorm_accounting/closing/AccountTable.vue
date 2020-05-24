@@ -4,15 +4,17 @@
     <v-card-text>
       <v-row class="pb-5">
         <v-col>
-          <dialog-box cardtitle="会計別収支の登録" cardsubtitle="会計ごとの現在の残高を入力してください">
-            <template #dialogaction>
-              <v-btn color="blue darken-1" text>Cancel</v-btn>
-              <v-btn color="blue darken-1" text>Save</v-btn>
-            </template>
-          </dialog-box>
+          <v-btn color="error" depressed absolute right>
+            <v-icon class="mr-1">mdi-security</v-icon>会計項目の追加と削除
+          </v-btn>
         </v-col>
       </v-row>
-      <v-data-table :headers="accountHeaders" :items="accounts" :items-per-page="20" :hide-default-footers="true"></v-data-table>
+      <v-data-table
+        :headers="accountHeaders"
+        :items="accounts"
+        :items-per-page="20"
+        :hide-default-footers="true"
+      ></v-data-table>
     </v-card-text>
   </v-card>
 </template>
