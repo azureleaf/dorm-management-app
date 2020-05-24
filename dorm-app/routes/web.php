@@ -19,6 +19,7 @@ use App\User;
 use App\Billing;
 use App\Room;
 use App\RoleTitle;
+use App\PersonalAccountTitle;
 
 // routes for view
 Route::get('/', function () {
@@ -89,6 +90,10 @@ Route::post('/edit/room/status/{room_id}', function (Request $req, $room_id) {
     $room->comment = $req->comment;
     $room->status = $req->status;
     $room->save();
+});
+
+Route::get('/personal/titles', function () {
+    return PersonalAccountTitle::orderBy("id")->get();
 });
 
 
