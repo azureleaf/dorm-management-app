@@ -11,6 +11,17 @@ window.Vue = require("vue");
 
 Vue.use(Vuetify);
 
+Vue.mixin({
+    methods: {
+        formatCurrency(number) {
+            return new Intl.NumberFormat("ja-JP", {
+                style: "currency",
+                currency: "JPY"
+            }).format(number);
+        }
+    }
+});
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
