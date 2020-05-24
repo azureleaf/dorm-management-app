@@ -10,8 +10,6 @@ class RoleTitle extends Model
 
     // Set default values
     protected $attributes = [
-        'reward_amount' => 0,
-        'reward_unit' => "jpy",
+        'default_reward_pct' => 0,
     ];
-    
 }

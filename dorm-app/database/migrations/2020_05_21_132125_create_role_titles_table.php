@@ -15,9 +15,8 @@ class CreateRoleTitlesTable extends Migration
     {
         Schema::create('role_titles', function (Blueprint $table) {
             $table->id();
-            $table->string("title");
-            $table->integer("reward_amount");
-            $table->enum("reward_unit", ["jpy", "pct"]);
+            $table->string("name");
+            $table->integer("default_reward_pct");
             $table->timestamps();
         });
     }
