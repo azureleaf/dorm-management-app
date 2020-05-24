@@ -2,7 +2,7 @@
   <v-content>
     <v-container>
       <v-card elevation="10">
-        <v-card-title>職名一覧</v-card-title>
+        <v-card-title>役職一覧</v-card-title>
         <v-card-text>
           <v-data-table
             :headers="titleHeaders"
@@ -33,9 +33,19 @@ export default {
           value: "title"
         },
         {
-          text: "既定の報酬額",
+          text: "報酬額の既定値",
           sortable: false,
           value: "reward"
+        },
+        {
+          text: "現職者名",
+          sortable: false,
+          value: "user_name"
+        },
+        {
+          text: "編集権限",
+          sortable: false,
+          value: "auth"
         }
       ]
     };

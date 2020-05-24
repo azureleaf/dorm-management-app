@@ -17,78 +17,78 @@ export default {
     return {
       docs: [
         {
+          title: "寮則",
+          last_author: "",
+          updated_at: "",
+          size: ""
+        },
+        {
           title: "委員長引継書",
           last_author: "",
           updated_at: "",
-          size: "",
+          size: ""
         },
         {
           title: "副委員長引継書",
           last_author: "",
           updated_at: "",
-          size: "",
+          size: ""
         },
         {
           title: "総務引継書",
           last_author: "",
           updated_at: "",
-          size: "",
+          size: ""
         },
         {
           title: "会計委員引継書",
           last_author: "",
           updated_at: "",
-          size: "",
+          size: ""
         },
         {
           title: "風呂掃除手順書",
           last_author: "",
           updated_at: "",
           category: "manual",
-          size: "",
+          size: ""
         },
         {
           title: "議長手順書",
           last_author: "",
           updated_at: "",
-          size: "",
+          size: ""
         },
         {
           title: "補食場清掃手順書",
           last_author: "",
           updated_at: "",
-          size: "",
+          size: ""
         },
-          {
+        {
           title: "トイレ清掃手順書",
           last_author: "",
           updated_at: "",
-          size: "",
+          size: ""
         },
         {
           title: "情報システム管理手順書",
           last_author: "",
           updated_at: "",
-          size: "",
+          size: ""
         },
         {
           title: "債務承認弁済契約書",
           last_author: "",
           updated_at: "",
-          size: "",
-        },
-        {
-          title: "寮則",
-          last_author: "",
-          updated_at: "",
-          size: "",
+          size: ""
         },
         {
           title: "新入寮生オリエンテーション資料",
           last_author: "",
           updated_at: "",
-          size: "",
-        },
+          size: ""
+        }
       ],
       docHeaders: [
         {
@@ -101,7 +101,7 @@ export default {
           sortable: true,
           value: "cat"
         },
-         {
+        {
           text: "編集権限",
           sortable: true,
           value: "auth"
@@ -111,11 +111,11 @@ export default {
           sortable: true,
           value: "updated_at"
         },
-         {
+        {
           text: "最終更新者",
           sortable: true,
           value: "last_author"
-        },
+        }
       ]
     };
   },

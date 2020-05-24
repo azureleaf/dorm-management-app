@@ -24,6 +24,10 @@
               </v-dialog>
             </v-col>
           </v-row>
+          <v-row>
+            <v-checkbox v-model="showCurrentUsers" label="現在の寮生" class="ml-5"></v-checkbox>
+            <v-checkbox v-model="showFormerUsers" label="過去の寮生" class="ml-5"></v-checkbox>
+          </v-row>
           <v-data-table :headers="userHeaders" :items="users" :items-per-page="10">
             <template v-slot:item.edit="{item}">
               <user-table-dialog :item="item"></user-table-dialog>
@@ -41,6 +45,8 @@ export default {
     return {
       isAdmin: true,
       isDialogOpen: false,
+      showCurrentUsers: true,
+      showFormerUsers: false,
       users: [],
       userHeadersAll: [
         {

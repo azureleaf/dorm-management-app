@@ -2,8 +2,8 @@
   <v-content>
     <v-container>
       <v-card elevation="10">
-        <v-card-title>行事申請</v-card-title>
-        <v-card-subtitle>「当番実施報告」「当番交代報告」「寮生大会委任状」「クリーンデー欠席届」を出すには、下のカレンダーから該当箇所をクリックしてください。</v-card-subtitle>
+        <v-card-title>行事報告提出</v-card-title>
+        <v-card-subtitle>当番の実施報告や交代報告など、下の日程表から該当箇所をクリックしてください。</v-card-subtitle>
         <v-card-text>
           <v-row class="pb-5 mb-2">
             <v-col>
@@ -38,7 +38,11 @@
               :event-overlap-threshold="30"
             ></v-calendar>
           </v-sheet>
-          <v-btn @click="logs">A</v-btn>
+          <v-card class="mt-5" outlined>
+            <v-card-title>行事変更履歴</v-card-title>
+            <v-card-subtitle>当番交代などの履歴です。</v-card-subtitle>
+            <v-card-text></v-card-text>
+          </v-card>
         </v-card-text>
       </v-card>
     </v-container>
