@@ -300,14 +300,15 @@ columns except for `id`, `created_at`, `updated_at`
   - monthly_reserve: nullable for 一般会計 & 罰金会計
 - `personal_account_titles`
   - year:
-  - period
+  - month:
   - is_payment: Boolean
   - name: 寮費, 寮費支払, 風呂掃除罰金, 脱衣所掃除罰金, ブロック掃除罰金, 滞納罰金, 寮生総会罰金, 委員会義務罰金, 寮費修正返還, 寮費修正徴収, 議長報酬, 監査報酬, クリーンデー罰金, クリーンデー報酬, ブロック掃除交代報酬, 風呂掃除交代報酬
-  - default_amount
+  - description
+  - default_amount: nullable
 - `dorm_account_titles`
   - is_expense: boolean
   - is_monthly: boolean
-  - name
+  - name: 寄宿料, 水道, 電気, ガス, 灯油, 共通棟重油, 共通棟ガス, インターネット, 新聞, 銀行手数料, 寮費徴収, 利子収入, ガス代徴収, 議長報酬, 寮費返還, 
 - `closing_items`
   - year
   - period
