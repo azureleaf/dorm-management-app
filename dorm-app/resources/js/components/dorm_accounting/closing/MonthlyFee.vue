@@ -1,26 +1,12 @@
 <template>
   <v-card outlined class="mb-4">
     <v-card-title>基本金</v-card-title>
-    <v-card-subtitle>翌月の各寮生からの徴収予定額です。</v-card-subtitle>
+    <v-card-subtitle>翌月の寮生ひとりあたりの徴収予定額です。</v-card-subtitle>
     <v-card-text>
-      <v-row class="pb-5 mb-2">
-        <v-col>
-          <v-btn color="error" depressed absolute right>
-            <v-icon class="mr-1">mdi-security</v-icon>負担人数の編集
-          </v-btn>
-        </v-col>
-      </v-row>
-      <v-card class="pa-3 formula" flat outlined>
-        <v-chip outlined label large color="green darken-2">一般会計支出： 200000</v-chip>
-        <span class="display-1">÷</span>
-        <v-chip outlined label large color="green darken-2">負担人数： 45.2</v-chip>
-        <span class="display-1">=</span>
-        <v-chip outlined label large color="red">寮費（端数切り上げ）： 12345</v-chip>
-      </v-card>
       <v-data-table
-        :headers="payerTypeHeaders"
-        :items="payerTypes"
-        :items-per-page="payerTypes.length"
+        :headers="fundHeaders"
+        :items="funds"
+        :items-per-page="funds.length"
         hide-default-footer
       ></v-data-table>
     </v-card-text>
@@ -31,9 +17,9 @@
 export default {
   data: function() {
     return {
-      payerTypes: [
+      funds: [
         {
-          type: "委員長",
+          type: "一般会計",
           burden_rate: "0",
           persons: "1",
           persons_deducted: "0",
@@ -42,7 +28,7 @@ export default {
           comment: ""
         },
         {
-          type: "副委員長",
+          type: "コンパ会計",
           burden_rate: "0.5",
           persons: "1",
           persons_deducted: "0.5",
@@ -51,7 +37,7 @@ export default {
           comment: ""
         },
         {
-          type: "総務",
+          type: "設備投資会計",
           burden_rate: "0.5",
           persons: "1",
           persons_deducted: "0.5",
@@ -60,28 +46,10 @@ export default {
           comment: ""
         },
         {
-          type: "会計委員",
+          type: "罰金会計",
           burden_rate: "0.25",
           persons: "2",
           persons_deducted: "0.5",
-          start_at: "",
-          end_at: "",
-          comment: ""
-        },
-        {
-          type: "会計委員（臨時代理）",
-          burden_rate: "0",
-          persons: "1",
-          persons_deducted: "0",
-          start_at: "2020-06",
-          end_at: "2020-09",
-          comment: ""
-        },
-        {
-          type: "一般寮生",
-          burden_rate: "1",
-          persons: "54",
-          persons_deducted: "50",
           start_at: "",
           end_at: "",
           comment: ""
@@ -96,44 +64,35 @@ export default {
           comment: ""
         }
       ],
-      payerTypeHeaders: [
+      fundHeaders: [
         {
-          text: "職名",
+          text: "会計",
           sortable: false,
           value: "type"
         },
         {
-          text: "負担率",
+          text: "徴収予定額合計",
           sortable: false,
-          value: "burden_rate"
-        },
-        {
-          text: "実人数",
-          sortable: false,
-          value: "persons"
+          value: ""
         },
         {
           text: "負担人数",
           sortable: false,
-          value: "persons_deducted"
+          value: ""
         },
         {
-          text: "開始月",
+          text: "除算結果",
           sortable: false,
-          value: "start_at"
+          value: ""
         },
         {
-          text: "終了月",
+          text: "基本金内訳（切り上げ）",
           sortable: false,
-          value: "end_at"
-        }
+          value: ""
+        },
+        
       ]
     };
-  },
-  computed: {
-    periodSelected() {
-      return this.periods[this.periods.length - 1];
-    }
   },
   mounted: async function() {
     const res = await axios.get("./billings");
