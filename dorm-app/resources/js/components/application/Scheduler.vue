@@ -2,7 +2,7 @@
   <v-content>
     <v-container>
       <v-card elevation="10">
-        <v-card-title>日程希望</v-card-title>
+        <v-card-title>日程希望申請</v-card-title>
         <v-card-subtitle>同じ項目について複数回提出した場合、最後の提出内容が適用されます。</v-card-subtitle>
         <v-card-text>
           <v-row>
@@ -13,7 +13,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="12" md="2">
+            <v-col cols="12" md="4">
               <v-select :items="formTypes" v-model="formTypeSelected" label="受付中の日程希望調査"></v-select>
             </v-col>
           </v-row>

@@ -2,8 +2,8 @@
   <v-content>
     <v-container>
       <v-card elevation="10">
-        <v-card-title>寮生大会委任状</v-card-title>
-        <v-card-subtitle>提出しても必ず認められるわけではありません。</v-card-subtitle>
+        <v-card-title>寮生大会委任状提出</v-card-title>
+        <v-card-subtitle>提出しても認められない場合があります。</v-card-subtitle>
         <v-card-text>
           <v-row class="pb-5">
             <v-col>

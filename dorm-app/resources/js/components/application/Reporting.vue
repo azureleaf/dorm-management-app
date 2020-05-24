@@ -11,19 +11,19 @@
               </v-btn>
             </v-col>
           </v-row>
-          <v-row>
+          <!-- <v-row>
             <v-col cols="12" md="2">
               <v-select :items="formTypes" v-model="formTypeSelected" label="実施報告の種別"></v-select>
             </v-col>
-          </v-row>
-          <v-radio-group v-model="isMyDuty">
+          </v-row> -->
+          <!-- <v-radio-group v-model="isMyDuty">
             <v-radio
               v-for="ans in [true, false]"
               :key="ans"
               :label="ans ? dutyText[0] : dutyText[1]"
               :value="ans"
             ></v-radio>
-          </v-radio-group>
+          </v-radio-group> -->
           <v-row>
             <v-col>
               <v-date-picker v-model="picker"></v-date-picker>
