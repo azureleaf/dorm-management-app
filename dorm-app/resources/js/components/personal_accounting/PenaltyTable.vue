@@ -2,8 +2,8 @@
   <v-content>
     <v-container>
       <v-card elevation="10">
-        <v-card-title>罰金履歴</v-card-title>
-        <v-card-subtitle>直近三ヶ月の罰金です。</v-card-subtitle>
+        <v-card-title>賞罰履歴</v-card-title>
+        <v-card-subtitle>直近三ヶ月に寮生に課せられた報酬と罰金の一覧です。</v-card-subtitle>
         <v-card-text>
           <v-data-table :headers="userHeaders" :items="users" :items-per-page="20"></v-data-table>
         </v-card-text>

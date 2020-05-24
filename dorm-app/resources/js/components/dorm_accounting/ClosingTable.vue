@@ -4,7 +4,7 @@
       <v-card elevation="10">
         <v-card-title>決算報告</v-card-title>
         <v-card-text>
-          <v-row class="pb-5">
+          <v-row class="pb-5 mb-5">
             <v-col>
               <v-btn
                 color="error"
@@ -13,8 +13,14 @@
                 right
                 :disabled="hasPendingReport || !isBillingDone"
               >
-                <v-icon class="mr-1">mdi-security</v-icon>決算報告の新規作成（寮大前）
+                <v-icon class="mr-1">mdi-security</v-icon>決算報告の新規作成
               </v-btn>
+            </v-col>
+          </v-row>
+          <v-divider></v-divider>
+          <v-row>
+            <v-col cols="12" md="4">
+              <v-select :items="periods" v-model="periodSelected" label="決算期" outlined></v-select>
             </v-col>
           </v-row>
           <v-row class="pb-5">
@@ -26,7 +32,7 @@
                 right
                 :disabled="!hasPendingReport || isBillingDone"
               >
-                <v-icon class="mr-1">mdi-security</v-icon>決算を確定し寮費請求（寮大後）
+                <v-icon class="mr-1">mdi-security</v-icon>決算を確定し寮費請求
               </v-btn>
             </v-col>
           </v-row>
@@ -39,13 +45,8 @@
                 right
                 :disabled="!hasPendingReport || !isBillingDone"
               >
-                <v-icon class="mr-1">mdi-security</v-icon>引落依頼CSVデータ生成（寮大後）
+                <v-icon class="mr-1">mdi-security</v-icon>引落依頼内容の生成
               </v-btn>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="12" md="4">
-              <v-select :items="periods" v-model="periodSelected" label="決算期" outlined></v-select>
             </v-col>
           </v-row>
 
