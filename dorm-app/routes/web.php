@@ -52,15 +52,8 @@ Route::get('/archive', function () {
 
 // routes for axios
 Route::get('/users', function () {
-    // error_log(User::find(2)->room->room);
-    // return User::all();
-
-    $merged = collect([]);
-    foreach (User::all() as $user) {
-        $user->room;
-        $merged->push($user);
-    }
-    return $merged;
+    // Get all the User models with relations to Room models
+    return User::with("room")->get();
 });
 
 Route::get('/billings', function () {
@@ -68,13 +61,15 @@ Route::get('/billings', function () {
 });
 
 Route::get('/rooms', function () {
+    return Room::with("user")->orderBy("number")->get();
+
+    /** Unused code below do the same as above but verbose */
     $merged = collect([]);
-    foreach (Room::orderBy("room")->get() as $room) {
+    foreach (Room::orderBy("number")->get() as $room) {
         // append "user" key with values
         // values will be the obj of related user if exists
-        // values will be "null" for no user is related
+        // values will be "null" when no user is related
         $room->user;
-
         $merged->push($room);
     }
     return $merged;
@@ -89,9 +84,13 @@ Route::get('/rooms/available', function () {
 Route::post('/create/user', function (Request $req) {
     // Save new user data without room info
     $newComer = new User;
-    $newComer->name = $req->name["family"]["kanji"] . $req->name["first"]["kanji"];
+    $newComer->name_family_kanji = $req->name["family"]["kanji"];
+    $newComer->name_first_kanji = $req->name["first"]["kanji"];
+    $newComer->name_family_kana = $req->name["family"]["kana"];
+    $newComer->name_first_kana = $req->name["first"]["kana"];
     $newComer->email = $req->email;
     $newComer->password = Hash::make($req->password);
+    $newComer->move_in_at = $req->move_in_at;
     $newComer->save();
 
     // Get the Room model of the room in which the new comer move

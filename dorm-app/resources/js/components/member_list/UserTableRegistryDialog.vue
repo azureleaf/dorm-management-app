@@ -40,7 +40,7 @@
               :items="rooms"
               v-model="room"
               label="居室"
-              item-text="room"
+              item-text="number"
               item-value="id"
               outlined
             ></v-select>
@@ -49,7 +49,7 @@
         <v-row justify="center">
           <div class="title">入寮日</div>
           <v-date-picker
-            v-model="moveInDate"
+            v-model="moveInAt"
             locale="ja-jp"
             :day-format="date => new Date(date).getDate()"
             style="box-shadow: 0 0 0; border: solid 1px gainsboro"
@@ -69,7 +69,7 @@
 export default {
   data: function() {
     return {
-      moveInDate: new Date().toISOString().substr(0, 10),
+      moveInAt: new Date().toISOString().substr(0, 10),
       rooms: [],
       room: "",
       name: {
@@ -91,9 +91,9 @@ export default {
         const res = await axios.post("/create/user", {
           name: this.name,
           room_id: this.room,
-          moveInDate: this.moveInDate,
+          move_in_at: this.moveInAt,
           password: this.password,
-          email: this.email + "@dc.aoba.ac.jp"
+          email: this.email + "@dc.aoba.ac.jp",
         });
       } catch (e) {
         console.error(e);

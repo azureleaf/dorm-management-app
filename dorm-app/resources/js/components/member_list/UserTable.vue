@@ -60,7 +60,7 @@ export default {
         {
           text: "名前",
           sortable: true,
-          value: "name",
+          value: "full_name",
           isAdminItem: false
         },
         {
@@ -72,7 +72,7 @@ export default {
         {
           text: "部屋番号",
           sortable: true,
-          value: "room.room",
+          value: "room.number",
           isAdminItem: false
         },
         {

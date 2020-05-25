@@ -46,7 +46,7 @@ export default {
         {
           text: "部屋番号",
           sortable: true,
-          value: "room"
+          value: "number"
         },
         {
           text: "居住可否",
@@ -56,7 +56,7 @@ export default {
         {
           text: "居住者",
           sortable: true,
-          value: "user.name"
+          value: "user.full_name"
         },
         {
           text: "所属ブロック",
