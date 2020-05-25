@@ -36,7 +36,7 @@ class RoomSeeder extends Seeder
 
                 // Create all the rooms
                 DB::table('rooms')->insert([
-                    'room' => $floor . $room,
+                    'number' => $floor . $room,
                     'comment' => "",
                     'status' => 'vacant',
                     'block' => $block,
@@ -48,14 +48,14 @@ class RoomSeeder extends Seeder
 
         // List existing user IDs & room numbers in the DB
         $userIds = App\User::all()->pluck('id')->toArray();
-        $roomNums = App\Room::all()->pluck('room')->toArray();
+        $roomNums = App\Room::all()->pluck('number')->toArray();
 
         $roomNums = $this->randArray($roomNums); // randomize
 
         // Seed occupied rooms with users in the user table
         foreach ($userIds as $index => $userId) {
             DB::table('rooms')
-                ->where('room', $roomNums[$index])
+                ->where('number', $roomNums[$index])
                 ->update(
                     [
                         'user_id' => $userId,
@@ -67,7 +67,7 @@ class RoomSeeder extends Seeder
         // Seed unavailable rooms
         for ($i = 0; $i < 8; $i++) {
             DB::table('rooms')
-                ->where('room', $roomNums[$i + count($userIds)])
+                ->where('number', $roomNums[$i + count($userIds)])
                 ->update([
                     'comment' => "暖房器具なし",
                     'status' => 'unavailable'
