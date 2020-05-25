@@ -6,7 +6,7 @@
         <v-card-text>
           <v-row class="pb-5">
             <v-col>
-              <user-table-registry-dialog @reloadUsers="loadUsers"></user-table-registry-dialog>
+              <user-table-registry-dialog :emaildomain="emailDomain" @reloadUsers="loadUsers"></user-table-registry-dialog>
             </v-col>
           </v-row>
           <v-row>
@@ -31,7 +31,11 @@
             :search="searchKeyword"
           >
             <template v-slot:item.edit="{item}">
-              <user-table-edit-dialog :item="item"></user-table-edit-dialog>
+              <user-table-edit-dialog
+                :user="item"
+                :emaildomain="emailDomain"
+                @reloadUsers="loadUsers"
+              ></user-table-edit-dialog>
             </template>
           </v-data-table>
         </v-card-text>
@@ -47,6 +51,7 @@ export default {
       searchKeyword: "",
       isAdmin: true,
       isDialogOpen: false,
+      emailDomain: "@dc.aoba.ac.jp",
       showCurrentUsers: true,
       showFormerUsers: false,
       users: [],
@@ -76,6 +81,18 @@ export default {
           isAdminItem: false
         },
         {
+          text: "入寮日",
+          sortable: true,
+          value: "move_in_at",
+          isAdminItem: true
+        },
+        {
+          text: "退寮日",
+          sortable: true,
+          value: "move_out_at",
+          isAdminItem: true
+        },
+        {
           text: "現職",
           sortable: true,
           value: "role",
@@ -85,7 +102,7 @@ export default {
           text: "編集",
           sortable: false,
           value: "edit",
-          isAdminItem: false
+          isAdminItem: true
         }
       ]
     };

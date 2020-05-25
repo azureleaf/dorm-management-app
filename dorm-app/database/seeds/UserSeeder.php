@@ -33,7 +33,7 @@ class UserSeeder extends Seeder
                 'name_first_kanji' => $names[$i][1],
                 'name_family_kana' => "ミョウジサンプル",
                 'name_first_kana' => "ナマエサンプル",
-                'email' => Str::random(10) . '@dcmail.com',
+                'email' => Str::random(10) . '@dc.aoba.ac.jp',
                 'password' => Hash::make('password'),
                 'move_in_at' => Carbon::create(2020, 01, 01),
                 // 'move_out_at' => Carbon::create(2030, 12, 31),
