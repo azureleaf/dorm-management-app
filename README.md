@@ -30,7 +30,7 @@
     - [Document Tables](#document-tables)
   - [Troubleshooting](#troubleshooting)
     - [Error `could not find driver` on `php artisan migrate`](#error-could-not-find-driver-on-php-artisan-migrate)
-    - [Error `password authentication failed for user "postgres"` on `php artisan migrate`](#error-password-authentication-failed-for-user-%22postgres%22-on-php-artisan-migrate)
+    - [Error `password authentication failed for user "postgres"` on `php artisan migrate`](#error-password-authentication-failed-for-user-postgres-on-php-artisan-migrate)
 
 ### Purpose
 
@@ -249,7 +249,10 @@ columns except for `id`, `created_at`, `updated_at`
 ### Member tables
 
 - `users`
-  - name
+  - family name kanji
+  - first name kanji
+  - family name kana
+  - first name kana
   - email
   - password
   - move_in_at
@@ -272,13 +275,15 @@ columns except for `id`, `created_at`, `updated_at`
   - role_id (many2one)
   - reward_rate
   - reward_amount
-  - start_at
-  - end_at
+  - start_at: Suggest default term on frontend, not on backend
+  - end_at: Suggest default term on frontend, not on backend
 
 ### Finance tables
 
 - `personal_balances`
   - user_id (many2one with `users`)
+  - year
+  - month
   - abstract
   - billing
   - payment
@@ -299,10 +304,8 @@ columns except for `id`, `created_at`, `updated_at`
   - end_at: nullable
   - monthly_reserve: nullable for 一般会計 & 罰金会計
 - `personal_account_titles`
-  - year:
-  - month:
   - is_payment: Boolean
-  - name: 寮費, 寮費支払, 風呂掃除罰金, 脱衣所掃除罰金, ブロック掃除罰金, 滞納罰金, 寮生総会罰金, 委員会義務罰金, 寮費修正返還, 寮費修正徴収, 議長報酬, 監査報酬, クリーンデー罰金, クリーンデー報酬, ブロック掃除交代報酬, 風呂掃除交代報酬
+  - name
   - description
   - default_amount: nullable
 - `dorm_account_titles`
@@ -329,11 +332,12 @@ columns except for `id`, `created_at`, `updated_at`
   - start_at:
   - end_at:
   - user_id:
+  - is_forcibly_assigned: boolean
+  - result: enum (attended, absent, cancelled) "absent" is for penalty while "cancelled" isn't
+  - result_updated_by: (one2many to `users` id)
+  - done_at: nullable, filled when the result status is "attended"
   - reward: 
   - penalty: 
-  - is_forcibly_assigned: boolean
-  - has_attended: boolean
-  - reported_at: nullable
 - `event_availabilities`
   - event_title_id (one2many)
   - event_name
