@@ -81,6 +81,30 @@ Route::get('/rooms', function () {
 });
 
 
+Route::get('/rooms/available', function () {
+    // return Room::where('status', 'vacant')->pluck("room")->toArray();
+    return Room::where('status', 'vacant')->get();
+});
+
+Route::post('/create/user', function (Request $req) {
+    // Save new user data without room info
+    $newComer = new User;
+    $newComer->name = $req->name["family"]["kanji"] . $req->name["first"]["kanji"];
+    $newComer->email = $req->email;
+    $newComer->password = Hash::make($req->password);
+    $newComer->save();
+
+    // Get the Room model of the room in which the new comer move
+    $room = Room::find($req->room_id);
+    $room->status = "occupied";
+
+    // Reload the new comer saved above, and add room with relationship
+    $newComerRetrieved = User::find($newComer->id);
+    $newComerRetrieved->room()->save($room);
+    $newComerRetrieved->save();
+});
+
+
 Route::get('/roletitles', function () {
     return RoleTitle::all();
 });

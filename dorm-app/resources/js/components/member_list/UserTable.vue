@@ -6,31 +6,32 @@
         <v-card-text>
           <v-row class="pb-5">
             <v-col>
-              <v-dialog v-model="isDialogOpen" persistent max-width="600px">
-                <template v-slot:activator="{ on }">
-                  <v-btn color="error" depressed right absolute dark v-on="on">
-                    <v-icon class="mr-1">mdi-security</v-icon>新入寮生登録
-                  </v-btn>
-                </template>
-                <v-card>
-                  <v-card-title>新入寮生登録</v-card-title>
-                  <v-card-text></v-card-text>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="isDialogOpen = false">Cancel</v-btn>
-                    <v-btn color="blue darken-1" text @click="isDialogOpen = false">Save</v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
+              <user-table-registry-dialog @reloadUsers="loadUsers"></user-table-registry-dialog>
             </v-col>
           </v-row>
           <v-row>
+            <v-col cols="12" md="4">
+              <v-text-field
+                v-model="searchKeyword"
+                append-icon="mdi-magnify"
+                label="Search"
+                single-line
+                outlined
+                dense
+                hide-details
+              ></v-text-field>
+            </v-col>
             <v-checkbox v-model="showCurrentUsers" label="現在の寮生" class="ml-5"></v-checkbox>
             <v-checkbox v-model="showFormerUsers" label="過去の寮生" class="ml-5"></v-checkbox>
           </v-row>
-          <v-data-table :headers="userHeaders" :items="users" :items-per-page="10">
+          <v-data-table
+            :headers="userHeaders"
+            :items="users"
+            :items-per-page="10"
+            :search="searchKeyword"
+          >
             <template v-slot:item.edit="{item}">
-              <user-table-dialog :item="item"></user-table-dialog>
+              <user-table-edit-dialog :item="item"></user-table-edit-dialog>
             </template>
           </v-data-table>
         </v-card-text>
@@ -43,6 +44,7 @@
 export default {
   data: function() {
     return {
+      searchKeyword: "",
       isAdmin: true,
       isDialogOpen: false,
       showCurrentUsers: true,
@@ -96,9 +98,14 @@ export default {
       else return this.userHeadersAll.filter(header => !header.isAdminItem);
     }
   },
-  mounted: async function() {
-    const res = await axios.get("./users");
-    this.users = res.data;
+  methods: {
+    async loadUsers() {
+      const res = await axios.get("./users");
+      this.users = res.data;
+    }
+  },
+  mounted: function() {
+    this.loadUsers();
   }
 };
 </script>
