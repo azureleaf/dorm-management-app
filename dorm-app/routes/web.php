@@ -53,7 +53,7 @@ Route::get('/archive', function () {
 // routes for axios
 Route::get('/users', function () {
     // Get all the User models with relations to Room models
-    return User::with("room")->get();
+    return User::with("room")->orderBy("id")->get();
 });
 
 Route::get('/billings', function () {
@@ -78,7 +78,7 @@ Route::get('/rooms', function () {
 
 Route::get('/rooms/available', function () {
     // return Room::where('status', 'vacant')->pluck("room")->toArray();
-    return Room::where('status', 'vacant')->get();
+    return Room::where('status', 'vacant')->orderBy("number")->get();
 });
 
 Route::post('/create/user', function (Request $req) {
@@ -101,6 +101,39 @@ Route::post('/create/user', function (Request $req) {
     $newComerRetrieved = User::find($newComer->id);
     $newComerRetrieved->room()->save($room);
     $newComerRetrieved->save();
+});
+
+Route::post('/update/user/{user_id}/{operation}', function (Request $req, $user_id, $operation) {
+    $user = User::find($user_id);
+
+    if ($operation == "names") {
+        $user->name_family_kanji = $req->name["family"]["kanji"];
+        $user->name_first_kanji = $req->name["first"]["kanji"];
+        $user->name_family_kana = $req->name["family"]["kana"];
+        $user->name_first_kana = $req->name["first"]["kana"];
+        $user->email = $req->email;
+        $user->save();
+    } else if ($operation == "password") {
+        $user->password = Hash::make($req->password);
+        $user->save();
+    } else if ($operation == "transfer") {
+        $oldRoom = Room::find($req->old_room_id);
+        $oldRoom->status = "vacant";
+        $oldRoom->user_id = null; // Can this be updated with relationship?
+        $oldRoom->save();
+
+        $newRoom = Room::find($req->new_room_id);
+        $newRoom->status = "occupied";
+        $user->room()->save($newRoom);
+    } else if ($operation == "leave") {
+        $room = Room::where("user_id", $user_id)->first();
+        $room->status = "vacant";
+        $room->user_id = null;
+        $room->save();
+
+        $user->move_out_at = $req->move_out_at;
+        $user->save();
+    }
 });
 
 
