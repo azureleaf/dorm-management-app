@@ -18,20 +18,25 @@ class UserSeeder extends Seeder
         $names = array();
         foreach ($familyNames as $familyName) {
             foreach ($firstNames as $firstName) {
-                array_push($names, $familyName . $firstName);
+                array_push($names, array($familyName, $firstName));
             }
         }
 
         // randomize the order of the names
-        $names = $this->randArray($names);
+        // $names = $this->randArray($names);
 
         // Seed some users
         // Note that number of users added here must be fewer than generated names
         for ($i = 0; $i < 20; $i++) {
             DB::table('users')->insert([
-                'name' => $names[$i],
+                'name_family_kanji' => $names[$i][0],
+                'name_first_kanji' => $names[$i][1],
+                'name_family_kana' => "ミョウジサンプル",
+                'name_first_kana' => "ナマエサンプル",
                 'email' => Str::random(10) . '@dcmail.com',
                 'password' => Hash::make('password'),
+                'move_in_at' => Carbon::create(2020, 01, 01),
+                // 'move_out_at' => Carbon::create(2030, 12, 31),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]);
