@@ -37,8 +37,24 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /** 
+     * By adding the accessor as follows, this accessor value will be
+     * dynamically appended on every model retrieval
+     */
+    protected $appends = [
+        'full_name'
+    ];
+
     public function room()
     {
         return $this->hasOne('App\Room');
+    }
+
+    // Accessor
+    // By naming the function as follows, the value can be accessed as "$user->full_name"
+    // Don't forget to add accessor to "$appends"
+    public function getFullNameAttribute()
+    {
+        return "{$this->name_family_kanji}{$this->name_first_kanji}";
     }
 }
