@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="isDialogOpen" persistent max-width="600px">
     <template v-slot:activator="{ on }">
-      <v-btn color="error" depressed dark v-on="on" dense>
+      <v-btn color="error" depressed v-on="on" dense :disabled="user.move_out_at != undefined">
         <v-icon class="mr-1">mdi-security</v-icon>
       </v-btn>
     </template>
@@ -77,6 +77,19 @@
               ></v-date-picker>
             </v-row>
           </v-container>
+          <v-container v-else-if="operation == '役職編集'">
+            <v-row justify="center">
+              <v-subheader class>開始日</v-subheader>
+            </v-row>
+            <v-row justify="center">
+              <v-date-picker
+                v-model="moveOutAt"
+                locale="ja-jp"
+                :day-format="date => new Date(date).getDate()"
+                style="box-shadow: 0 0 0; border: solid 1px gainsboro"
+              ></v-date-picker>
+            </v-row>
+          </v-container>
         </v-form>
       </v-card-text>
       <v-card-actions>
@@ -111,7 +124,13 @@ export default {
       password: "",
       isPasswordMasked: true,
       operation: "情報編集",
-      operations: ["情報編集", "パスワード変更", "部屋移動", "退寮処理"]
+      operations: [
+        "情報編集",
+        "パスワード変更",
+        "部屋移動",
+        "役職編集",
+        "退寮処理"
+      ]
     };
   },
   methods: {
