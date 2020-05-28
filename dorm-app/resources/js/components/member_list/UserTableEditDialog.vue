@@ -36,6 +36,11 @@
                 <v-text-field label="メールアドレス" v-model="email" :suffix="emaildomain"></v-text-field>
               </v-col>
             </v-row>
+            <v-row>
+              <v-col cols="12">
+                <v-text-field label="特記事項" v-model="comment"></v-text-field>
+              </v-col>
+            </v-row>
           </v-container>
           <v-container v-if="operation == 'パスワード変更'">
             <v-row>
@@ -123,6 +128,7 @@ export default {
       email: "",
       password: "",
       isPasswordMasked: true,
+      comment: "",
       operation: "情報編集",
       operations: [
         "情報編集",
@@ -137,6 +143,7 @@ export default {
     initForm() {
       this.email = this.user.email.replace(this.emaildomain, "");
       this.password = "";
+      this.comment = this.user.comment;
       this.name.family.kanji = this.user.name_family_kanji;
       this.name.family.kana = this.user.name_family_kana;
       this.name.first.kanji = this.user.name_first_kanji;
@@ -152,7 +159,8 @@ export default {
         if (this.operation == "情報編集") {
           const res = await axios.post(`/update/user/${this.user.id}/names`, {
             name: this.name,
-            email: this.email + this.emaildomain
+            email: this.email + this.emaildomain,
+            comment: this.comment
           });
         } else if (this.operation == "パスワード変更") {
           const res = await axios.post(

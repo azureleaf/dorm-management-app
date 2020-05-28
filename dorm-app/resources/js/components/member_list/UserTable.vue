@@ -103,6 +103,12 @@ export default {
           value: "move_out_at",
           isAdminItem: true
         },
+         {
+          text: "特記事項",
+          sortable: false,
+          value: "comment",
+          isAdminItem: true
+        },
         {
           text: "編集",
           sortable: false,

@@ -113,6 +113,7 @@ Route::post('/update/user/{user_id}/{operation}', function (Request $req, $user_
         $user->name_family_kana = $req->name["family"]["kana"];
         $user->name_first_kana = $req->name["first"]["kana"];
         $user->email = $req->email;
+        $user->comment = $req->comment;
         $user->save();
     } else if ($operation == "password") {
         $user->password = Hash::make($req->password);
