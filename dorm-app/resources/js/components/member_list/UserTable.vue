@@ -104,12 +104,6 @@ export default {
           isAdminItem: true
         },
         {
-          text: "現職",
-          sortable: true,
-          value: "role",
-          isAdminItem: false
-        },
-        {
           text: "編集",
           sortable: false,
           value: "edit",
@@ -130,6 +124,7 @@ export default {
     async loadUsers() {
       const res = await axios.get("./users");
       this.users = res.data;
+      this.filterUsers();
     },
     filterUsers() {
       this.usersShown = [];
@@ -147,7 +142,6 @@ export default {
   },
   mounted: async function() {
     await this.loadUsers();
-    this.filterUsers();
   }
 };
 </script>
