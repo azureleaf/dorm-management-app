@@ -2,13 +2,20 @@
   <v-content>
     <v-container>
       <v-card elevation="10">
-        <v-card-title>行事報告提出</v-card-title>
-        <v-card-subtitle>当番の実施報告や交代報告など、下の日程表から該当箇所をクリックしてください。</v-card-subtitle>
+        <v-card-title>当番割振結果</v-card-title>
+        <v-card-subtitle></v-card-subtitle>
         <v-card-text>
           <v-row class="pb-5 mb-2">
             <v-col>
               <v-btn color="error" depressed absolute right>
-                <v-icon class="mr-1">mdi-security</v-icon>寮行事日程編集
+                <v-icon class="mr-1">mdi-security</v-icon>実施結果の登録と賞罰処理
+              </v-btn>
+            </v-col>
+          </v-row>
+          <v-row class="pb-5 mb-2">
+            <v-col>
+              <v-btn color="error" depressed absolute right>
+                <v-icon class="mr-1">mdi-security</v-icon>割振データの編集と保存
               </v-btn>
             </v-col>
           </v-row>

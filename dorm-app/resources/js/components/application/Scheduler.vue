@@ -2,7 +2,7 @@
   <v-content>
     <v-container>
       <v-card elevation="10">
-        <v-card-title>日程希望申請</v-card-title>
+        <v-card-title>日程希望提出</v-card-title>
         <v-card-subtitle>同じ項目について複数回提出した場合、最後の提出内容が適用されます。</v-card-subtitle>
         <v-card-text>
           <v-row>
