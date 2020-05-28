@@ -147,6 +147,17 @@ Route::get('/rolehx', function () {
     return RoleHistory::with("user")->with("roleTitle")->get();
 });
 
+Route::post('/update/rolehx/{hx_id}', function (Request $req, $hx_id) {
+    $hx = RoleHistory::find($hx_id);
+    $hx->role_title_id = $req->role_title_id;
+    $hx->start_at = $req->start_at;
+    $hx->end_at = $req->end_at;
+    $hx->reward_pct = $req->reward_pct;
+    $hx->comment = $req->comment;
+    $hx->save();
+});
+
+
 Route::post('/edit/room/status/{room_id}', function (Request $req, $room_id) {
     $room = Room::find($room_id);
     $room->comment = $req->comment;

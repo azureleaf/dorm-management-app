@@ -7,6 +7,9 @@
           <v-data-table :headers="hxHeaders" :items="hxs" :items-per-page="20">
             <template v-slot:item.reward_pct="{ item }">{{ item.reward_pct}}%</template>
             <template v-slot:item.name="{ item }">{{ item.user.full_name }} (#{{ item.user_id }})</template>
+            <template v-slot:item.edit="{item}">
+              <role-history-edit-dialog :roleHistory="item" @retrieveAgain="retrieve"></role-history-edit-dialog>
+            </template>
           </v-data-table>
         </v-card-text>
       </v-card>
@@ -47,7 +50,7 @@ export default {
           value: "end_at"
         },
         {
-          text: "報酬率",
+          text: "寮費免除率",
           sortable: false,
           value: "reward_pct"
         },
@@ -55,13 +58,23 @@ export default {
           text: "特記事項",
           sortable: false,
           value: "comment"
+        },
+        {
+          text: "編集",
+          sortable: false,
+          value: "edit"
         }
       ]
     };
   },
+  methods: {
+    async retrieve() {
+      const res = await axios.get("./rolehx");
+      this.hxs = res.data;
+    }
+  },
   mounted: async function() {
-    const res = await axios.get("./rolehx");
-    this.hxs = res.data;
+    this.retrieve();
   }
 };
 </script>
