@@ -19,6 +19,7 @@ use App\User;
 use App\Billing;
 use App\Room;
 use App\RoleTitle;
+use App\RoleHistory;
 use App\PersonalAccountTitle;
 
 // routes for view
@@ -139,6 +140,10 @@ Route::post('/update/user/{user_id}/{operation}', function (Request $req, $user_
 
 Route::get('/roletitles', function () {
     return RoleTitle::all();
+});
+
+Route::get('/rolehx', function () {
+    return RoleHistory::with("user")->with("roleTitle")->get();
 });
 
 Route::post('/edit/room/status/{room_id}', function (Request $req, $room_id) {
