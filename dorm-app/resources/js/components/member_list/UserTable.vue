@@ -21,12 +21,22 @@
                 hide-details
               ></v-text-field>
             </v-col>
-            <v-checkbox v-model="showCurrentUsers" label="現在の寮生" class="ml-5"></v-checkbox>
-            <v-checkbox v-model="showFormerUsers" label="過去の寮生" class="ml-5"></v-checkbox>
+            <v-checkbox
+              v-model="showCurrentUsers"
+              @change="filterUsers()"
+              label="現在の寮生"
+              class="ml-5"
+            ></v-checkbox>
+            <v-checkbox
+              v-model="showFormerUsers"
+              @change="filterUsers()"
+              label="過去の寮生"
+              class="ml-5"
+            ></v-checkbox>
           </v-row>
           <v-data-table
             :headers="userHeaders"
-            :items="users"
+            :items="usersShown"
             :items-per-page="10"
             :search="searchKeyword"
           >
@@ -55,6 +65,7 @@ export default {
       showCurrentUsers: true,
       showFormerUsers: false,
       users: [],
+      usersShown: [],
       userHeadersAll: [
         {
           text: "寮生ID",
@@ -119,10 +130,24 @@ export default {
     async loadUsers() {
       const res = await axios.get("./users");
       this.users = res.data;
+    },
+    filterUsers() {
+      this.usersShown = [];
+      this.usersShown = this.usersShown.concat(
+        this.users.filter(user => {
+          if (this.showCurrentUsers) return user.move_out_at == undefined;
+        })
+      );
+      this.usersShown = this.usersShown.concat(
+        this.users.filter(user => {
+          if (this.showFormerUsers) return user.move_out_at != undefined;
+        })
+      );
     }
   },
-  mounted: function() {
-    this.loadUsers();
+  mounted: async function() {
+    await this.loadUsers();
+    this.filterUsers();
   }
 };
 </script>
