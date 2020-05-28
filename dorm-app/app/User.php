@@ -45,9 +45,16 @@ class User extends Authenticatable
         'full_name'
     ];
 
+    // A user can have only one room
     public function room()
     {
         return $this->hasOne('App\Room');
+    }
+
+    // A user can have multiple role histories
+    public function roleHistories()
+    {
+        return $this->hasMany('App\RoleHistory');
     }
 
     // Accessor

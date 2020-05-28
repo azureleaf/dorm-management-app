@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
             BillingSeeder::class,
             RoomSeeder::class,
             RoleTitleSeeder::class,
-            PersonalAccountTitleSeeder::class
+            RoleHistoriesTableSeeder::class,
+            PersonalAccountTitleSeeder::class,
         ]);
     }
 }

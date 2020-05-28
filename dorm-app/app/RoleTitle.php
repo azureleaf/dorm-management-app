@@ -12,4 +12,10 @@ class RoleTitle extends Model
     protected $attributes = [
         'default_reward_pct' => 0,
     ];
+
+    // A user can have multiple role histories
+    public function roleHistories()
+    {
+        return $this->hasMany('App\RoleHistory');
+    }
 }
