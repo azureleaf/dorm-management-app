@@ -144,7 +144,7 @@ Route::get('/roletitles', function () {
 });
 
 Route::get('/rolehx', function () {
-    return RoleHistory::with("user")->with("roleTitle")->get();
+    return RoleHistory::with("user")->with("roleTitle")->orderBy("start_at", "desc")->get();
 });
 
 Route::post('/update/rolehx/{hx_id}', function (Request $req, $hx_id) {
