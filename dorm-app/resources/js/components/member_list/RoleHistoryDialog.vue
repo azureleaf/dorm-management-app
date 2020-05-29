@@ -1,5 +1,5 @@
 <!--
-  Dialog components for 2 modes of role histories table:
+  Dialog component for 2 modes of role histories table:
     mode to create a new history,
     mode to update an existing history
 -->
@@ -38,6 +38,7 @@
               label="職種"
               item-text="name"
               item-value="id"
+              @change="autofillReward()"
             ></v-select>
           </v-col>
           <v-col cols="12" md="6">
@@ -49,10 +50,10 @@
         </v-row>
         <v-row>
           <v-col cols="12" md="6">
-            <v-select :items="years" v-model="year" label="委員会年度（任意入力）" @change="autoInputTerm()"></v-select>
+            <v-select :items="years" v-model="year" label="委員会年度（任意入力）" @change="autofillTerm()"></v-select>
           </v-col>
           <v-col cols="12" md="6">
-            <v-select :items="terms" v-model="term" label="委員会期（任意入力）" @change="autoInputTerm()"></v-select>
+            <v-select :items="terms" v-model="term" label="委員会期（任意入力）" @change="autofillTerm()"></v-select>
           </v-col>
         </v-row>
         <v-row justify="center">
@@ -77,7 +78,6 @@
             style="box-shadow: 0 0 0; border: solid 1px gainsboro"
           ></v-date-picker>
         </v-row>
-
         <v-row>
           <v-col cols="12">
             <v-text-field label="特記事項" v-model="comment"></v-text-field>
@@ -108,8 +108,9 @@ export default {
       role_title_id: "",
       roleTitles: [],
       user_id: "", // unused for update mode
-      users: [], // // unused for update mode
+      users: [], // unused for update mode
       years: [
+        // Show 3 years as candidates
         new Date().getFullYear() - 1,
         new Date().getFullYear(),
         new Date().getFullYear() + 1
@@ -160,7 +161,7 @@ export default {
       this.initForms();
       this.isDialogOpen = false;
     },
-    async loadTitles() {
+    async loadRoleTitles() {
       const res = await axios.get("./roletitles");
       this.roleTitles = res.data;
     },
@@ -182,8 +183,12 @@ export default {
         user["readableName"] = `${user.room.number}: ${user.full_name}`;
       });
     },
-    autoInputTerm() {
+    // autofill the date of start & end of the role history
+    autofillTerm() {
+      // autofill only when the necessary info is supplied
       if (this.year == "" || this.term == "") return;
+
+      // Note that the date format of v-date-picker is 2020-01-01
       switch (this.term) {
         case "I期":
           this.start_at = this.year + "-06-01";
@@ -199,6 +204,14 @@ export default {
           break;
       }
     },
+    // autofill the default reward percentages
+    autofillReward() {
+      this.roleTitles.forEach(roleTitle => {
+        if (roleTitle.id == this.role_title_id)
+          this.reward_pct = roleTitle.default_reward_pct;
+      });
+    },
+    // Clear the input forms and fill with the default values
     initForms() {
       this.user_id = "";
       this.start_at = this.isCreation ? "" : this.currHistory.start_at;
@@ -212,7 +225,7 @@ export default {
   },
   mounted: function() {
     this.initForms();
-    this.loadTitles();
+    this.loadRoleTitles();
     this.loadUsers();
   }
 };
