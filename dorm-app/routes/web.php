@@ -157,6 +157,16 @@ Route::post('/update/rolehx/{hx_id}', function (Request $req, $hx_id) {
     $hx->save();
 });
 
+Route::post('/create/rolehx/{user_id}/{role_title_id}', function (Request $req, $user_id, $role_title_id) {
+    $hx = new RoleHistory;
+    $hx->role_title_id = $role_title_id;
+    $hx->user_id = $user_id;
+    $hx->start_at = $req->start_at;
+    $hx->end_at = $req->end_at;
+    $hx->reward_pct = $req->reward_pct;
+    $hx->comment = $req->comment;
+    $hx->save();
+});
 
 Route::post('/edit/room/status/{room_id}', function (Request $req, $room_id) {
     $room = Room::find($room_id);

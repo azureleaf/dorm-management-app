@@ -2,11 +2,14 @@
   <v-content>
     <v-container>
       <v-card elevation="10">
-        <v-card-title>役職履歴</v-card-title>
+        <v-card-title>
+          役職記録
+          <v-spacer></v-spacer>
+          <role-history-create-dialog @retrieveAgain="retrieve"></role-history-create-dialog>
+        </v-card-title>
         <v-card-text>
           <v-data-table :headers="hxHeaders" :items="hxs" :items-per-page="20">
             <template v-slot:item.reward_pct="{ item }">{{ item.reward_pct}}%</template>
-            <template v-slot:item.name="{ item }">{{ item.user.full_name }} (#{{ item.user_id }})</template>
             <template v-slot:item.edit="{item}">
               <role-history-edit-dialog :roleHistory="item" @retrieveAgain="retrieve"></role-history-edit-dialog>
             </template>
@@ -24,28 +27,33 @@ export default {
       hxs: [],
       hxHeaders: [
         {
-          text: "役職履歴ID",
+          text: "役職記録ID",
           sortable: true,
           value: "id"
+        },
+          {
+          text: "寮生ID",
+          sortable: true,
+          value: "user.id"
         },
         {
           text: "氏名",
           sortable: true,
-          value: "name"
+          value: "user.full_name"
         },
         {
-          text: "職名",
+          text: "職種",
           sortable: true,
           value: "role_title.name"
         },
         {
-          text: "開始日",
+          text: "開始月",
           sortable: true,
           value: "start_at"
         },
 
         {
-          text: "終了日",
+          text: "終了月",
           sortable: true,
           value: "end_at"
         },

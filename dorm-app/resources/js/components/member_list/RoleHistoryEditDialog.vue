@@ -2,7 +2,7 @@
   <v-dialog v-model="isDialogOpen" persistent max-width="600px">
     <template v-slot:activator="{ on }">
       <v-btn color="error" depressed dark v-on="on" dense>
-        <v-icon class="mr-1">mdi-security</v-icon>
+        <v-icon>mdi-square-edit-outline</v-icon>
       </v-btn>
     </template>
     <v-card>
@@ -18,7 +18,7 @@
               item-value="id"
             ></v-select>
           </v-col>
-           <v-col cols="12" md="6">
+          <v-col cols="12" md="6">
             <v-text-field label="寮費免除率" v-model="reward_pct" suffix="%"></v-text-field>
           </v-col>
         </v-row>
@@ -44,7 +44,7 @@
             style="box-shadow: 0 0 0; border: solid 1px gainsboro"
           ></v-date-picker>
         </v-row>
-       
+
         <v-row>
           <v-col cols="12">
             <v-text-field label="特記事項" v-model="comment"></v-text-field>
@@ -78,16 +78,13 @@ export default {
   methods: {
     async updateRoleHistories() {
       try {
-        const res = await axios.post(
-          "/update/rolehx/" + this.roleHistory.id,
-          {
-            start_at: this.start_at,
-            end_at: this.end_at,
-            comment: this.comment,
-            role_title_id: this.role_title_id,
-            reward_pct: this.reward_pct
-          }
-        );
+        const res = await axios.post("/update/rolehx/" + this.roleHistory.id, {
+          start_at: this.start_at,
+          end_at: this.end_at,
+          comment: this.comment,
+          role_title_id: this.role_title_id,
+          reward_pct: this.reward_pct
+        });
       } catch (e) {
         console.error(e);
       }
