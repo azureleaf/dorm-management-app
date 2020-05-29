@@ -2,7 +2,7 @@
   <v-dialog v-model="isDialogOpen" persistent max-width="600px">
     <template v-slot:activator="{ on }">
       <v-btn color="error" depressed dark v-on="on" dense>
-        <v-icon class="mr-1">mdi-security</v-icon>新入寮生登録
+        <v-icon class="mr-1">mdi-plus-circle</v-icon>新入寮生登録
       </v-btn>
     </template>
     <v-card>

@@ -31,7 +31,7 @@ export default {
           sortable: true,
           value: "id"
         },
-          {
+        {
           text: "寮生ID",
           sortable: true,
           value: "user.id"

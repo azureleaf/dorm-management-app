@@ -2,7 +2,7 @@
   <v-dialog v-model="isDialogOpen" persistent max-width="600px">
     <template v-slot:activator="{ on }">
       <v-btn color="error" depressed dark v-on="on" dense>
-        <v-icon class="mr-1">mdi-security</v-icon>
+        <v-icon class="mr-1">mdi-square-edit-outline</v-icon>
       </v-btn>
     </template>
     <v-card>

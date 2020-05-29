@@ -4,7 +4,7 @@
       <v-card elevation="10">
         <v-card-title>居室状況</v-card-title>
         <v-card-text>
-          <v-data-table :headers="roomHeaders" :items="rooms" :items-per-page="10">
+          <v-data-table :headers="roomHeaders" :items="rooms" :items-per-page="10" >
             <template v-slot:item.edit="{item}">
               <room-table-dialog :item="item" @retrieveAgain="retrieve"></room-table-dialog>
             </template>
@@ -88,7 +88,7 @@ export default {
     if (this.isAdmin) {
       // add admin-only columns
       this.roomHeaders.push({
-        text: "設備状態の編集",
+        text: "編集",
         sortable: false,
         value: "edit"
       });

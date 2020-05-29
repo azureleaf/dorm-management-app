@@ -2,25 +2,14 @@
   <v-content>
     <v-container>
       <v-card elevation="10">
-        <v-card-title>寮生一覧</v-card-title>
+        <v-card-title>
+          <span>寮生一覧</span>
+          <v-spacer></v-spacer>
+          <user-table-registry-dialog :emaildomain="emailDomain" @reloadUsers="loadUsers"></user-table-registry-dialog>
+        </v-card-title>
         <v-card-text>
-          <v-row class="pb-5">
-            <v-col>
-              <user-table-registry-dialog :emaildomain="emailDomain" @reloadUsers="loadUsers"></user-table-registry-dialog>
-            </v-col>
-          </v-row>
           <v-row>
-            <v-col cols="12" md="4">
-              <v-text-field
-                v-model="searchKeyword"
-                append-icon="mdi-magnify"
-                label="Search"
-                single-line
-                outlined
-                dense
-                hide-details
-              ></v-text-field>
-            </v-col>
+            <v-spacer></v-spacer>
             <v-checkbox
               v-model="showCurrentUsers"
               @change="filterUsers()"
@@ -33,6 +22,16 @@
               label="過去の寮生"
               class="ml-5"
             ></v-checkbox>
+            <v-col cols="12" md="4" lg="2">
+              <v-text-field
+                v-model="searchKeyword"
+                append-icon="mdi-magnify"
+                single-line
+                outlined
+                dense
+                hide-details
+              ></v-text-field>
+            </v-col>
           </v-row>
           <v-data-table
             :headers="userHeaders"
@@ -103,7 +102,7 @@ export default {
           value: "move_out_at",
           isAdminItem: true
         },
-         {
+        {
           text: "特記事項",
           sortable: false,
           value: "comment",
