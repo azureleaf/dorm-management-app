@@ -23,6 +23,17 @@
           </v-col>
         </v-row>
         <v-row justify="center">
+          <v-subheader>以下で委員会期を選択すると開始日・終了日の既定値を自動入力できます。</v-subheader>
+        </v-row>
+        <v-row>
+          <v-col cols="12" md="6">
+            <v-select :items="years" v-model="year" label="委員会年度（任意入力）" @change="autoInputTerm()"></v-select>
+          </v-col>
+          <v-col cols="12" md="6">
+            <v-select :items="terms" v-model="term" label="委員会期（任意入力）" @change="autoInputTerm()"></v-select>
+          </v-col>
+        </v-row>
+        <v-row justify="center">
           <v-subheader class>開始日</v-subheader>
         </v-row>
         <v-row justify="center">
@@ -72,7 +83,15 @@ export default {
       comment: this.roleHistory.comment,
       reward_pct: this.roleHistory.reward_pct,
       role_title_id: this.roleHistory.role_title_id,
-      roleTitles: []
+      roleTitles: [],
+      years: [
+        new Date().getFullYear() - 1,
+        new Date().getFullYear(),
+        new Date().getFullYear() + 1
+      ],
+      year: new Date().getFullYear(),
+      terms: ["I期", "II期", "III期"],
+      term: ""
     };
   },
   methods: {
@@ -95,6 +114,23 @@ export default {
     async loadTitles() {
       const res = await axios.get("./roletitles");
       this.roleTitles = res.data;
+    },
+    autoInputTerm() {
+      if (this.year == "" || this.term == "") return;
+      switch (this.term) {
+        case "I期":
+          this.start_at = this.year + "-06-01";
+          this.end_at = this.year + "-09-30";
+          break;
+        case "II期":
+          this.start_at = this.year + "-10-01";
+          this.end_at = this.year + 1 + "-01-31";
+          break;
+        case "III期":
+          this.start_at = this.year + 1 + "-02-01";
+          this.end_at = this.year + 1 + "-05-31";
+          break;
+      }
     }
   },
   mounted: function() {

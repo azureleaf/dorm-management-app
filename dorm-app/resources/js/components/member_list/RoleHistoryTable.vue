@@ -47,13 +47,13 @@ export default {
           value: "role_title.name"
         },
         {
-          text: "開始月",
+          text: "開始日",
           sortable: true,
           value: "start_at"
         },
 
         {
-          text: "終了月",
+          text: "終了日",
           sortable: true,
           value: "end_at"
         },

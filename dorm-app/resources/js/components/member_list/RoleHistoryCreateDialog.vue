@@ -32,7 +32,7 @@
             ></v-select>
           </v-col>
           <v-col cols="12" md="6">
-            <v-text-field label="寮費免除率" v-model="reward_pct" suffix="%"></v-text-field>
+            <v-text-field label="寮費免除率" v-model="reward_pct" type="number" suffix="%"></v-text-field>
           </v-col>
         </v-row>
         <v-row justify="center">
