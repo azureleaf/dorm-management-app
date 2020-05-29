@@ -5,13 +5,21 @@
         <v-card-title>
           役職記録
           <v-spacer></v-spacer>
-          <role-history-create-dialog @retrieveAgain="retrieve"></role-history-create-dialog>
+          <role-history-dialog
+            :isCreation="true"
+            :currHistory="undefined"
+            @retrieveAgain="retrieve"
+          ></role-history-dialog>
         </v-card-title>
         <v-card-text>
           <v-data-table :headers="hxHeaders" :items="hxs" :items-per-page="20">
             <template v-slot:item.reward_pct="{ item }">{{ item.reward_pct}}%</template>
             <template v-slot:item.edit="{item}">
-              <role-history-edit-dialog :roleHistory="item" @retrieveAgain="retrieve"></role-history-edit-dialog>
+              <role-history-dialog
+                :isCreation="false"
+                :currHistory="item"
+                @retrieveAgain="retrieve"
+              ></role-history-dialog>
             </template>
           </v-data-table>
         </v-card-text>
