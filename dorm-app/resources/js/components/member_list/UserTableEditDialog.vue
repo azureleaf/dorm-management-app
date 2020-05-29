@@ -11,10 +11,17 @@
         <v-form>
           <v-row>
             <v-col>
-              <v-select :items="operations" v-model="operation" label="処理内容" outlined></v-select>
+              <v-select
+                :items="operations"
+                item-text="text"
+                item-value="value"
+                v-model="operation"
+                label="処理内容"
+                outlined
+              ></v-select>
             </v-col>
           </v-row>
-          <v-container v-if="operation == '情報編集'">
+          <v-container v-if="operation == 'names'">
             <v-row>
               <v-col cols="6">
                 <v-text-field label="名字" v-model="name.family.kanji"></v-text-field>
@@ -42,7 +49,7 @@
               </v-col>
             </v-row>
           </v-container>
-          <v-container v-if="operation == 'パスワード変更'">
+          <v-container v-if="operation == 'password'">
             <v-row>
               <v-col cols="12">
                 <v-text-field
@@ -55,7 +62,7 @@
               </v-col>
             </v-row>
           </v-container>
-          <v-container v-else-if="operation == '部屋移動'">
+          <v-container v-else-if="operation == 'transfer'">
             <v-row>
               <v-col>
                 <v-select
@@ -69,7 +76,7 @@
               </v-col>
             </v-row>
           </v-container>
-          <v-container v-else-if="operation == '退寮処理'">
+          <v-container v-else-if="operation == 'leave'">
             <v-row justify="center">
               <v-subheader class>退寮日</v-subheader>
             </v-row>
@@ -129,13 +136,12 @@ export default {
       password: "",
       isPasswordMasked: true,
       comment: "",
-      operation: "情報編集",
+      operation: "",
       operations: [
-        "情報編集",
-        "パスワード変更",
-        "部屋移動",
-        "役職編集",
-        "退寮処理"
+        { text: "基本情報", value: "names" },
+        { text: "パスワード変更", value: "password" },
+        { text: "部屋移動", value: "transfer" },
+        { text: "退寮処理", value: "leave" }
       ]
     };
   },
@@ -156,20 +162,20 @@ export default {
     },
     async updateUser() {
       try {
-        if (this.operation == "情報編集") {
+        if (this.operation == "names") {
           const res = await axios.post(`/update/user/${this.user.id}/names`, {
             name: this.name,
             email: this.email + this.emaildomain,
             comment: this.comment
           });
-        } else if (this.operation == "パスワード変更") {
+        } else if (this.operation == "password") {
           const res = await axios.post(
             `/update/user/${this.user.id}/password`,
             {
               password: this.password // needs to be encrypted!
             }
           );
-        } else if (this.operation == "部屋移動") {
+        } else if (this.operation == "transfer") {
           const res = await axios.post(
             `/update/user/${this.user.id}/transfer`,
             {
@@ -177,7 +183,7 @@ export default {
               new_room_id: this.room
             }
           );
-        } else if (this.operation == "退寮処理") {
+        } else if (this.operation == "leave") {
           /** Here need to check if the role, payment is clear! */
           const res = await axios.post(`/update/user/${this.user.id}/leave`, {
             move_out_at: this.moveOutAt
