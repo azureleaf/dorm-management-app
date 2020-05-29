@@ -8,7 +8,7 @@
           <v-data-table
             :headers="titleHeaders"
             :items="titles"
-            :items-per-page="20"
+            :items-per-page="titles.length"
             hide-default-footer
           ></v-data-table>
         </v-card-text>
@@ -41,8 +41,8 @@ export default {
         {
           text: "現職者名",
           sortable: false,
-          value: "user_name"
-        },
+          value: "incumbents"
+        }
       ]
     };
   },
@@ -55,10 +55,48 @@ export default {
       this.titles.forEach(title => {
         title["reward"] = "寮費の" + title.default_reward_pct + "％";
       });
+
+      // Let the v-data-table detect the data update
+      this.titles = this.titles.slice(0, this.titles.length);
+    },
+    async loadRoleHistories() {
+      // Retrieve all the role histories
+      const res = await axios.get("./rolehx");
+      let hxs = res.data;
+
+      // Filter out the former / future role histories, keep current ones only
+      return hxs.filter(hx => {
+        const now = new Date();
+        if (now - new Date(hx.start_at) >= 0 && new Date(hx.end_at) - now >= 0)
+          return 1;
+        else return 0;
+      });
     }
   },
   mounted: async function() {
-    this.loadTitles();
+    await this.loadTitles();
+    const incumbents = await this.loadRoleHistories();
+
+    // Loop for all the role titles
+    this.titles.forEach(title => {
+      let incumbentsStr = "";
+
+      // Loop for all the role histories
+      // Notice that multiple people may be assigned for a role title
+      incumbents.forEach(incumbent => {
+        if (title.id == incumbent.role_title_id) {
+          incumbentsStr += `${incumbent.user.full_name}　`;
+        }
+      });
+
+      // Add new value to the table
+      title["incumbents"] = incumbentsStr;
+    });
+
+    // Just copying the array to self
+    // Without this, v-data-table doesn't detect the data update of the array
+    // Seemingly this is a sort of bug of the Vuetify / Vue
+    this.titles = this.titles.slice(0, this.titles.length);
   }
 };
 </script>
