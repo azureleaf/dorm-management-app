@@ -88,6 +88,12 @@
         <v-spacer></v-spacer>
         <v-btn color="blue darken-1" text @click="cancelEdit()">Cancel</v-btn>
         <v-btn v-if="isCreation" color="blue darken-1" text @click="createRoleHx()">Save</v-btn>
+        <confirmation-dialog
+          v-if="!isCreation"
+          confirmationTitle="削除確認"
+          :confirmationMsg="confirmationMsg"
+          @isConfirmed="deleteRoleHx()"
+        ></confirmation-dialog>
         <v-btn v-if="!isCreation" color="blue darken-1" text @click="updateRoleHx()">Save</v-btn>
       </v-card-actions>
     </v-card>
@@ -101,6 +107,7 @@ export default {
     return {
       isAdmin: true,
       isDialogOpen: false,
+      isConfirmationDialogOpen: false,
       start_at: "",
       end_at: "",
       comment: "",
@@ -119,6 +126,11 @@ export default {
       terms: ["I期", "II期", "III期"],
       term: ""
     };
+  },
+  computed: {
+    confirmationMsg() {
+      return `${this.currHistory.user.full_name}さんの${this.currHistory.role_title.name}の役職記録を削除します。本当によろしいですか？`;
+    }
   },
   methods: {
     cancelEdit() {
@@ -153,6 +165,20 @@ export default {
           role_title_id: this.role_title_id,
           reward_pct: this.reward_pct
         });
+      } catch (e) {
+        console.error(e);
+      }
+      // now that the DB is updated, reload the table in the parent component
+      this.$emit("retrieveAgain");
+      this.initForms();
+      this.isDialogOpen = false;
+    },
+    async deleteRoleHx() {
+      try {
+        const res = await axios.post(
+          `delete/rolehx/${this.currHistory.id}`,
+          {}
+        );
       } catch (e) {
         console.error(e);
       }

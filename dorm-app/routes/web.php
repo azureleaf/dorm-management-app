@@ -168,6 +168,11 @@ Route::post('/create/rolehx/{user_id}/{role_title_id}', function (Request $req, 
     $hx->save();
 });
 
+Route::post('/delete/rolehx/{role_title_id}', function (Request $req, $role_title_id) {
+    $hx = RoleHistory::find($role_title_id);
+    $hx->delete();
+});
+
 Route::post('/edit/room/status/{room_id}', function (Request $req, $room_id) {
     $room = Room::find($room_id);
     $room->comment = $req->comment;
