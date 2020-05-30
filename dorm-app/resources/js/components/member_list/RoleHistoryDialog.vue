@@ -17,7 +17,7 @@
     <v-card>
       <v-card-title v-if="!isCreation">{{ currHistory.user.full_name }}さんの役職を編集</v-card-title>
       <v-card-title v-if="isCreation">役職記録の新規作成</v-card-title>
-      <v-card-subtitle v-if="isCreation">期の途中で報酬が代わる場合などは、２つの別々の役職で登録してください。</v-card-subtitle>
+      <v-card-subtitle v-if="isCreation">期の途中で報酬が代わる場合などは、それぞれ別個の役職として登録してください。</v-card-subtitle>
       <v-card-text>
         <v-row v-if="isCreation">
           <v-col cols="12" md="6">
@@ -123,13 +123,13 @@ export default {
         new Date().getFullYear() + 1
       ],
       year: new Date().getFullYear(),
-      terms: ["I期", "II期", "III期"],
+      terms: ["一期", "二期", "三期"],
       term: ""
     };
   },
   computed: {
     confirmationMsg() {
-      return `${this.currHistory.user.full_name}さんの${this.currHistory.role_title.name}の役職記録を削除します。本当によろしいですか？`;
+      return `${this.currHistory.user.full_name}さんの${this.currHistory.role_title.name}記録を削除します。<span style="color:red;">この操作は元に戻せません。</span><br/>本当によろしいですか？`;
     }
   },
   methods: {
@@ -201,15 +201,15 @@ export default {
 
       // Note that the date format of v-date-picker is 2020-01-01
       switch (this.term) {
-        case "I期":
+        case "一期":
           this.start_at = this.year + "-06-01";
           this.end_at = this.year + "-09-30";
           break;
-        case "II期":
+        case "二期":
           this.start_at = this.year + "-10-01";
           this.end_at = this.year + 1 + "-01-31";
           break;
-        case "III期":
+        case "三期":
           this.start_at = this.year + 1 + "-02-01";
           this.end_at = this.year + 1 + "-05-31";
           break;

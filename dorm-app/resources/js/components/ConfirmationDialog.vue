@@ -8,8 +8,8 @@
       <v-btn color="blue darken-1" text v-on="on">Delete</v-btn>
     </template>
     <v-card>
-      <v-card-title>{{ confirmationTitle }}</v-card-title>
-      <v-card-subtitle>{{ confirmationMsg }}</v-card-subtitle>
+      <v-card-title v-html="confirmationTitle"></v-card-title>
+      <v-card-subtitle v-html="confirmationMsg"></v-card-subtitle>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="blue darken-1" text @click="cancelEdit()">中止</v-btn>
@@ -24,7 +24,7 @@ export default {
   props: ["confirmationTitle", "confirmationMsg"],
   data: function() {
     return {
-        isDialogOpen: false,
+      isDialogOpen: false
     };
   },
   methods: {
