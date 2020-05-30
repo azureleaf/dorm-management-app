@@ -87,14 +87,14 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="blue darken-1" text @click="cancelEdit()">Cancel</v-btn>
-        <v-btn v-if="isCreation" color="blue darken-1" text @click="createRoleHx()">Save</v-btn>
+        <v-btn v-if="isCreation" color="blue darken-1" text @click="editRoleHx('create')">Save</v-btn>
         <confirmation-dialog
           v-if="!isCreation"
           confirmationTitle="削除確認"
           :confirmationMsg="confirmationMsg"
-          @isConfirmed="deleteRoleHx()"
+          @isConfirmed="editRoleHx('delete')"
         ></confirmation-dialog>
-        <v-btn v-if="!isCreation" color="blue darken-1" text @click="updateRoleHx()">Save</v-btn>
+        <v-btn v-if="!isCreation" color="blue darken-1" text @click="editRoleHx('update')">Save</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -137,48 +137,33 @@ export default {
       this.initForms();
       this.isDialogOpen = false;
     },
-    async createRoleHx() {
+    async editRoleHx(editType) {
       try {
-        const res = await axios.post(
-          `create/rolehx/${this.user_id}/${this.role_title_id}`,
-          {
-            start_at: this.start_at,
-            end_at: this.end_at,
-            comment: this.comment,
-            reward_pct: this.reward_pct
-          }
-        );
-      } catch (e) {
-        console.error(e);
-      }
-      // now that the DB is updated, reload the table in the parent component
-      this.$emit("retrieveAgain");
-      this.initForms();
-      this.isDialogOpen = false;
-    },
-    async updateRoleHx() {
-      try {
-        const res = await axios.post("/update/rolehx/" + this.currHistory.id, {
-          start_at: this.start_at,
-          end_at: this.end_at,
-          comment: this.comment,
-          role_title_id: this.role_title_id,
-          reward_pct: this.reward_pct
-        });
-      } catch (e) {
-        console.error(e);
-      }
-      // now that the DB is updated, reload the table in the parent component
-      this.$emit("retrieveAgain");
-      this.initForms();
-      this.isDialogOpen = false;
-    },
-    async deleteRoleHx() {
-      try {
-        const res = await axios.post(
-          `delete/rolehx/${this.currHistory.id}`,
-          {}
-        );
+        switch (editType) {
+          case "create":
+            await axios.post(
+              `create/rolehx/${this.user_id}/${this.role_title_id}`,
+              {
+                start_at: this.start_at,
+                end_at: this.end_at,
+                comment: this.comment,
+                reward_pct: this.reward_pct
+              }
+            );
+            break;
+          case "update":
+            await axios.post("/update/rolehx/" + this.currHistory.id, {
+              start_at: this.start_at,
+              end_at: this.end_at,
+              comment: this.comment,
+              role_title_id: this.role_title_id,
+              reward_pct: this.reward_pct
+            });
+            break;
+          case "delete":
+            await axios.post(`delete/rolehx/${this.currHistory.id}`, {});
+            break;
+        }
       } catch (e) {
         console.error(e);
       }
