@@ -57,7 +57,7 @@ export default {
       });
 
       // Let the v-data-table detect the data update
-      this.titles = this.titles.slice(0, this.titles.length);
+      this.titles = this.titles.splice(0, this.titles.length, ...this.titles);
     },
     async loadRoleHistories() {
       // Retrieve all the role histories
@@ -96,7 +96,7 @@ export default {
     // Just copying the array to self
     // Without this, v-data-table doesn't detect the data update of the array
     // Seemingly this is a sort of bug of the Vuetify / Vue
-    this.titles = this.titles.slice(0, this.titles.length);
+    this.titles = this.titles.splice(0, this.titles.length, ...this.titles);
   }
 };
 </script>
