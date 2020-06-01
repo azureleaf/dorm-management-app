@@ -4,7 +4,7 @@
       <span>会計区分別収支</span>
       <v-spacer></v-spacer>
       <v-btn color="error" depressed absolute right>
-        <v-icon class="mr-1">mdi-plus-circle</v-icon>会計区分の編集
+        <v-icon class="mr-1">mdi-plus-circle</v-icon>新しい会計区分の追加
       </v-btn>
     </v-card-title>
     <v-card-text>
@@ -16,7 +16,15 @@
         :items="accounts"
         :items-per-page="20"
         :hide-default-footers="true"
-      ></v-data-table>
+      >
+        <template v-slot:item.edit="{ item }">
+          <account-table-edit-dialog
+            :accountName="item.name"
+            @retrieveAgain="retrieve"
+            v-if="item.name !== '合計額'"
+          ></account-table-edit-dialog>
+        </template>
+      </v-data-table>
     </v-card-text>
   </v-card>
 </template>
@@ -63,7 +71,7 @@ export default {
           end_at: ""
         },
         {
-          name: "合計額（D）",
+          name: "合計額",
           beginningBalance: "12345",
           income: "1000",
           expenditure: "5000",
@@ -112,6 +120,11 @@ export default {
   computed: {
     periodSelected() {
       return this.periods[this.periods.length - 1];
+    }
+  },
+  methods: {
+    retrieve() {
+      console.log("retrieve!");
     }
   },
   mounted: async function() {
