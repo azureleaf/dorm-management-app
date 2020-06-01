@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
             RoleTitleSeeder::class,
             RoleHistoriesTableSeeder::class,
             PersonalAccountTitleSeeder::class,
+            FundTitleSeeder::class,
+            DormAccountTitleSeeder::class
         ]);
     }
 }
