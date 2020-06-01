@@ -9,7 +9,7 @@
             <template v-slot:item.is_payment="{item}">
               <v-icon v-if="item.is_payment" color="red">mdi-plus-circle-outline</v-icon>
               <v-icon v-else color="green">mdi-minus-circle-outline</v-icon>
-              {{ item.is_payment ? "加算" : "減算"}}
+              {{ item.is_payment ? "増額" : "減額"}}
             </template>
             <template v-slot:item.default_amount="{item}">
               <span v-if="item.default_amount != null">{{ formatCurrency(item.default_amount) }}</span>
