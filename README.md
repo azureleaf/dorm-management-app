@@ -248,7 +248,7 @@ columns except for `id`, `created_at`, `updated_at`
 
 ### Member tables
 
-- `users`
+- [x] `users`
   - family name kanji
   - first name kanji
   - family name kana
@@ -257,40 +257,41 @@ columns except for `id`, `created_at`, `updated_at`
   - password
   - move_in_at
   - move_out_at: nullable
-- `role_titles`
+- [x] `role_titles`
   - name
   - default_reward_pct
-- `rooms`
+- [x] `rooms`
   - number
   - block
   - status: enum (vacant, unavailable, occupied)
   - comment
-- `room_histories`
+- ~~`room_histories`~~
   - room_id (many2one)
   - user_id (many2one)
   - move_in_at
   - move_out_at: nullable
-- `role_histories`: for board members
+- [x] `role_histories`: for board members
   - user_id (many2one)
   - role_id (many2one)
-  - reward_rate
-  - reward_amount
+  - reward_pct
+  - comment
   - start_at: Suggest default term on frontend, not on backend
   - end_at: Suggest default term on frontend, not on backend
 
 ### Finance tables
 
-- `personal_balances`
+- [x] `personal_balances`
   - user_id (many2one with `users`)
   - year
   - month
+  - personal_account_title_id (one2many with `personal_account_titles`)
   - abstract
   - billing
   - payment
+  - billing_ids JSON (one2many with `personal_balances` if possible. References of the payment to the billings)
   - balance
-  - personal_account_title_id (one2many with `personal_account_titles`)
   - comment
-- `dorm_balances`
+- [x] `dorm_balances`
   - fund_title_id (one2many with `fund_titles`)
   - dorm_accont_title_id (many2one with `dorm_account_titles`)
   - abstract
@@ -298,21 +299,22 @@ columns except for `id`, `created_at`, `updated_at`
   - expense
   - balances
   - comment
-- `fund_titles`
+- [x] `fund_titles`
   - name: 一般会計, 罰金会計, コンパ積立金, 通信設備積立金
   - start_at: nullable
   - end_at: nullable
-  - monthly_reserve: nullable for 一般会計 & 罰金会計
-- `personal_account_titles`
+  - monthly_reserve_amount: nullable
+- [x] `personal_account_titles`
   - is_payment: Boolean
   - name
   - description
   - default_amount: nullable
-- `dorm_account_titles`
+- [x] `dorm_account_titles`
   - is_expense: boolean
-  - is_monthly: boolean
-  - name: 寄宿料, 水道, 電気, ガス, 灯油, 共通棟重油, 共通棟ガス, インターネット, 新聞, 銀行手数料, 寮費徴収, 利子収入, ガス代徴収, 議長報酬, 寮費返還, 
-- `closing_items`
+  - ~~is_monthly: boolean~~
+  - ~~name: 寄宿料, 水道, 電気, ガス, 灯油, 共通棟重油, 共通棟ガス, インターネット, 新聞, 銀行手数料, 寮費徴収, 利子収入, ガス代徴収, 議長報酬, 寮費返還,~~
+  - name: 寮費引落徴収, 寮費現金徴収, 支出
+- [x] `closing_items` History of the monthly closings
   - year
   - period
   - abstract
@@ -322,11 +324,11 @@ columns except for `id`, `created_at`, `updated_at`
 
 ### Event Tables
 
-- `event_titles`
+- [ ] `event_titles`
   - name: 風呂掃除, ブロック掃除, 寮生大会, 飲み会, その他
   - default_reward
   - default_penalty
-- `event_histories`:
+- [ ] `event_histories`:
   - event_type_id (one2many)
   - name
   - start_at:
@@ -336,9 +338,9 @@ columns except for `id`, `created_at`, `updated_at`
   - result: enum (attended, absent, cancelled) "absent" is for penalty while "cancelled" isn't
   - result_updated_by: (one2many to `users` id)
   - done_at: nullable, filled when the result status is "attended"
-  - reward: 
-  - penalty: 
-- `event_availabilities`
+  - reward:
+  - penalty:
+- [ ] `event_availabilities`
   - event_title_id (one2many)
   - event_name
   - user_id (one2many)
@@ -347,7 +349,7 @@ columns except for `id`, `created_at`, `updated_at`
 
 ### Document Tables
 
-- `documents`: Keeping all the edit history consume large HDD resources?
+- [ ] `documents`: Keeping all the edit history consume large HDD resources?
   - name
   - category
   - auth: enum (all, boss, sub, )
