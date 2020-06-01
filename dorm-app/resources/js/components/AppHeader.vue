@@ -4,8 +4,11 @@
       <!-- <v-avatar>
         <v-img class="mx-2" :src="avatarurl" max-height="50" max-width="50" contain></v-img>
       </v-avatar>-->
-      <v-toolbar-title class="headline" style="font-family: 'Titillium Web' !important;">
-        <v-icon large class="mr-1" color="orange">mdi-weather-snowy-heavy</v-icon>
+      <v-toolbar-title
+        class="headline vmid"
+        style="font-family: 'Titillium Web' !important;"
+      >
+        <v-icon large class="mr-1">mdi-weather-snowy-heavy</v-icon>
         <span class="font-weight-black">Aobaryo</span>
         <span class="font-weight-light">Cloud</span>
       </v-toolbar-title>
@@ -21,13 +24,16 @@
           class="mx-0 px-0 d-none d-sm-flex"
           style="border-right: solid 1px #2266aa;"
         >
-          <v-icon>{{page.icon}}</v-icon>
+          <v-icon>{{ page.icon }}</v-icon>
           <!-- <span class="d-none d-lg-flex d-xl-flex">{{ page.title }}</span> -->
         </v-btn>
       </v-toolbar-items>
       <v-menu v-model="isNavOpen" :offsetY="true">
         <template v-slot:activator="{ on }">
-          <v-app-bar-nav-icon v-on="on" class="d-flex d-sm-none"></v-app-bar-nav-icon>
+          <v-app-bar-nav-icon
+            v-on="on"
+            class="d-flex d-sm-none"
+          ></v-app-bar-nav-icon>
         </template>
         <v-list>
           <v-list-item v-for="page in pages" :key="page.title" :href="page.uri">
@@ -65,4 +71,7 @@ export default {
 };
 </script>
 <style scoped>
+.vmid {
+  vertical-align: middle;
+}
 </style>
