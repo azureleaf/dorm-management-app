@@ -12,7 +12,7 @@
             right
             :disabled="hasPendingReport || !isBillingDone"
           >
-            <v-icon class="mr-1">mdi-plus-circle</v-icon>基本金の新規登録
+            <v-icon class="mr-1">mdi-plus-circle</v-icon>新しい決算期の追加
           </v-btn>
         </v-card-title>
         <v-card-text>
@@ -36,7 +36,7 @@
                 right
                 :disabled="!hasPendingReport || isBillingDone"
               >
-                <v-icon class="mr-1">mdi-security</v-icon>決算を確定し寮費請求
+                <v-icon class="mr-1">mdi-security</v-icon>各寮生への請求処理
               </v-btn>
             </v-col>
           </v-row>
@@ -49,7 +49,7 @@
                 right
                 :disabled="!hasPendingReport || !isBillingDone"
               >
-                <v-icon class="mr-1">mdi-security</v-icon>引落依頼内容の生成
+                <v-icon class="mr-1">mdi-security</v-icon>引落依頼情報の生成
               </v-btn>
             </v-col>
           </v-row>
