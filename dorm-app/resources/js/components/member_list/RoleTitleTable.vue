@@ -2,7 +2,13 @@
   <v-content>
     <v-container>
       <v-card elevation="10">
-        <v-card-title>職種一覧</v-card-title>
+        <v-card-title>
+          <span>職種一覧</span>
+          <v-spacer></v-spacer>
+          <v-btn color="error" depressed absolute right>
+            <v-icon class="mr-1">mdi-plus-circle</v-icon>職種の追加
+          </v-btn>
+        </v-card-title>
         <v-card-text>
           <!-- <role-title-table-edit-dialog :titles="this.titles" @reloadTitles="loadTitles"></role-title-table-edit-dialog> -->
           <v-data-table

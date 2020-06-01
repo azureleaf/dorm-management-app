@@ -1,13 +1,15 @@
 <template>
   <v-card outlined class="mb-4">
-    <v-card-title>会計別収支</v-card-title>
+    <v-card-title>
+      <span>会計区分別収支</span>
+      <v-spacer></v-spacer>
+      <v-btn color="error" depressed absolute right>
+        <v-icon class="mr-1">mdi-plus-circle</v-icon>会計区分の編集
+      </v-btn>
+    </v-card-title>
     <v-card-text>
       <v-row class="pb-5">
-        <v-col>
-          <v-btn color="error" depressed absolute right>
-            <v-icon class="mr-1">mdi-security</v-icon>会計項目の追加と削除
-          </v-btn>
-        </v-col>
+        <v-col> </v-col>
       </v-row>
       <v-data-table
         :headers="accountHeaders"
@@ -75,16 +77,6 @@ export default {
           value: "name"
         },
         {
-          text: "開始年月",
-          sortable: false,
-          value: "start_at"
-        },
-        {
-          text: "終了年月",
-          sortable: false,
-          value: "end_at"
-        },
-        {
           text: "期首残高",
           sortable: false,
           value: "beginningBalance"
@@ -103,6 +95,16 @@ export default {
           text: "期末残高",
           sortable: false,
           value: "finalBalance"
+        },
+        {
+          text: "滞納分未収金",
+          sortable: false,
+          value: "arrears"
+        },
+        {
+          text: "編集",
+          sortable: false,
+          value: "edit"
         }
       ]
     };

@@ -1,15 +1,19 @@
 <template>
   <v-card outlined class="mb-4">
-    <v-card-title>資産内訳</v-card-title>
+    <v-card-title>
+      <span>資産内訳</span>
+      <v-spacer></v-spacer>
+      <v-btn color="error" depressed>
+        <v-icon class="mr-1">mdi-plus-circle</v-icon>資産有高の登録
+      </v-btn>
+    </v-card-title>
     <v-card-text>
-      <v-row class="pb-5">
-        <v-col>
-          <v-btn color="error" depressed absolute right>
-            <v-icon class="mr-1">mdi-security</v-icon>資産有高の登録
-          </v-btn>
-        </v-col>
-      </v-row>
-      <v-data-table :headers="assetHeaders" :items="assetItems" :items-per-page="20" :hide-default-footer="true"></v-data-table>
+      <v-data-table
+        :headers="assetHeaders"
+        :items="assetItems"
+        :items-per-page="20"
+        :hide-default-footer="true"
+      ></v-data-table>
     </v-card-text>
   </v-card>
 </template>

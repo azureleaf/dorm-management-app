@@ -28,6 +28,15 @@ export default {
           comment: ""
         },
         {
+          type: "罰金会計",
+          burden_rate: "0.25",
+          persons: "2",
+          persons_deducted: "0.5",
+          start_at: "",
+          end_at: "",
+          comment: ""
+        },
+        {
           type: "コンパ会計",
           burden_rate: "0.5",
           persons: "1",
@@ -45,15 +54,7 @@ export default {
           end_at: "",
           comment: ""
         },
-        {
-          type: "罰金会計",
-          burden_rate: "0.25",
-          persons: "2",
-          persons_deducted: "0.5",
-          start_at: "",
-          end_at: "",
-          comment: ""
-        },
+
         {
           type: "合計",
           burden_rate: "",
@@ -66,12 +67,22 @@ export default {
       ],
       fundHeaders: [
         {
-          text: "会計",
+          text: "会計区分",
           sortable: false,
           value: "type"
         },
         {
-          text: "徴収予定額合計",
+          text: "積立期間",
+          sortable: false,
+          value: ""
+        },
+        {
+          text: "既定額",
+          sortable: false,
+          value: ""
+        },
+        {
+          text: "均等徴収額合計",
           sortable: false,
           value: ""
         },
@@ -89,8 +100,7 @@ export default {
           text: "基本金内訳（切り上げ）",
           sortable: false,
           value: ""
-        },
-        
+        }
       ]
     };
   },

@@ -1,6 +1,12 @@
 <template>
   <v-card outlined class="mb-4">
-    <v-card-title>負担人数</v-card-title>
+    <v-card-title>
+      <span>負担人数</span>
+      <v-spacer></v-spacer>
+      <v-btn color="error" depressed absolute right>
+        <v-icon class="mr-1">mdi-plus-circle</v-icon>負担人数の編集
+      </v-btn>
+    </v-card-title>
     <v-card-text>
       <!-- <v-card class="pa-3 formula" flat outlined>
         <v-chip outlined label large color="green darken-2">一般会計支出： 200000</v-chip>
@@ -61,13 +67,22 @@ export default {
           comment: ""
         },
         {
-          type: "会計委員（臨時代理）",
+          type: "会計委員（報酬額変更）",
           burden_rate: "0",
           persons: "1",
           persons_deducted: "0",
           start_at: "2020-06",
           end_at: "2020-09",
           comment: ""
+        },
+        {
+          type: "臨時委員",
+          burden_rate: "0",
+          persons: "1",
+          persons_deducted: "0",
+          start_at: "2020-06",
+          end_at: "2020-09",
+          comment: "水不足の対処担当"
         },
         {
           type: "一般寮生",
@@ -115,9 +130,14 @@ export default {
           value: "persons"
         },
         {
-          text: "負担人数",
+          text: "換算負担人数",
           sortable: false,
           value: "persons_deducted"
+        },
+        {
+          text: "特記事項",
+          sortable: false,
+          value: "comment"
         }
       ]
     };

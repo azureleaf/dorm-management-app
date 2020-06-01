@@ -2,25 +2,29 @@
   <v-content>
     <v-container>
       <v-card elevation="10">
-        <v-card-title>決算報告</v-card-title>
+        <v-card-title>
+          <span>寮会計基本金</span>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="error"
+            depressed
+            absolute
+            right
+            :disabled="hasPendingReport || !isBillingDone"
+          >
+            <v-icon class="mr-1">mdi-plus-circle</v-icon>基本金の新規登録
+          </v-btn>
+        </v-card-title>
         <v-card-text>
-          <v-row class="pb-5 mb-5">
-            <v-col>
-              <v-btn
-                color="error"
-                depressed
-                absolute
-                right
-                :disabled="hasPendingReport || !isBillingDone"
-              >
-                <v-icon class="mr-1">mdi-security</v-icon>決算報告の新規作成
-              </v-btn>
-            </v-col>
-          </v-row>
           <v-divider></v-divider>
           <v-row>
             <v-col cols="12" md="4">
-              <v-select :items="periods" v-model="periodSelected" label="決算期" outlined></v-select>
+              <v-select
+                :items="periods"
+                v-model="periodSelected"
+                label="決算期"
+                outlined
+              ></v-select>
             </v-col>
           </v-row>
           <v-row class="pb-5">
@@ -55,27 +59,25 @@
           <div class="mt-2">
             報告者：
             <v-chip class="ma-1" color="grey" text-color="white" label>
-              <v-avatar left>
-                <v-icon>mdi-account-circle</v-icon>
-              </v-avatar>201 田中（会計）
+              <v-avatar left> <v-icon>mdi-account-circle</v-icon> </v-avatar>201
+              田中（会計）
             </v-chip>
             <v-chip class="ma-1" color="grey" text-color="white" label>
-              <v-avatar left>
-                <v-icon>mdi-account-circle</v-icon>
-              </v-avatar>202 鈴木（会計）
+              <v-avatar left> <v-icon>mdi-account-circle</v-icon> </v-avatar>202
+              鈴木（会計）
             </v-chip>
             <v-chip class="ma-1" color="grey" text-color="white" label>
-              <v-avatar left>
-                <v-icon>mdi-account-circle</v-icon>
-              </v-avatar>203 岡本（監査）
+              <v-avatar left> <v-icon>mdi-account-circle</v-icon> </v-avatar>203
+              岡本（監査）
             </v-chip>
           </div>
           <monthly-fee></monthly-fee>
           <deduction-table></deduction-table>
-          <income-table></income-table>
-          <expenditure-table></expenditure-table>
-          <assets-table></assets-table>
           <account-table></account-table>
+          <collection-result-table></collection-result-table>
+          <!-- <income-table></income-table> -->
+          <!-- <expenditure-table></expenditure-table> -->
+          <!-- <assets-table></assets-table> -->
           <!-- <total-balance-table></total-balance-table> -->
         </v-card-text>
       </v-card>

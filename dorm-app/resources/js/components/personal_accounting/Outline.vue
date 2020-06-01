@@ -9,8 +9,16 @@
               <v-list-item-title>
                 <span>次回の引落予定：</span>
                 <span>
-                  <v-chip label outlined large color="indigo darken-1" class="px-3">
-                    <span class="headline ml-1">{{ formatCurrency(12345)}}</span>
+                  <v-chip
+                    label
+                    outlined
+                    large
+                    color="indigo darken-1"
+                    class="px-3"
+                  >
+                    <span class="headline ml-1">{{
+                      formatCurrency(12345)
+                    }}</span>
                   </v-chip>
                 </span>
               </v-list-item-title>
@@ -40,16 +48,14 @@
             </v-list-item-content>
           </v-list-item>
           <v-data-table :headers="arrearHeaders" :items="arrears">
-            <template v-slot:item.paid_at="{ item }">
-              <span v-if="item.paid_at != undefined">{{ item.paid_at}}</span>
-              <span v-else>-</span>
-            </template>
             <template v-slot:item.isNextDebit="{ item }">
               <v-checkbox
-                v-if="item.status != '引落成功' && item.status != '現金納付'"
-                :disabled="item.status=='次回引落予定'"
+                :disabled="item.status == '新規請求分'"
                 v-model="isSelected"
               ></v-checkbox>
+            </template>
+            <template v-slot:item.amount="{ item }">
+              {{ formatCurrency(item.amount) }}
             </template>
           </v-data-table>
         </v-card-text>
@@ -101,40 +107,25 @@ export default {
       ],
       arrears: [
         {
-          id: 1,
-          billed_at: "2020-04-01",
-          abstract: "2020年３月分",
-          amount: 12345,
-          status: "引落成功",
-          paid_at: "2020-04-20"
-        },
-        {
-          id: 2,
-          billed_at: "2020-04-01",
-          abstract: "2020年３月分",
-          amount: 12345,
-          status: "現金納付"
-        },
-        {
           id: 3,
           billed_at: "2020-04-01",
           abstract: "2020年３月分",
           amount: 12345,
-          status: "次回引落予定"
+          status: "新規請求分"
         },
         {
           id: 4,
           billed_at: "2020-04-01",
           abstract: "2020年３月分",
           amount: 12345,
-          status: "次回引落予定"
+          status: "新規請求分"
         },
         {
           id: 5,
           billed_at: "2020-04-01",
           abstract: "2020年３月分",
           amount: 12345,
-          status: "滞納中"
+          status: "滞納分"
         }
       ]
     };
