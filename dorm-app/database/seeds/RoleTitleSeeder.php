@@ -31,5 +31,10 @@ class RoleTitleSeeder extends Seeder
         $accountant->name = "会計委員";
         $accountant->default_reward_pct = 75;
         $accountant->save();
+
+        $extra = new RoleTitle;
+        $extra->name = "臨時委員";
+        $extra->default_reward_pct = 0;
+        $extra->save();
     }
 }

@@ -13,14 +13,18 @@ class PersonalAccountTitleSeeder extends Seeder
     public function run()
     {
         $items = array(
-            array(101, false, "寮費支払", "", null),
-            array(102, false, "寮費修正返還", "寮費の徴収ミス修正などのための返還", null),
-            array(103, false, "風呂掃除無許可欠席者代行報酬", "", 4000),
-            array(104, false, "ブロック掃除無許可欠席者代行報酬", "", 2000),
-            array(105, false, "クリーンデー参加者報酬", "欠席者の罰金合計を出席者で頭割り", null),
-            array(106, false, "監査報酬", "", null),
-            array(107, false, "議長報酬", "", 2000),
-            array(199, false, "その他の減算", "", null),
+            // substraction
+            array(101, false, "寮費自動引落", "", null),
+            array(102, false, "寮費現金納付", "", null),
+            array(103, false, "寮費修正返還", "寮費の徴収ミス修正などのための返還", null),
+            array(104, false, "風呂掃除無許可欠席者代行報酬", "", 4000),
+            array(105, false, "ブロック掃除無許可欠席者代行報酬", "", 2000),
+            array(106, false, "クリーンデー参加者報酬", "欠席者の罰金合計を出席者で頭割り", null),
+            array(107, false, "監査報酬", "", null),
+            array(108, false, "議長報酬", "", 2000),
+            array(199, false, "その他の減額", "", null),
+
+            // addition
             array(201, true, "寮費請求", "", null),
             array(202, true, "風呂掃除不履行罰金", "", 4000),
             array(203, true, "脱衣所掃除不履行罰金", "", 1000),
@@ -33,8 +37,8 @@ class PersonalAccountTitleSeeder extends Seeder
             array(210, true, "寮生大会無許可欠席４回", "", 4000),
             array(211, true, "クリーンデー無許可欠席罰金", "", 500),
             array(212, true, "寮費修正徴収", "寮費の徴収ミス修正などのための徴収", null),
-            array(299, true, "その他の加算", "", null),
-          
+            array(299, true, "その他の増額", "", null),
+
         );
         foreach ($items as $item) {
             $title = new PersonalAccountTitle;
