@@ -9,6 +9,7 @@
       <v-card-title
         >{{ titleDetails.name }}の寮費免除率の既定値を変更</v-card-title
       >
+      <v-card-subtitle v-html="subtitleMsg"></v-card-subtitle>
       <v-card-text>
         <v-form>
           <v-row>
@@ -38,7 +39,10 @@ export default {
   data: function() {
     return {
       isDialogOpen: false,
-      default_reward_pct: ""
+      default_reward_pct: "",
+
+      subtitleMsg:
+        "<span style='color: red;'>委員会の報酬割合が永続的に変更された場合にのみ</span>編集してください。ある委員会期で一時的に報酬が変更された場合には、ここではなく役職記録から編集してください。"
     };
   },
   methods: {
@@ -58,8 +62,8 @@ export default {
     },
     cancelEdit() {
       this.isDialogOpen = false;
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped>

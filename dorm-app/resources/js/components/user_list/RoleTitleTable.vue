@@ -57,7 +57,7 @@ export default {
           value: "incumbents"
         },
         {
-          text: "免除率の編集",
+          text: "既定の寮費免除率を編集",
           sortable: false,
           value: "edit"
         }
