@@ -8,8 +8,8 @@ class PersonalAccountTitle extends Model
 {
     protected $table = "personal_account_titles";
 
-    public function personalBalances()
+    public function billingDetails()
     {
-        return $this->hasMany('App\PersonalBalance');
+        return $this->hasMany('App\BillingDetails');
     }
 }

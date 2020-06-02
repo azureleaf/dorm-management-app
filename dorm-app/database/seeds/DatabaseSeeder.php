@@ -13,13 +13,14 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             UserSeeder::class,
-            BillingSeeder::class,
+            // BillingSeeder::class,
             RoomSeeder::class,
             RoleTitleSeeder::class,
             RoleHistoriesTableSeeder::class,
             PersonalAccountTitleSeeder::class,
             FundTitleSeeder::class,
-            DormAccountTitleSeeder::class
+            DormAccountTitleSeeder::class,
+            BillingDetailSeeder::class
         ]);
     }
 }

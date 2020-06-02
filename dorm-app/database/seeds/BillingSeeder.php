@@ -1,3 +1,7 @@
+<!-- 
+    This seeder is commented out in DatabaseSeeder.php!
+    because seeding to this table will be done in BillingDetailsSeeder.php!
+-->
 <?php
 
 use Illuminate\Database\Seeder;

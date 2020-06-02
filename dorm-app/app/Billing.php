@@ -8,4 +8,8 @@ class Billing extends Model
 {
     protected $table = "billings";
     
+    public function billingDetails()
+    {
+        return $this->hasMany('App\BillingDetail');
+    }
 }
