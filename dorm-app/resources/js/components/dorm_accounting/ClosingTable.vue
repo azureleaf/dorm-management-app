@@ -26,8 +26,7 @@
                 outlined
               ></v-select>
             </v-col>
-          </v-row>
-          <v-row class="pb-5">
+            <v-spacer></v-spacer>
             <v-col>
               <v-btn
                 color="error"
@@ -40,7 +39,7 @@
               </v-btn>
             </v-col>
           </v-row>
-          <v-row class="pb-5">
+          <!-- <v-row class="pb-5">
             <v-col>
               <v-btn
                 color="error"
@@ -52,11 +51,10 @@
                 <v-icon class="mr-1">mdi-security</v-icon>引落依頼情報の生成
               </v-btn>
             </v-col>
-          </v-row>
-
-          <div>決算日： 2020年5月10日</div>
-          <div>寮生大会承認日： 承認待ち</div>
-          <div class="mt-2">
+          </v-row> -->
+          <v-subheader>決算日： 2020年5月10日</v-subheader>
+          <v-subheader>寮生大会承認日： 承認待ち</v-subheader>
+          <!-- <div class="mt-2">
             報告者：
             <v-chip class="ma-1" color="grey" text-color="white" label>
               <v-avatar left> <v-icon>mdi-account-circle</v-icon> </v-avatar>201
@@ -70,11 +68,11 @@
               <v-avatar left> <v-icon>mdi-account-circle</v-icon> </v-avatar>203
               岡本（監査）
             </v-chip>
-          </div>
+          </div> -->
           <monthly-fee></monthly-fee>
           <deduction-table></deduction-table>
-          <account-table></account-table>
           <collection-result-table></collection-result-table>
+          <!-- <account-table></account-table> -->
           <!-- <income-table></income-table> -->
           <!-- <expenditure-table></expenditure-table> -->
           <!-- <assets-table></assets-table> -->
@@ -92,46 +90,7 @@ export default {
       periods: ["2020年05月期", "2020年06月期", "2020年07月期"],
       periodShown: "",
       hasPendingReport: false,
-      isBillingDone: true,
-      billItems: [],
-      billingHeaders: [
-        {
-          text: "寮会計処理ID",
-          sortable: true,
-          value: "id"
-        },
-        {
-          text: "処理登録日",
-          sortable: true,
-          value: "created_at"
-        },
-        {
-          text: "区分",
-          sortable: true,
-          value: "category"
-        },
-        {
-          text: "摘要",
-          sortable: true,
-          value: "abstract"
-        },
-        {
-          text: "収入",
-          sortable: true,
-          value: "billing"
-        },
-        {
-          text: "支出",
-          sortable: true,
-          value: "payment"
-        },
-
-        {
-          text: "残高",
-          sortable: true,
-          value: "balance"
-        }
-      ]
+      isBillingDone: true
     };
   },
   computed: {
@@ -143,10 +102,6 @@ export default {
         this.periodShown = newVal;
       }
     }
-  },
-  mounted: async function() {
-    const res = await axios.get("./billings");
-    this.billItems = res.data;
   }
 };
 </script>

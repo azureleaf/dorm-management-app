@@ -45,11 +45,6 @@
               :event-overlap-threshold="30"
             ></v-calendar>
           </v-sheet>
-          <v-card class="mt-5" outlined>
-            <v-card-title>行事変更履歴</v-card-title>
-            <v-card-subtitle>当番交代などの履歴です。</v-card-subtitle>
-            <v-card-text></v-card-text>
-          </v-card>
         </v-card-text>
       </v-card>
     </v-container>

@@ -7,5 +7,4 @@
 <arrears-table></arrears-table>
 <penalty-history-table></penalty-history-table>
 <personal-account-title-table></personal-account-title-table>
-<event-table></event-table>
 @endsection

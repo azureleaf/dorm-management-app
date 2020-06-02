@@ -2,10 +2,10 @@
   <v-card outlined class="mb-4">
     <v-card-title>
       <span>負担人数</span>
-      <v-spacer></v-spacer>
+      <!-- <v-spacer></v-spacer>
       <v-btn color="error" depressed absolute right>
         <v-icon class="mr-1">mdi-plus-circle</v-icon>負担人数の編集
-      </v-btn>
+      </v-btn> -->
     </v-card-title>
     <v-card-text>
       <!-- <v-card class="pa-3 formula" flat outlined>
