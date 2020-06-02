@@ -14,11 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-use Illuminate\Http\Request;
-use App\User;
 use App\Billing;
-use App\RoleTitle;
-use App\RoleHistory;
 use App\PersonalAccountTitle;
 
 /**
@@ -28,11 +24,9 @@ Route::get('/', function () {
     return view('introduction');
 });
 
-
 Route::get('/user-list', function () {
     return view('user_list');
 });
-
 
 Route::get('/personal-accounting', function () {
     return view('personal_accounting');
@@ -46,10 +40,9 @@ Route::get('/schedule', function () {
     return view('schedule');
 });
 
-
-Route::get('/document', function () {
-    return view('document');
-});
+// Route::get('/document', function () {
+//     return view('document');
+// });
 
 
 /**

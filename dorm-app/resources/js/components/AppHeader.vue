@@ -59,7 +59,7 @@ export default {
         { title: "寮会計", uri: "/dorm-accounting", icon: "mdi-currency-jpy" },
         { title: "寮生一覧", uri: "/user-list", icon: "mdi-account-group" },
         { title: "日程管理", uri: "/schedule", icon: "mdi-clock" },
-        { title: "寮文書", uri: "/document", icon: "mdi-file-document" },
+        // { title: "寮文書", uri: "/document", icon: "mdi-file-document" },
         { title: "ログアウト", uri: "/logout", icon: "mdi-lock-open" }
       ],
       isNavOpen: false
