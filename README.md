@@ -280,18 +280,33 @@ columns except for `id`, `created_at`, `updated_at`
 
 ### Finance tables
 
-- [x] `personal_balances`
+- [ ] `billings`
   - user_id (many2one with `users`)
-  - year
-  - month
-  - personal_account_title_id (one2many with `personal_account_titles`)
+  - closed_at: date (last day of the month)
+  - paid_at: date
+  - amount
+  - is_next_debit_target: Boolean
+  - is_cash_payment: Boolean
+- [ ] `billing_details`
+  - billing_id (many2one with `billings`)
+  - personal_account_title_id (many2one with `personal_account_titles`)
+  - abstract (can't be edited by the user)
+  - amount
+  - comment (can be edited by the user)
+- [x] `personal_account_titles`
+  - is_payment: Boolean
+  - name
+  - default_amount: nullable
+  - description
+- [ ] `closing_items` History of the monthly closings
+  - closed_at: last day of the month, refers to the fiscal period
   - abstract
-  - billing
-  - payment
-  - billing_ids JSON (one2many with `personal_balances` if possible. References of the payment to the billings)
-  - balance
-  - comment
-- [x] `dorm_balances`
+  - total_amount
+  - persons
+  - quota_amount
+  - ~~assets: JSON~~
+  - ~~funds: JSON~~
+- [x] ~~`dorm_balances`~~
   - fund_title_id (one2many with `fund_titles`)
   - dorm_accont_title_id (many2one with `dorm_account_titles`)
   - abstract
@@ -299,52 +314,42 @@ columns except for `id`, `created_at`, `updated_at`
   - expense
   - balances
   - comment
-- [x] `fund_titles`
-  - name: 一般会計, 罰金会計, コンパ積立金, 通信設備積立金
-  - start_at: nullable
-  - end_at: nullable
-  - monthly_reserve_amount: nullable
-- [x] `personal_account_titles`
-  - is_payment: Boolean
-  - name
-  - description
-  - default_amount: nullable
-- [x] `dorm_account_titles`
+- [x] ~~`dorm_account_titles`~~
   - is_expense: boolean
   - ~~is_monthly: boolean~~
   - ~~name: 寄宿料, 水道, 電気, ガス, 灯油, 共通棟重油, 共通棟ガス, インターネット, 新聞, 銀行手数料, 寮費徴収, 利子収入, ガス代徴収, 議長報酬, 寮費返還,~~
   - name: 寮費引落徴収, 寮費現金徴収, 支出
-- [x] `closing_items` History of the monthly closings
-  - year
-  - period
-  - abstract
-  - assets: JSON
-  - persons: JSON
-  - funds: JSON
+- [x] ~~`fund_titles`~~
+  - name: 一般会計, 罰金会計, コンパ積立金, 通信設備積立金
+  - start_at: nullable
+  - end_at: nullable
+  - monthly_reserve_amount: nullable
 
 ### Event Tables
 
 - [ ] `event_titles`
-  - name: 風呂掃除, ブロック掃除, 寮生大会, 飲み会, その他
+  - name: 風呂掃除, ブロック掃除, 寮生大会, コンパ, その他
   - default_reward
   - default_penalty
-- [ ] `event_histories`:
+- [ ] `event_surveys`
+  - event_title_id (one2many)
+  - selectable_at: JSON (array of dates)
+  - event_name
+  - result: JSON
+- [ ] `event_histories`: Result of the assignment
   - event_type_id (one2many)
-  - name
-  - start_at:
-  - end_at:
+  - schedule_start_at:
+  - schedule_end_at:
   - user_id:
   - is_forcibly_assigned: boolean
   - result: enum (attended, absent, cancelled) "absent" is for penalty while "cancelled" isn't
   - result_updated_by: (one2many to `users` id)
   - done_at: nullable, filled when the result status is "attended"
-  - reward:
-  - penalty:
+  - reward_amount:
+  - penalty_amount:
 - [ ] `event_availabilities`
-  - event_title_id (one2many)
-  - event_name
+  - event_inquiry_id (one2many)
   - user_id (one2many)
-  - selectable_at: JSON (array of dates)
   - available_at: JSON (array of dates)
 
 ### Document Tables
