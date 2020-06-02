@@ -1,6 +1,11 @@
 <template>
   <v-card outlined class="my-5">
-    <v-card-title>基本金</v-card-title>
+    <v-card-title
+      >基本金<v-spacer></v-spacer>
+      <v-btn color="error" depressed absolute right>
+        <v-icon class="mr-1">mdi-square-edit-outline</v-icon>徴収総額の編集
+      </v-btn></v-card-title
+    >
     <v-card-text>
       <v-data-table
         :headers="fundHeaders"
@@ -15,7 +20,13 @@
           {{ (item.total_amount / item.persons_deducted).toFixed(2) }}
         </template>
         <template v-slot:item.quota="{ item }">
-          <v-chip color="primary" outlined large label class="my-1 font-weight-bold">
+          <v-chip
+            color="primary"
+            outlined
+            large
+            label
+            class="my-1 font-weight-bold"
+          >
             {{
               formatCurrency(
                 Math.ceil(

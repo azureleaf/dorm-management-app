@@ -4,6 +4,6 @@
 @section('content')
 <outline></outline>
 <billing-table></billing-table>
-<penalty-history-table></penalty-history-table>
 <personal-account-title-table></personal-account-title-table>
+<!-- <penalty-history-table></penalty-history-table> -->
 @endsection
