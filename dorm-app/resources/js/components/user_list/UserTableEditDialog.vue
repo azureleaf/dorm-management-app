@@ -7,6 +7,7 @@
         v-on="on"
         dense
         :disabled="user.move_out_at != undefined"
+        @click="initForms()" 
       >
         <v-icon class="mr-1">mdi-square-edit-outline</v-icon>
       </v-btn>
@@ -174,7 +175,7 @@ export default {
     };
   },
   methods: {
-    initForm() {
+    initForms() {
       this.operation = "";
       this.email = this.user.email.replace(this.emaildomain, "");
       this.password = "";
@@ -228,16 +229,13 @@ export default {
         console.error(e);
       }
       this.$emit("reloadUsers");
-      this.initForm();
       this.isDialogOpen = false;
     },
     cancelEdit() {
-      this.initForm();
       this.isDialogOpen = false;
     }
   },
   mounted: function() {
-    this.initForm();
     this.getAvailableRooms();
   }
 };

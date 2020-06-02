@@ -1,7 +1,15 @@
 <template>
   <v-dialog v-model="isDialogOpen" persistent max-width="600px">
     <template v-slot:activator="{ on }">
-      <v-btn color="error" depressed right absolute dark v-on="on">
+      <v-btn
+        color="error"
+        depressed
+        right
+        absolute
+        dark
+        v-on="on"
+        @click="initForms()"
+      >
         <v-icon class="mr-1">mdi-security</v-icon>出納登録
       </v-btn>
     </template>
@@ -29,10 +37,17 @@
               style="box-shadow: 0 0 0; border: solid 1px gainsboro"
             ></v-date-picker>
           </v-row>
-          <v-container v-if="displayCat == 'miscReceipt' || displayCat == 'expense'">
+          <v-container
+            v-if="displayCat == 'miscReceipt' || displayCat == 'expense'"
+          >
             <v-row>
               <v-col cols="12" md="6">
-                <v-select :items="accounts" v-model="account" label="会計区分 *" dense></v-select>
+                <v-select
+                  :items="accounts"
+                  v-model="account"
+                  label="会計区分 *"
+                  dense
+                ></v-select>
               </v-col>
               <v-col cols="12" md="6">
                 <v-select
@@ -46,32 +61,53 @@
             </v-row>
             <v-row>
               <v-col cols="12" md="6">
-                <v-select :items="years" v-model="yearSelected" label="年 *" dense></v-select>
+                <v-select
+                  :items="years"
+                  v-model="yearSelected"
+                  label="年 *"
+                  dense
+                ></v-select>
               </v-col>
               <v-col cols="12" md="6">
-                <v-select :items="months" v-model="monthSelected" label="月 *" dense></v-select>
+                <v-select
+                  :items="months"
+                  v-model="monthSelected"
+                  label="月 *"
+                  dense
+                ></v-select>
               </v-col>
             </v-row>
             <v-row>
               <v-col cols="12">
-                <v-text-field label="摘要 *" v-model="abstract" dense required></v-text-field>
+                <v-text-field
+                  label="摘要 *"
+                  v-model="abstract"
+                  dense
+                  required
+                ></v-text-field>
               </v-col>
             </v-row>
             <v-row>
               <v-col cols="12">
-                <v-text-field label="金額 *" v-model="amount" dense required></v-text-field>
+                <v-text-field
+                  label="金額 *"
+                  v-model="amount"
+                  dense
+                  required
+                ></v-text-field>
               </v-col>
             </v-row>
           </v-container>
           <v-container v-else-if="displayCat == 'feeReceipt'">
             寮費の表、会計別
-
           </v-container>
         </v-container>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="blue darken-1" text @click="isDialogOpen = false">Cancel</v-btn>
+        <v-btn color="blue darken-1" text @click="isDialogOpen = false"
+          >Cancel</v-btn
+        >
         <v-btn color="blue darken-1" text @click="saveInput">Delete</v-btn>
         <v-btn color="blue darken-1" text @click="saveInput">Save</v-btn>
       </v-card-actions>
@@ -123,7 +159,7 @@ export default {
   methods: {
     saveInput() {
       // axios post method comes here!
-      this.initForms();
+
       this.isDialogOpen = false;
     },
     initForms() {

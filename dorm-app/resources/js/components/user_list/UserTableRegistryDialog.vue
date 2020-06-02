@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="isDialogOpen" persistent max-width="600px">
     <template v-slot:activator="{ on }">
-      <v-btn color="error" depressed dark v-on="on" dense>
+      <v-btn color="error" depressed dark v-on="on" @click="initForms()" dense>
         <v-icon class="mr-1">mdi-plus-circle</v-icon>新入寮生登録
       </v-btn>
     </template>
@@ -11,23 +11,39 @@
         <v-form>
           <v-row>
             <v-col cols="6">
-              <v-text-field label="名字" v-model="name.family.kanji"></v-text-field>
+              <v-text-field
+                label="名字"
+                v-model="name.family.kanji"
+              ></v-text-field>
             </v-col>
             <v-col cols="6">
-              <v-text-field label="名前" v-model="name.first.kanji"></v-text-field>
+              <v-text-field
+                label="名前"
+                v-model="name.first.kanji"
+              ></v-text-field>
             </v-col>
           </v-row>
           <v-row>
             <v-col cols="6">
-              <v-text-field label="みょうじ" v-model="name.family.kana"></v-text-field>
+              <v-text-field
+                label="みょうじ"
+                v-model="name.family.kana"
+              ></v-text-field>
             </v-col>
             <v-col cols="6">
-              <v-text-field label="なまえ" v-model="name.first.kana"></v-text-field>
+              <v-text-field
+                label="なまえ"
+                v-model="name.first.kana"
+              ></v-text-field>
             </v-col>
           </v-row>
           <v-row>
             <v-col cols="12">
-              <v-text-field label="メールアドレス" v-model="email" :suffix="emaildomain"></v-text-field>
+              <v-text-field
+                label="メールアドレス"
+                v-model="email"
+                :suffix="emaildomain"
+              ></v-text-field>
             </v-col>
           </v-row>
           <v-row>
@@ -68,8 +84,12 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="blue darken-1" text @click="isDialogOpen = false">Cancel</v-btn>
-        <v-btn color="blue darken-1" text @click="registerNewComer()">Save</v-btn>
+        <v-btn color="blue darken-1" text @click="isDialogOpen = false"
+          >Cancel</v-btn
+        >
+        <v-btn color="blue darken-1" text @click="registerNewComer()"
+          >Save</v-btn
+        >
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -77,9 +97,7 @@
 
 <script>
 export default {
-  props: [
-    "emaildomain"
-  ],
+  props: ["emaildomain"],
   data: function() {
     return {
       moveInAt: new Date().toISOString().substr(0, 10),
@@ -92,7 +110,7 @@ export default {
       email: "",
       password: "", // needs to be encrypted before submission!
       isDialogOpen: false,
-      isPasswordMasked: true,
+      isPasswordMasked: true
     };
   },
   methods: {
@@ -114,6 +132,17 @@ export default {
       }
       this.$emit("reloadUsers");
       this.isDialogOpen = false;
+    },
+    initForms() {
+      this.moveInAt = new Date().toISOString().substr(0, 10);
+      this.room = "";
+      this.name = {
+        family: { kanji: "", kana: "" },
+        first: { kanji: "", kana: "" }
+      };
+      this.email = "";
+      this.password = "";
+      this.isPasswordMasked = true;
     }
   },
   mounted: function() {

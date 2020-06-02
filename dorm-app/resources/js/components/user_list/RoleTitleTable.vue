@@ -17,7 +17,7 @@
             :items-per-page="titles.length"
             hide-default-footer
           >
-            <template v-slot:item.edit="{item}">
+            <template v-slot:item.edit="{ item }">
               <role-title-table-edit-dialog
                 :titleDetails="item"
                 @reloadTitles="loadTitles"

@@ -6,11 +6,27 @@
 <template>
   <v-dialog v-model="isDialogOpen" persistent max-width="600px">
     <template v-slot:activator="{ on }">
-      <v-btn v-if="isCreation" color="error" depressed dark v-on="on" dense>
+      <v-btn
+        v-if="isCreation"
+        color="error"
+        depressed
+        dark
+        v-on="on"
+        @click="initForms()"
+        dense
+      >
         <v-icon class="mr-1">mdi-plus-circle</v-icon>
         <span>役職記録の新規作成</span>
       </v-btn>
-      <v-btn v-if="!isCreation" color="error" depressed dark v-on="on" dense>
+      <v-btn
+        v-if="!isCreation"
+        color="error"
+        depressed
+        dark
+        v-on="on"
+        @click="initForms()"
+        dense
+      >
         <v-icon>mdi-square-edit-outline</v-icon>
       </v-btn>
     </template>
@@ -167,7 +183,6 @@ export default {
   },
   methods: {
     cancelEdit() {
-      this.initForms();
       this.isDialogOpen = false;
     },
     async editRoleHx(editType) {
@@ -201,7 +216,6 @@ export default {
       }
       // now that the DB is updated, reload the table in the parent component
       this.$emit("retrieveAgain");
-      this.initForms();
       this.isDialogOpen = false;
     },
     async loadRoleTitles() {
@@ -267,7 +281,6 @@ export default {
     }
   },
   mounted: function() {
-    this.initForms();
     this.loadRoleTitles();
     this.loadUsers();
   }
