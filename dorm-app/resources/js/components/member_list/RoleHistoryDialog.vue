@@ -205,7 +205,7 @@ export default {
       this.isDialogOpen = false;
     },
     async loadRoleTitles() {
-      const res = await axios.get("./roletitles");
+      const res = await axios.get("./role-titles");
       this.roleTitles = res.data;
     },
     async loadUsers() {

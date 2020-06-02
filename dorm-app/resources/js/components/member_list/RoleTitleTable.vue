@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     async loadTitles() {
-      const res = await axios.get("./roletitles");
+      const res = await axios.get("./role-titles");
       this.titles = res.data;
 
       // Append the new column for readable reward info
