@@ -34,7 +34,7 @@ export default {
       rooms: [],
       statuses: [
         { en: "occupied", ja: "使用中" },
-        { en: "vacant", ja: "空室" },
+        { en: "vacant", ja: "入居可" },
         { en: "unavailable", ja: "使用不能" }
       ],
       roomHeaders: [
