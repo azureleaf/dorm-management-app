@@ -36,9 +36,9 @@ Route::get('/dorm-accounting', function () {
     return view('dorm_accounting');
 });
 
-Route::get('/schedule', function () {
-    return view('schedule');
-});
+// Route::get('/schedule', function () {
+//     return view('schedule');
+// });
 
 // Route::get('/document', function () {
 //     return view('document');
