@@ -1,5 +1,5 @@
 <template>
-  <v-card outlined class="mb-4">
+  <v-card outlined class="my-5">
     <v-card-title>支出の部</v-card-title>
     <v-card-text>
       <v-data-table :headers="billingHeaders" :items="billItems" :items-per-page="20"></v-data-table>

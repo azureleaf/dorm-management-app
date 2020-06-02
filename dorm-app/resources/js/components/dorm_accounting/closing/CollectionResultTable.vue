@@ -1,5 +1,5 @@
 <template>
-  <v-card outlined>
+  <v-card outlined class="my-5">
     <v-card-title>
       <span>寮費徴収結果</span>
       <v-spacer></v-spacer>
@@ -8,11 +8,6 @@
       </v-btn>
     </v-card-title>
     <v-card-text>
-      <v-row class="pb-5">
-        <v-col>
-          <!-- <payment-table-dialog></payment-table-dialog> -->
-        </v-col>
-      </v-row>
       <v-row>
         <v-col>
           <v-data-table

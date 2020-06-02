@@ -1,7 +1,6 @@
 <template>
-  <v-card outlined class="mb-4">
+  <v-card outlined class="my-5">
     <v-card-title>基本金</v-card-title>
-    <v-card-subtitle>翌月の寮生ひとりあたりの徴収予定額です。</v-card-subtitle>
     <v-card-text>
       <v-data-table
         :headers="fundHeaders"

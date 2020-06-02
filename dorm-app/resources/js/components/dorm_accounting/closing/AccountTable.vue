@@ -1,5 +1,5 @@
 <template>
-  <v-card outlined class="mb-4">
+  <v-card outlined class="my-5">
     <v-card-title>
       <span>会計区分別収支</span>
       <v-spacer></v-spacer>
