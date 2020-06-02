@@ -25,30 +25,30 @@ use App\PersonalAccountTitle;
  * Views
  */
 Route::get('/', function () {
-    return view('welcome');
+    return view('introduction');
 });
 
 
-Route::get('/userlist', function () {
-    return view('user-list');
+Route::get('/user-list', function () {
+    return view('user_list');
 });
 
 
-Route::get('/personalbook', function () {
-    return view('personal-book');
+Route::get('/personal-accounting', function () {
+    return view('personal_accounting');
 });
 
-Route::get('/dormbook', function () {
-    return view('dorm-book');
+Route::get('/dorm-accounting', function () {
+    return view('dorm_accounting');
 });
 
-Route::get('/application', function () {
-    return view('application');
+Route::get('/schedule', function () {
+    return view('schedule');
 });
 
 
-Route::get('/archive', function () {
-    return view('archive');
+Route::get('/document', function () {
+    return view('document');
 });
 
 

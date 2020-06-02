@@ -55,11 +55,11 @@ export default {
     return {
       pages: [
         { title: "寮紹介", uri: "/", icon: "mdi-home" },
-        { title: "個人記録", uri: "/personalbook", icon: "mdi-account-circle" },
-        { title: "寮会計", uri: "/dormbook", icon: "mdi-currency-jpy" },
-        { title: "日程管理", uri: "/application", icon: "mdi-clock" },
-        { title: "寮生一覧", uri: "/userlist", icon: "mdi-account-group" },
-        { title: "寮文書", uri: "/archive", icon: "mdi-file-document" },
+        { title: "個人記録", uri: "/personal-accounting", icon: "mdi-account-circle" },
+        { title: "寮会計", uri: "/dorm-accounting", icon: "mdi-currency-jpy" },
+        { title: "寮生一覧", uri: "/user-list", icon: "mdi-account-group" },
+        { title: "日程管理", uri: "/schedule", icon: "mdi-clock" },
+        { title: "寮文書", uri: "/document", icon: "mdi-file-document" },
         { title: "ログアウト", uri: "/logout", icon: "mdi-lock-open" }
       ],
       isNavOpen: false
