@@ -8,7 +8,25 @@
         :items="funds"
         :items-per-page="funds.length"
         hide-default-footer
-      ></v-data-table>
+      >
+        <template v-slot:item.total_amount="{ item }">
+          {{ formatCurrency(item.total_amount) }}
+        </template>
+        <template v-slot:item.quotient="{ item }">
+          {{ (item.total_amount / item.persons_deducted).toFixed(2) }}
+        </template>
+        <template v-slot:item.quota="{ item }">
+          <v-chip color="primary" outlined large label class="my-1 font-weight-bold">
+            {{
+              formatCurrency(
+                Math.ceil(
+                  (item.total_amount / item.persons_deducted).toFixed(2)
+                )
+              )
+            }}
+          </v-chip>
+        </template>
+      </v-data-table>
     </v-card-text>
   </v-card>
 </template>
@@ -20,13 +38,11 @@ export default {
       funds: [
         {
           type: "一般会計",
-          burden_rate: "0",
-          persons: "1",
-          persons_deducted: "0",
-          start_at: "",
-          end_at: "",
-          comment: ""
-        },
+          total_amount: 1234567,
+          persons_deducted: 52.5,
+          quotient: "",
+          quota: ""
+        }
         // {
         //   type: "罰金会計",
         //   burden_rate: "0.25",
@@ -82,24 +98,24 @@ export default {
         //   value: ""
         // },
         {
-          text: "一般会計支出",
+          text: "徴収総額",
           sortable: false,
-          value: ""
+          value: "total_amount"
         },
         {
           text: "負担人数",
           sortable: false,
-          value: ""
+          value: "persons_deducted"
         },
         {
           text: "除算結果",
           sortable: false,
-          value: ""
+          value: "quotient"
         },
         {
-          text: "基本金内訳（切り上げ）",
+          text: "基本金（切り上げ）",
           sortable: false,
-          value: ""
+          value: "quota"
         }
       ]
     };
