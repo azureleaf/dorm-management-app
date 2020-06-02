@@ -52,7 +52,7 @@ export default {
           value: "reward"
         },
         {
-          text: "現職者名",
+          text: "現任者",
           sortable: false,
           value: "incumbents"
         },

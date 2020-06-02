@@ -17,28 +17,36 @@
         </v-card-title>
         <v-card-text>
           <v-divider></v-divider>
-          <v-row>
-            <v-col cols="12" md="4">
-              <v-select
-                :items="periods"
-                v-model="periodSelected"
-                label="決算期"
-                outlined
-              ></v-select>
-            </v-col>
-            <v-spacer></v-spacer>
-            <v-col>
+
+          <v-card class="d-flex" flat tile>
+            <v-row class="mt-2">
+              <v-col cols="12" md="4">
+                <v-select
+                  :items="periods"
+                  v-model="periodSelected"
+                  label="決算期"
+                  outlined
+                ></v-select>
+              </v-col>
+              <v-col> </v-col>
+            </v-row>
+            <v-card tile flat class="ml-auto my-3">
               <v-btn
                 color="error"
                 depressed
-                absolute
-                right
+                :disabled="hasPendingReport || !isBillingDone"
+              >
+                <v-icon class="mr-1">mdi-calendar-month</v-icon>決算日の設定
+              </v-btn>
+              <v-btn
+                color="error"
+                depressed
                 :disabled="!hasPendingReport || isBillingDone"
               >
                 <v-icon class="mr-1">mdi-security</v-icon>各寮生への請求処理
               </v-btn>
-            </v-col>
-          </v-row>
+            </v-card>
+          </v-card>
           <!-- <v-row class="pb-5">
             <v-col>
               <v-btn
@@ -52,8 +60,6 @@
               </v-btn>
             </v-col>
           </v-row> -->
-          <v-subheader>決算日： 2020年5月10日</v-subheader>
-          <v-subheader>寮生大会承認日： 承認待ち</v-subheader>
           <!-- <div class="mt-2">
             報告者：
             <v-chip class="ma-1" color="grey" text-color="white" label>
@@ -105,5 +111,4 @@ export default {
   }
 };
 </script>
-<style scoped>
-</style>
+<style scoped></style>
