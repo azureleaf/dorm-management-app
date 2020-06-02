@@ -4,10 +4,10 @@
       <v-card elevation="10">
         <v-card-title>
           <span>職種一覧</span>
-          <v-spacer></v-spacer>
+          <!-- <v-spacer></v-spacer>
           <v-btn color="error" depressed absolute right>
             <v-icon class="mr-1">mdi-plus-circle</v-icon>職種の追加
-          </v-btn>
+          </v-btn> -->
         </v-card-title>
         <v-card-text>
           <!-- <role-title-table-edit-dialog :titles="this.titles" @reloadTitles="loadTitles"></role-title-table-edit-dialog> -->
@@ -16,7 +16,14 @@
             :items="titles"
             :items-per-page="titles.length"
             hide-default-footer
-          ></v-data-table>
+          >
+            <template v-slot:item.edit="{item}">
+              <role-title-table-edit-dialog
+                :titleDetails="item"
+                @reloadTitles="loadTitles"
+              ></role-title-table-edit-dialog>
+            </template>
+          </v-data-table>
         </v-card-text>
       </v-card>
     </v-container>
@@ -40,7 +47,7 @@ export default {
           value: "name"
         },
         {
-          text: "報酬額の既定値",
+          text: "既定の寮費免除率",
           sortable: false,
           value: "reward"
         },
@@ -48,6 +55,11 @@ export default {
           text: "現職者名",
           sortable: false,
           value: "incumbents"
+        },
+        {
+          text: "免除率の編集",
+          sortable: false,
+          value: "edit"
         }
       ]
     };

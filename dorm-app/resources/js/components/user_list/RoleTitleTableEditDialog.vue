@@ -2,41 +2,31 @@
   <v-dialog v-model="isDialogOpen" persistent max-width="600px">
     <template v-slot:activator="{ on }">
       <v-btn color="error" depressed dark v-on="on" dense>
-        <v-icon class="mr-1">mdi-security</v-icon>役職種別の編集
+        <v-icon class="mr-1">mdi-square-edit-outline</v-icon>
       </v-btn>
     </template>
     <v-card>
-      <v-card-title>役職種別の編集</v-card-title>
+      <v-card-title
+        >{{ titleDetails.name }}の寮費免除率の既定値を変更</v-card-title
+      >
       <v-card-text>
         <v-form>
           <v-row>
             <v-col>
-              <v-select
-                :items="operations"
-                item-value="value"
-                item-text="text"
-                v-model="operation"
-                label="処理内容"
-                outlined
-              ></v-select>
+              <v-text-field
+                label="免除率"
+                v-model="default_reward_pct"
+                type="number"
+                suffix="%"
+              ></v-text-field>
             </v-col>
           </v-row>
-          <v-container v-if="operation == 'create'">
-            <v-row>
-              <v-col cols="6">
-                <v-text-field label="職種名" v-model="titleName"></v-text-field>
-              </v-col>
-              <v-col cols="6">
-                <v-text-field label="既定の報酬率" v-model="rewardPct"></v-text-field>
-              </v-col>
-            </v-row>
-          </v-container>
         </v-form>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="blue darken-1" text @click="cancelEdit()">Cancel</v-btn>
-        <v-btn color="blue darken-1" text @click="updateTitles()">Save</v-btn>
+        <v-btn color="blue darken-1" text @click="updateTitle()">Save</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -44,29 +34,22 @@
 
 <script>
 export default {
-  props: ["titles"],
+  props: ["titleDetails"],
   data: function() {
     return {
       isDialogOpen: false,
-      titleName: "",
-      rewardPct: "",
-      operation: "",
-      operations: [
-        { value: "create", text: "新規作成" },
-        { value: "edit", text: "役職編集" },
-      ]
+      default_reward_pct: ""
     };
   },
   methods: {
-    initForm() {},
-    async updateTitles() {
+    initForm() {
+      this.default_reward_pct = this.titleDetails.default_reward_pct;
+    },
+    async updateTitle() {
       try {
-        if (this.operation == "create") {
-          const res = await axios.post(`/create/roletitle/`, {
-            titleName: this.titleName,
-            rewardPct: this.rewardPct,
-          });
-        } 
+        const res = await axios.put(`/role-titles/${this.titleDetails.id}`, {
+          default_reward_pct: this.default_reward_pct
+        });
       } catch (e) {
         console.error(e);
       }

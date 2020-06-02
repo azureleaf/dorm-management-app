@@ -72,9 +72,8 @@ Route::post('/users', 'UserController@store');
 Route::put('/users/{user_id}/operation/{operation}', 'UserController@update');
 
 // Role Titles
-Route::get('/role-titles', function () {
-    return RoleTitle::all();
-});
+Route::get('/role-titles', 'RoleTitleController@index');
+Route::put('/role-titles/{role_title_id}', 'RoleTitleController@update');
 
 // Role Histories
 Route::get('/role-histories', 'RoleHistoryController@index');
