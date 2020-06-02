@@ -85,7 +85,7 @@ export default {
   },
   methods: {
     async retrieve() {
-      const res = await axios.get("./rolehx");
+      const res = await axios.get("./role-histories");
       this.hxs = res.data;
     }
   },

@@ -17,12 +17,13 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\User;
 use App\Billing;
-use App\Room;
 use App\RoleTitle;
 use App\RoleHistory;
 use App\PersonalAccountTitle;
 
-// routes for view
+/**
+ * Views
+ */
 Route::get('/', function () {
     return view('welcome');
 });
@@ -51,141 +52,48 @@ Route::get('/archive', function () {
 });
 
 
-// routes for axios
-Route::get('/users', function () {
-    // Get all the User models with relations to Room models
-    return User::with("room")->orderBy("id")->get();
-});
+/**
+ * Billing
+ */
 
 Route::get('/billings', function () {
     return Billing::all();
 });
 
-Route::get('/rooms', function () {
-    return Room::with("user")->orderBy("number")->get();
 
-    /** Unused code below do the same as above but verbose */
-    $merged = collect([]);
-    foreach (Room::orderBy("number")->get() as $room) {
-        // append "user" key with values
-        // values will be the obj of related user if exists
-        // values will be "null" when no user is related
-        $room->user;
-        $merged->push($room);
-    }
-    return $merged;
-});
+// Rooms
+Route::get('/rooms', 'RoomController@index');
+Route::get('/rooms/available', 'RoomController@available'); // original
+Route::put('/rooms/{room_id}/', 'RoomController@update');
 
+// User
+Route::get('/users', 'UserController@index');
+Route::post('/users', 'UserController@store');
+Route::put('/users/{user_id}/operation/{operation}', 'UserController@update');
 
-Route::get('/rooms/available', function () {
-    // return Room::where('status', 'vacant')->pluck("room")->toArray();
-    return Room::where('status', 'vacant')->orderBy("number")->get();
-});
-
-Route::post('/create/user', function (Request $req) {
-    // Save new user data without room info
-    $newComer = new User;
-    $newComer->name_family_kanji = $req->name["family"]["kanji"];
-    $newComer->name_first_kanji = $req->name["first"]["kanji"];
-    $newComer->name_family_kana = $req->name["family"]["kana"];
-    $newComer->name_first_kana = $req->name["first"]["kana"];
-    $newComer->email = $req->email;
-    $newComer->password = Hash::make($req->password);
-    $newComer->move_in_at = $req->move_in_at;
-    $newComer->save();
-
-    // Get the Room model of the room in which the new comer move
-    $room = Room::find($req->room_id);
-    $room->status = "occupied";
-
-    // Reload the new comer saved above, and add room with relationship
-    $newComerRetrieved = User::find($newComer->id);
-    $newComerRetrieved->room()->save($room);
-    $newComerRetrieved->save();
-});
-
-Route::post('/update/user/{user_id}/{operation}', function (Request $req, $user_id, $operation) {
-    $user = User::find($user_id);
-
-    if ($operation == "names") {
-        $user->name_family_kanji = $req->name["family"]["kanji"];
-        $user->name_first_kanji = $req->name["first"]["kanji"];
-        $user->name_family_kana = $req->name["family"]["kana"];
-        $user->name_first_kana = $req->name["first"]["kana"];
-        $user->email = $req->email;
-        $user->comment = $req->comment;
-        $user->save();
-    } else if ($operation == "password") {
-        $user->password = Hash::make($req->password);
-        $user->save();
-    } else if ($operation == "transfer") {
-        $oldRoom = Room::find($req->old_room_id);
-        $oldRoom->status = "vacant";
-        $oldRoom->user_id = null; // Can this be updated with relationship?
-        $oldRoom->save();
-
-        $newRoom = Room::find($req->new_room_id);
-        $newRoom->status = "occupied";
-        $user->room()->save($newRoom);
-    } else if ($operation == "leave") {
-        $room = Room::where("user_id", $user_id)->first();
-        $room->status = "vacant";
-        $room->user_id = null;
-        $room->save();
-
-        $user->move_out_at = $req->move_out_at;
-        $user->save();
-    }
-});
-
-
+// Role Titles
 Route::get('/roletitles', function () {
     return RoleTitle::all();
 });
 
-Route::get('/rolehx', function () {
-    return RoleHistory::with("user")->with("roleTitle")->orderBy("start_at", "desc")->get();
-});
+// Role Histories
+Route::get('/role-histories', 'RoleHistoryController@index');
+Route::post('/role-histories/', 'RoleHistoryController@store');
+Route::put('/role-histories/{hx_id}', 'RoleHistoryController@update');
+Route::delete('/role-histories/{hx_id}', 'RoleHistoryController@destroy');
 
-Route::post('/update/rolehx/{hx_id}', function (Request $req, $hx_id) {
-    $hx = RoleHistory::find($hx_id);
-    $hx->role_title_id = $req->role_title_id;
-    $hx->start_at = $req->start_at;
-    $hx->end_at = $req->end_at;
-    $hx->reward_pct = $req->reward_pct;
-    $hx->comment = $req->comment;
-    $hx->save();
-});
-
-Route::post('/create/rolehx/{user_id}/{role_title_id}', function (Request $req, $user_id, $role_title_id) {
-    $hx = new RoleHistory;
-    $hx->role_title_id = $role_title_id;
-    $hx->user_id = $user_id;
-    $hx->start_at = $req->start_at;
-    $hx->end_at = $req->end_at;
-    $hx->reward_pct = $req->reward_pct;
-    $hx->comment = $req->comment;
-    $hx->save();
-});
-
-Route::post('/delete/rolehx/{role_title_id}', function (Request $req, $role_title_id) {
-    $hx = RoleHistory::find($role_title_id);
-    $hx->delete();
-});
-
-Route::post('/edit/room/status/{room_id}', function (Request $req, $room_id) {
-    $room = Room::find($room_id);
-    $room->comment = $req->comment;
-    $room->status = $req->status;
-    $room->save();
-});
+/**
+ * Personal accounting
+ */
 
 Route::get('/personal/titles', function () {
     return PersonalAccountTitle::orderBy("id")->get();
 });
 
 
-// routes for auth
+/**
+ * Auth
+ */
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

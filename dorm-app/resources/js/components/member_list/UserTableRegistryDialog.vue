@@ -102,7 +102,7 @@ export default {
     },
     async registerNewComer() {
       try {
-        const res = await axios.post("/create/user", {
+        const res = await axios.post("/users", {
           name: this.name,
           room_id: this.room,
           move_in_at: this.moveInAt,

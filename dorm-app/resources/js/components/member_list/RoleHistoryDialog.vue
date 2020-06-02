@@ -15,9 +15,13 @@
       </v-btn>
     </template>
     <v-card>
-      <v-card-title v-if="!isCreation">{{ currHistory.user.full_name }}さんの役職を編集</v-card-title>
+      <v-card-title v-if="!isCreation"
+        >{{ currHistory.user.full_name }}さんの役職を編集</v-card-title
+      >
       <v-card-title v-if="isCreation">役職記録の新規作成</v-card-title>
-      <v-card-subtitle v-if="isCreation">期の途中で報酬が代わる場合などは、それぞれ別個の役職として登録してください。</v-card-subtitle>
+      <v-card-subtitle v-if="isCreation"
+        >期の途中で報酬が代わる場合などは、それぞれ別個の役職として登録してください。</v-card-subtitle
+      >
       <v-card-text>
         <v-row v-if="isCreation">
           <v-col cols="12" md="6">
@@ -42,18 +46,35 @@
             ></v-select>
           </v-col>
           <v-col cols="12" md="6">
-            <v-text-field label="寮費免除率" v-model="reward_pct" type="number" suffix="%"></v-text-field>
+            <v-text-field
+              label="寮費免除率"
+              v-model="reward_pct"
+              type="number"
+              suffix="%"
+            ></v-text-field>
           </v-col>
         </v-row>
         <v-row justify="center">
-          <v-subheader>以下で委員会期を選択すると開始日・終了日の既定値を自動入力できます。</v-subheader>
+          <v-subheader
+            >以下で委員会期を選択すると開始日・終了日の既定値を自動入力できます。</v-subheader
+          >
         </v-row>
         <v-row>
           <v-col cols="12" md="6">
-            <v-select :items="years" v-model="year" label="委員会年度（任意入力）" @change="autofillTerm()"></v-select>
+            <v-select
+              :items="years"
+              v-model="year"
+              label="委員会年度（任意入力）"
+              @change="autofillTerm()"
+            ></v-select>
           </v-col>
           <v-col cols="12" md="6">
-            <v-select :items="terms" v-model="term" label="委員会期（任意入力）" @change="autofillTerm()"></v-select>
+            <v-select
+              :items="terms"
+              v-model="term"
+              label="委員会期（任意入力）"
+              @change="autofillTerm()"
+            ></v-select>
           </v-col>
         </v-row>
         <v-row justify="center">
@@ -87,14 +108,26 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="blue darken-1" text @click="cancelEdit()">Cancel</v-btn>
-        <v-btn v-if="isCreation" color="blue darken-1" text @click="editRoleHx('create')">Save</v-btn>
+        <v-btn
+          v-if="isCreation"
+          color="blue darken-1"
+          text
+          @click="editRoleHx('create')"
+          >Save</v-btn
+        >
         <confirmation-dialog
           v-if="!isCreation"
           confirmationTitle="削除確認"
           :confirmationMsg="confirmationMsg"
           @isConfirmed="editRoleHx('delete')"
         ></confirmation-dialog>
-        <v-btn v-if="!isCreation" color="blue darken-1" text @click="editRoleHx('update')">Save</v-btn>
+        <v-btn
+          v-if="!isCreation"
+          color="blue darken-1"
+          text
+          @click="editRoleHx('update')"
+          >Save</v-btn
+        >
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -141,18 +174,17 @@ export default {
       try {
         switch (editType) {
           case "create":
-            await axios.post(
-              `create/rolehx/${this.user_id}/${this.role_title_id}`,
-              {
-                start_at: this.start_at,
-                end_at: this.end_at,
-                comment: this.comment,
-                reward_pct: this.reward_pct
-              }
-            );
+            await axios.post(`/role-histories/`, {
+              user_id: this.user_id,
+              role_title_id: this.role_title_id,
+              start_at: this.start_at,
+              end_at: this.end_at,
+              comment: this.comment,
+              reward_pct: this.reward_pct
+            });
             break;
           case "update":
-            await axios.post("/update/rolehx/" + this.currHistory.id, {
+            await axios.put(`/role-histories/${this.currHistory.id}`, {
               start_at: this.start_at,
               end_at: this.end_at,
               comment: this.comment,
@@ -161,7 +193,7 @@ export default {
             });
             break;
           case "delete":
-            await axios.post(`delete/rolehx/${this.currHistory.id}`, {});
+            await axios.delete(`role-histories/${this.currHistory.id}`);
             break;
         }
       } catch (e) {

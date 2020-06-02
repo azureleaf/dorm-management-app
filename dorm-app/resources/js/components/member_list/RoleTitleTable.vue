@@ -67,7 +67,7 @@ export default {
     },
     async loadRoleHistories() {
       // Retrieve all the role histories
-      const res = await axios.get("./rolehx");
+      const res = await axios.get("./role-histories");
       let hxs = res.data;
 
       // Filter out the former / future role histories, keep current ones only

@@ -6,7 +6,7 @@
       </v-btn>
     </template>
     <v-card>
-      <v-card-title>{{item.room}}号室の状態を編集</v-card-title>
+      <v-card-title>{{ item.room }}号室の状態を編集</v-card-title>
       <v-card-text>
         <v-row>
           <v-col cols="12">
@@ -21,14 +21,21 @@
         </v-row>
         <v-row>
           <v-col cols="12">
-            <v-text-field label="部屋の状態の詳細説明" v-model="comment"></v-text-field>
+            <v-text-field
+              label="部屋の状態の詳細説明"
+              v-model="comment"
+            ></v-text-field>
           </v-col>
         </v-row>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="blue darken-1" text @click="isDialogOpen = false">Cancel</v-btn>
-        <v-btn color="blue darken-1" text @click="updateRoomStatus()">Save</v-btn>
+        <v-btn color="blue darken-1" text @click="isDialogOpen = false"
+          >Cancel</v-btn
+        >
+        <v-btn color="blue darken-1" text @click="updateRoomStatus()"
+          >Save</v-btn
+        >
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -53,7 +60,7 @@ export default {
   methods: {
     async updateRoomStatus() {
       try {
-        const res = await axios.post("/edit/room/status/" + this.item.id, {
+        const res = await axios.put(`/rooms/${this.item.id}`, {
           comment: this.comment,
           status: this.status
         });

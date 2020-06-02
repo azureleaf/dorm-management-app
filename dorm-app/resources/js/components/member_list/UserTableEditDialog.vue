@@ -1,12 +1,18 @@
 <template>
   <v-dialog v-model="isDialogOpen" persistent max-width="600px">
     <template v-slot:activator="{ on }">
-      <v-btn color="error" depressed v-on="on" dense :disabled="user.move_out_at != undefined">
+      <v-btn
+        color="error"
+        depressed
+        v-on="on"
+        dense
+        :disabled="user.move_out_at != undefined"
+      >
         <v-icon class="mr-1">mdi-square-edit-outline</v-icon>
       </v-btn>
     </template>
     <v-card>
-      <v-card-title>{{user.full_name}}さんの情報を更新</v-card-title>
+      <v-card-title>{{ user.full_name }}さんの情報を更新</v-card-title>
       <v-card-text>
         <v-form>
           <v-row>
@@ -24,23 +30,39 @@
           <v-container v-if="operation == 'names'">
             <v-row>
               <v-col cols="6">
-                <v-text-field label="名字" v-model="name.family.kanji"></v-text-field>
+                <v-text-field
+                  label="名字"
+                  v-model="name.family.kanji"
+                ></v-text-field>
               </v-col>
               <v-col cols="6">
-                <v-text-field label="名前" v-model="name.first.kanji"></v-text-field>
+                <v-text-field
+                  label="名前"
+                  v-model="name.first.kanji"
+                ></v-text-field>
               </v-col>
             </v-row>
             <v-row>
               <v-col cols="6">
-                <v-text-field label="みょうじ" v-model="name.family.kana"></v-text-field>
+                <v-text-field
+                  label="みょうじ"
+                  v-model="name.family.kana"
+                ></v-text-field>
               </v-col>
               <v-col cols="6">
-                <v-text-field label="なまえ" v-model="name.first.kana"></v-text-field>
+                <v-text-field
+                  label="なまえ"
+                  v-model="name.first.kana"
+                ></v-text-field>
               </v-col>
             </v-row>
             <v-row>
               <v-col cols="12">
-                <v-text-field label="メールアドレス" v-model="email" :suffix="emaildomain"></v-text-field>
+                <v-text-field
+                  label="メールアドレス"
+                  v-model="email"
+                  :suffix="emaildomain"
+                ></v-text-field>
               </v-col>
             </v-row>
             <v-row>
@@ -107,7 +129,13 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="blue darken-1" text @click="cancelEdit()">Cancel</v-btn>
-        <v-btn color="blue darken-1" text @click="updateUser()">Save</v-btn>
+        <v-btn
+          color="blue darken-1"
+          text
+          @click="updateUser()"
+          :disabled="operation == ''"
+          >Save</v-btn
+        >
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -147,6 +175,7 @@ export default {
   },
   methods: {
     initForm() {
+      this.operation = "";
       this.email = this.user.email.replace(this.emaildomain, "");
       this.password = "";
       this.comment = this.user.comment;
@@ -163,21 +192,24 @@ export default {
     async updateUser() {
       try {
         if (this.operation == "names") {
-          const res = await axios.post(`/update/user/${this.user.id}/names`, {
-            name: this.name,
-            email: this.email + this.emaildomain,
-            comment: this.comment
-          });
+          const res = await axios.put(
+            `/users/${this.user.id}/operation/names`,
+            {
+              name: this.name,
+              email: this.email + this.emaildomain,
+              comment: this.comment
+            }
+          );
         } else if (this.operation == "password") {
-          const res = await axios.post(
-            `/update/user/${this.user.id}/password`,
+          const res = await axios.put(
+            `/users/${this.user.id}/operation/password`,
             {
               password: this.password // needs to be encrypted!
             }
           );
         } else if (this.operation == "transfer") {
-          const res = await axios.post(
-            `/update/user/${this.user.id}/transfer`,
+          const res = await axios.put(
+            `/users/${this.user.id}/operation/transfer`,
             {
               old_room_id: this.user.room.id,
               new_room_id: this.room
@@ -185,9 +217,12 @@ export default {
           );
         } else if (this.operation == "leave") {
           /** Here need to check if the role, payment is clear! */
-          const res = await axios.post(`/update/user/${this.user.id}/leave`, {
-            move_out_at: this.moveOutAt
-          });
+          const res = await axios.put(
+            `/users/${this.user.id}/operation/leave`,
+            {
+              move_out_at: this.moveOutAt
+            }
+          );
         }
       } catch (e) {
         console.error(e);

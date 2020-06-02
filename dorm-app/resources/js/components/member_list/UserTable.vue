@@ -132,6 +132,7 @@ export default {
       this.filterUsers();
     },
     filterUsers() {
+      // Show / hide current users & former users according to the checkboxes
       this.usersShown = [];
       this.usersShown = this.usersShown.concat(
         this.users.filter(user => {
