@@ -23,7 +23,7 @@
               <v-col cols="12" md="6">
                 <v-select
                   :items="periods"
-                  v-model="periodIndexInFees"
+                  v-model="periodIndex"
                   item-text="text"
                   item-value="indexInFees"
                   label="決算期"
@@ -78,7 +78,7 @@
               岡本（監査）
             </v-chip>
           </div> -->
-          <monthly-fee :feeDetails="feeDetails"></monthly-fee>
+          <monthly-fee :feeDetailsPromise="feeDetailsPromise"></monthly-fee>
           <deduction-table></deduction-table>
           <collection-result-table></collection-result-table>
           <reward-and-penalty-table></reward-and-penalty-table>
@@ -100,19 +100,19 @@ export default {
       periods: [],
       // Index of the period selected in fees[]
       // The first period is the latest, supposedly
-      periodIndexInFees: 0,
+      periodIndex: 0,
       hasPendingReport: false,
       isBillingDone: true,
       fees: []
     };
   },
   computed: {
-    feeDetails: {
+    feeDetailsPromise: {
       get: async function() {
         await this.loadFees();
-        console.log(this.fees[this.periodIndexInFees]);
-        return this.fees[this.periodIndexInFees];
-      }
+        return this.fees[this.periodIndex];
+      },
+      
     }
   },
   methods: {
@@ -126,8 +126,8 @@ export default {
     },
     showClosing() {
       // Set props to be passed to the component
-      this.feeDetails = this.fees[this.periodIndexInFees];
-    }
+      this.feeDetails = this.fees[this.periodIndex];
+    },
   },
   mounted: async function() {
     await this.loadFees();

@@ -43,13 +43,14 @@
 
 <script>
 export default {
+  props: ["feeDetailsPromise"],
   data: function() {
     return {
       funds: [
         {
           type: "一般会計",
-          total_amount: 1234567,
-          persons_after_deduction: 52.5,
+          total_amount: "",
+          persons_after_deduction: "",
           quotient: "",
           fee: ""
         }
@@ -131,8 +132,9 @@ export default {
     };
   },
   mounted: async function() {
-    const res = await axios.get("./billings");
-    this.billItems = res.data;
+    const feeDetails = await this.feeDetailsPromise;
+    this.funds[0].total_amount = feeDetails.total_amount;
+    this.funds[0].persons_after_deduction = feeDetails.persons_after_deduction;
   }
 };
 </script>
