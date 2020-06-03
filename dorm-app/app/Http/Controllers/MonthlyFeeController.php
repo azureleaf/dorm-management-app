@@ -14,7 +14,7 @@ class MonthlyFeeController extends Controller
      */
     public function index()
     {
-        return MonthlyFee::orderBy("closed_at", "desc")->get();
+        return MonthlyFee::orderBy("closing_name", "desc")->get();
     }
 
     /**

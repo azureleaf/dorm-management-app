@@ -15,9 +15,8 @@ class MonthlyFee extends Model
 
     public function getClosingNameAttribute()
     {
-        $year = Carbon::parse($this->closed_at)->year;
-        $month = Carbon::parse($this->closed_at)->month;
-        $month = (intval($month) > 9) ? strval($month) : "0" . strval($month);
-        return "{$year}年{$month}月分決算";
+        // Prepend 0 when the month has only 1 digit
+        $month = (intval($this->month) > 9) ? strval($this->month) : "0" . strval($this->month);
+        return "{$this->year}年{$month}月期";
     }
 }

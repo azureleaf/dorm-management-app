@@ -15,7 +15,10 @@ class CreateMonthlyFeesTable extends Migration
     {
         Schema::create('monthly_fees', function (Blueprint $table) {
             $table->id();
+            $table->integer('year');
+            $table->integer('month');
             $table->date('closed_at');
+            $table->date('approved_at')->nullable();
             $table->integer('total_amount');
             $table->integer('persons');
             $table->decimal('persons_after_deduction', 5, 2);
