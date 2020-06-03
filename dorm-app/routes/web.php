@@ -82,6 +82,8 @@ Route::get('/personal/titles', function () {
     return PersonalAccountTitle::orderBy("id")->get();
 });
 
+// Monthly Fees
+Route::get('monthly-fees', 'MonthlyFeeController@index');
 
 /**
  * Auth

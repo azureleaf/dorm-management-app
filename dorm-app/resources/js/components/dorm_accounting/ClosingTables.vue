@@ -20,12 +20,15 @@
 
           <v-card class="d-flex" flat tile>
             <v-row class="mt-2">
-              <v-col cols="12" md="4">
+              <v-col cols="12" md="6">
                 <v-select
                   :items="periods"
-                  v-model="periodSelected"
+                  v-model="index4periodSelected"
+                  item-text="text"
+                  item-value="indexInFees"
                   label="決算期"
                   outlined
+                  @change="showClosing"
                 ></v-select>
               </v-col>
               <v-col> </v-col>
@@ -75,7 +78,7 @@
               岡本（監査）
             </v-chip>
           </div> -->
-          <monthly-fee></monthly-fee>
+          <monthly-fee :feeDetails="feeDetails"></monthly-fee>
           <deduction-table></deduction-table>
           <collection-result-table></collection-result-table>
           <reward-and-penalty-table></reward-and-penalty-table>
@@ -94,21 +97,42 @@
 export default {
   data: function() {
     return {
-      periods: ["2020年05月期", "2020年06月期", "2020年07月期"],
-      periodShown: "",
+      periods: [],
+      index4periodSelected: "",
       hasPendingReport: false,
-      isBillingDone: true
+      isBillingDone: true,
+      feeDetails: ""
     };
   },
   computed: {
-    periodSelected: {
-      get: function() {
-        return this.periods[this.periods.length - 1];
-      },
-      set: function(newVal) {
-        this.periodShown = newVal;
-      }
+    // index4periodSelected: {
+    //   // By default, select the first month (which is supposed to be the latest one)
+    //   get: function() {
+    //     return this.periods[0];
+    //   },
+    //   // When the user select the month, let it be
+    //   set: function(newVal) {
+    //     this.periodShown = newVal;
+    //   }
+    // }
+  },
+  methods: {
+    async loadFees() {
+      const res = await axios.get("./monthly-fees");
+      this.fees = res.data;
+      this.fees.map((fee, index) => {
+        this.periods.push({ text: fee.closing_name, indexInFees: index });
+      });
+      // The first period is the latest, supposedly
+      this.index4periodSelected = 0;
+    },
+    showClosing() {
+      console.log("Selected month id:", this.index4periodSelected);
+      this.feeDetails = this.fees[this.index4periodSelected]
     }
+  },
+  mounted: function() {
+    this.loadFees();
   }
 };
 </script>
