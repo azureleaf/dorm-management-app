@@ -2,7 +2,7 @@
   <v-content>
     <v-container>
       <v-card elevation="10">
-        <v-card-title>寮費推移</v-card-title>
+        <v-card-title>基本金推移</v-card-title>
         <v-card-text>
         </v-card-text>
       </v-card>
