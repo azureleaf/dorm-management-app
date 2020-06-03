@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
             PersonalAccountTitleSeeder::class,
             FundTitleSeeder::class,
             DormAccountTitleSeeder::class,
-            BillingDetailSeeder::class
+            BillingDetailSeeder::class,
+            MonthlyFeeSeeder::class
         ]);
     }
 }
