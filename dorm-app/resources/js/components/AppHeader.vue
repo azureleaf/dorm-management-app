@@ -28,7 +28,7 @@
           <!-- <span class="d-none d-lg-flex d-xl-flex">{{ page.title }}</span> -->
         </v-btn>
       </v-toolbar-items>
-      <v-menu v-model="isNavOpen" :offsetY="true">
+      <v-menu :offsetY="true">
         <template v-slot:activator="{ on }">
           <v-app-bar-nav-icon
             v-on="on"
@@ -62,7 +62,6 @@ export default {
         // { title: "寮文書", uri: "/document", icon: "mdi-file-document" },
         { title: "ログアウト", uri: "/logout", icon: "mdi-lock-open" }
       ],
-      isNavOpen: false
     };
   },
   mounted: function() {
