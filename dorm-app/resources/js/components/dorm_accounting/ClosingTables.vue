@@ -23,7 +23,7 @@
               <v-col cols="12" md="6">
                 <v-select
                   :items="periods"
-                  v-model="index4periodSelected"
+                  v-model="periodIndexInFees"
                   item-text="text"
                   item-value="indexInFees"
                   label="決算期"
@@ -98,41 +98,39 @@ export default {
   data: function() {
     return {
       periods: [],
-      index4periodSelected: "",
+      // Index of the period selected in fees[]
+      // The first period is the latest, supposedly
+      periodIndexInFees: 0,
       hasPendingReport: false,
       isBillingDone: true,
-      feeDetails: ""
+      fees: []
     };
   },
   computed: {
-    // index4periodSelected: {
-    //   // By default, select the first month (which is supposed to be the latest one)
-    //   get: function() {
-    //     return this.periods[0];
-    //   },
-    //   // When the user select the month, let it be
-    //   set: function(newVal) {
-    //     this.periodShown = newVal;
-    //   }
-    // }
+    feeDetails: {
+      get: async function() {
+        await this.loadFees();
+        console.log(this.fees[this.periodIndexInFees]);
+        return this.fees[this.periodIndexInFees];
+      }
+    }
   },
   methods: {
+    // Load from DB, set fees[]
     async loadFees() {
       const res = await axios.get("./monthly-fees");
       this.fees = res.data;
       this.fees.map((fee, index) => {
         this.periods.push({ text: fee.closing_name, indexInFees: index });
       });
-      // The first period is the latest, supposedly
-      this.index4periodSelected = 0;
     },
     showClosing() {
-      console.log("Selected month id:", this.index4periodSelected);
-      this.feeDetails = this.fees[this.index4periodSelected]
+      // Set props to be passed to the component
+      this.feeDetails = this.fees[this.periodIndexInFees];
     }
   },
-  mounted: function() {
-    this.loadFees();
+  mounted: async function() {
+    await this.loadFees();
   }
 };
 </script>
