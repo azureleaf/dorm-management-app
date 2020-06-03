@@ -4,6 +4,6 @@
 @section('content')
 <closing-tables></closing-tables>
 <arrears-table></arrears-table>
-<payment-chart></payment-chart>
+<fee-transition-chart></fee-transition-chart>
 <!-- <payment-table></payment-table> -->
 @endsection

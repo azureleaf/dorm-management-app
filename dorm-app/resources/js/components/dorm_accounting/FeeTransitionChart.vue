@@ -4,6 +4,20 @@
       <v-card elevation="10">
         <v-card-title>基本金推移</v-card-title>
         <v-card-text>
+          ここにChart.jsの表がくる
+          <v-data-table
+            :headers="feesHeaders"
+            :items="fees"
+            :items-per-page="10"
+          >
+            <template v-slot:item.total_amount="{ item }">
+              {{ formatCurrency(item.total_amount) }}
+            </template>
+
+            <template v-slot:item.fee_amount="{ item }">
+              {{ formatCurrency(item.fee_amount) }}
+            </template>
+          </v-data-table>
         </v-card-text>
       </v-card>
     </v-container>
@@ -14,50 +28,46 @@
 export default {
   data: function() {
     return {
-      users: "",
-      userHeaders: [
-         {
+      fees: [],
+      feesHeaders: [
+        {
           text: "ID",
           sortable: true,
           value: "id"
         },
-          {
-          text: "名前",
+        {
+          text: "決算期",
           sortable: true,
-          value: "name"
+          value: "closing_name"
         },
         {
-          text: "メールアドレス",
+          text: "決算日",
           sortable: false,
-          value: "email"
+          value: "closed_at"
         },
-         {
-          text: "部屋番号",
+        {
+          text: "徴収総額",
           sortable: true,
-          value: ""
+          value: "total_amount"
         },
-         {
-          text: "役職",
+        {
+          text: "換算負担人数",
           sortable: true,
-          value: ""
+          value: "persons_after_deduction"
         },
+        {
+          text: "基本金",
+          sortable: true,
+          value: "fee_amount"
+        }
       ]
     };
   },
   mounted: async function() {
-    const res = await axios.get("./users");
-    this.users = res.data;
+    const res = await axios.get("./monthly-fees");
+    this.fees = res.data;
   }
 };
 </script>
 <style scoped>
-table {
-  border-collapse: collapse;
-}
-
-table,
-th,
-td {
-  border: 1px solid black;
-}
 </style>
