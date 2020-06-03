@@ -17,9 +17,9 @@
           {{ formatCurrency(item.total_amount) }}
         </template>
         <template v-slot:item.quotient="{ item }">
-          {{ (item.total_amount / item.persons_deducted).toFixed(2) }}
+          {{ (item.total_amount / item.persons_after_deduction).toFixed(2) }}
         </template>
-        <template v-slot:item.quota="{ item }">
+        <template v-slot:item.fee="{ item }">
           <v-chip
             color="primary"
             outlined
@@ -30,7 +30,7 @@
             {{
               formatCurrency(
                 Math.ceil(
-                  (item.total_amount / item.persons_deducted).toFixed(2)
+                  (item.total_amount / item.persons_after_deduction).toFixed(2)
                 )
               )
             }}
@@ -49,15 +49,15 @@ export default {
         {
           type: "一般会計",
           total_amount: 1234567,
-          persons_deducted: 52.5,
+          persons_after_deduction: 52.5,
           quotient: "",
-          quota: ""
+          fee: ""
         }
         // {
         //   type: "罰金会計",
         //   burden_rate: "0.25",
         //   persons: "2",
-        //   persons_deducted: "0.5",
+        //   persons_after_deduction: "0.5",
         //   start_at: "",
         //   end_at: "",
         //   comment: ""
@@ -66,7 +66,7 @@ export default {
         //   type: "コンパ会計",
         //   burden_rate: "0.5",
         //   persons: "1",
-        //   persons_deducted: "0.5",
+        //   persons_after_deduction: "0.5",
         //   start_at: "",
         //   end_at: "",
         //   comment: ""
@@ -75,7 +75,7 @@ export default {
         //   type: "設備投資会計",
         //   burden_rate: "0.5",
         //   persons: "1",
-        //   persons_deducted: "0.5",
+        //   persons_after_deduction: "0.5",
         //   start_at: "",
         //   end_at: "",
         //   comment: ""
@@ -85,7 +85,7 @@ export default {
         //   type: "合計",
         //   burden_rate: "",
         //   persons: "60",
-        //   persons_deducted: "",
+        //   persons_after_deduction: "",
         //   start_at: "",
         //   end_at: "",
         //   comment: ""
@@ -115,7 +115,7 @@ export default {
         {
           text: "負担人数",
           sortable: false,
-          value: "persons_deducted"
+          value: "persons_after_deduction"
         },
         {
           text: "除算結果",
@@ -125,7 +125,7 @@ export default {
         {
           text: "基本金（切り上げ）",
           sortable: false,
-          value: "quota"
+          value: "fee"
         }
       ]
     };
