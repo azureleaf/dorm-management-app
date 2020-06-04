@@ -32,6 +32,7 @@
 
 <script>
 export default {
+  props: ["closingdate"],
   data: function() {
     return {
       burdens: [],
@@ -66,7 +67,9 @@ export default {
   },
   methods: {
     async loadIncumbents() {
-      const res = await axios.get("/role-histories/incumbent");
+      const res = await axios.post("/role-histories/incumbents", {
+        date: this.closingdate
+      });
       return res.data;
     },
     async loadRoleTitles() {
@@ -150,7 +153,7 @@ export default {
       });
     }
   },
-  mounted: async function() {
+  async mounted() {
     await this.setBurdens();
 
     // Tell the parent component the number of persons who'll pay for the monthly fee

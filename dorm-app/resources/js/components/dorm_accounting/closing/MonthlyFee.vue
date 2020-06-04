@@ -46,16 +46,6 @@
           <span v-if="!item.totalAmount">-</span>
           <span v-else> {{ formatCurrency(item.totalAmount) }} </span>
         </template>
-        <!-- <template v-slot:item.persons="{}">
-          <span v-if="!personsprop">-</span>
-          <span v-else>{{ personsprop }}</span>
-        </template>
-        <template v-slot:item.quotient="{}">
-          <span v-if="!totalAmount || !persons">-</span>
-          <span v-else>
-            {{ (totalAmount / persons).toFixed(2) }}
-          </span>
-        </template> -->
         <template v-slot:item.feeAmount="{ item }">
           <v-chip
             color="primary"
@@ -119,11 +109,6 @@ export default {
     }
   },
   computed: {
-    personsComp() {
-      return !this.personsprop || this.personsprop.length == 0
-        ? ""
-        : this.personsprop;
-    },
     fees: {
       // Show temporary empty object when the props aren't loaded
       get() {
