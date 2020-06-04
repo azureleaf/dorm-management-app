@@ -13,13 +13,18 @@
         </v-card-title>
         <v-card-text>
           <v-data-table :headers="hxHeaders" :items="hxs" :items-per-page="20">
-            <template v-slot:item.reward_pct="{ item }">{{ item.reward_pct}}%</template>
-            <template v-slot:item.edit="{item}">
+            <template v-slot:item.reward_pct="{ item }"
+              >{{ item.reward_pct }}%</template
+            >
+            <template v-slot:item.edit="{ item }">
               <role-history-dialog
                 :isCreation="false"
                 :currHistory="item"
                 @retrieveAgain="retrieve"
               ></role-history-dialog>
+            </template>
+            <template v-slot:item.readable_term="{ item }">
+              {{ item.fiscal_year }}年度{{ item.term }}期
             </template>
           </v-data-table>
         </v-card-text>
@@ -35,11 +40,6 @@ export default {
       hxs: [],
       hxHeaders: [
         {
-          text: "役職記録ID",
-          sortable: true,
-          value: "id"
-        },
-        {
           text: "寮生ID",
           sortable: true,
           value: "user.id"
@@ -53,6 +53,11 @@ export default {
           text: "職種",
           sortable: true,
           value: "role_title.name"
+        },
+        {
+          text: "委員会期",
+          sortable: true,
+          value: "readable_term"
         },
         {
           text: "開始日",

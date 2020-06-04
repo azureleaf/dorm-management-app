@@ -62,6 +62,8 @@ class RoleHistoryController extends Controller
         $hx->role_title_id = $request->role_title_id;
         $hx->start_at = $request->start_at;
         $hx->end_at = $request->end_at;
+        $hx->fiscal_year = $request->fiscal_year;
+        $hx->term = $request->term;
         $hx->reward_pct = $request->reward_pct;
         $hx->comment = $request->comment;
         $hx->save();
@@ -102,6 +104,8 @@ class RoleHistoryController extends Controller
         $hx->role_title_id = $request->role_title_id;
         $hx->start_at = $request->start_at;
         $hx->end_at = $request->end_at;
+        $hx->fiscal_year = $request->fiscal_year;
+        $hx->term = $request->term;
         $hx->reward_pct = $request->reward_pct;
         $hx->comment = $request->comment;
         $hx->save();

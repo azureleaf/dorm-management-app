@@ -70,17 +70,12 @@
             ></v-text-field>
           </v-col>
         </v-row>
-        <v-row justify="center">
-          <v-subheader
-            >以下で委員会期を選択すると開始日・終了日の既定値を自動入力できます。</v-subheader
-          >
-        </v-row>
         <v-row>
           <v-col cols="12" md="6">
             <v-select
               :items="years"
               v-model="year"
-              label="委員会年度（任意入力）"
+              label="委員会年度"
               @change="autofillTerm()"
             ></v-select>
           </v-col>
@@ -88,10 +83,17 @@
             <v-select
               :items="terms"
               v-model="term"
-              label="委員会期（任意入力）"
+              item-text="text"
+              item-value="value"
+              label="委員会期"
               @change="autofillTerm()"
             ></v-select>
           </v-col>
+        </v-row>
+        <v-row justify="center">
+          <v-subheader
+            >以下で詳しい開始日・終了日を設定してください。この期日は情報システム上での編集権限の移行タイミングに影響します。この値は後から変更できます。</v-subheader
+          >
         </v-row>
         <v-row justify="center">
           <v-subheader>開始日</v-subheader>
@@ -114,6 +116,11 @@
             :day-format="date => new Date(date).getDate()"
             style="box-shadow: 0 0 0; border: solid 1px gainsboro"
           ></v-date-picker>
+        </v-row>
+        <v-row justify="center">
+          <v-subheader
+            >報酬割合を既定金額から変更する場合などには、以下に必ずその理由を記入してください。</v-subheader
+          >
         </v-row>
         <v-row>
           <v-col cols="12">
@@ -171,8 +178,13 @@ export default {
         new Date().getFullYear(),
         new Date().getFullYear() + 1
       ],
-      year: new Date().getFullYear(),
-      terms: ["一期", "二期", "三期"],
+      // year: new Date().getFullYear(), // Prefill with current year
+      year: "",
+      terms: [
+        { value: 1, text: "一期" },
+        { value: 2, text: "二期" },
+        { value: 3, text: "三期" }
+      ],
       term: ""
     };
   },
@@ -194,6 +206,8 @@ export default {
               role_title_id: this.role_title_id,
               start_at: this.start_at,
               end_at: this.end_at,
+              fiscal_year: this.year,
+              term: this.term,
               comment: this.comment,
               reward_pct: this.reward_pct
             });
@@ -202,6 +216,8 @@ export default {
             await axios.put(`/role-histories/${this.currHistory.id}`, {
               start_at: this.start_at,
               end_at: this.end_at,
+              fiscal_year: this.year,
+              term: this.term,
               comment: this.comment,
               role_title_id: this.role_title_id,
               reward_pct: this.reward_pct
@@ -247,15 +263,15 @@ export default {
 
       // Note that the date format of v-date-picker is 2020-01-01
       switch (this.term) {
-        case "一期":
+        case 1:
           this.start_at = this.year + "-06-01";
           this.end_at = this.year + "-09-30";
           break;
-        case "二期":
+        case 2:
           this.start_at = this.year + "-10-01";
           this.end_at = this.year + 1 + "-01-31";
           break;
-        case "三期":
+        case 3:
           this.start_at = this.year + 1 + "-02-01";
           this.end_at = this.year + 1 + "-05-31";
           break;
@@ -270,9 +286,12 @@ export default {
     },
     // Clear the input forms and fill with the default values
     initForms() {
+      console.log("current history", this.currHistory);
       this.user_id = "";
       this.start_at = this.isCreation ? "" : this.currHistory.start_at;
       this.end_at = this.isCreation ? "" : this.currHistory.end_at;
+      this.year = this.isCreation ? "" : Number(this.currHistory.fiscal_year);
+      this.term = this.isCreation ? "" : Number(this.currHistory.term);
       this.comment = this.isCreation ? "" : this.currHistory.comment;
       this.reward_pct = this.isCreation ? "" : this.currHistory.reward_pct;
       this.role_title_id = this.isCreation
