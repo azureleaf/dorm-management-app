@@ -3,52 +3,36 @@
     <v-container>
       <v-card elevation="10">
         <v-card-title>
-          <span>寮会計基本金</span>
+          <span>{{ feeComp.closing_name }}寮費請求</span>
           <v-spacer></v-spacer>
           <v-btn
             color="error"
             depressed
-            absolute
-            right
             :disabled="hasPendingReport || !isBillingDone"
           >
-            <v-icon class="mr-1">mdi-plus-circle</v-icon>新しい決算期の追加
+            <v-icon class="mr-1">mdi-plus-circle</v-icon>決算期追加
+          </v-btn>
+          <v-btn
+            color="error"
+            depressed
+            :disabled="hasPendingReport || !isBillingDone"
+          >
+            <v-icon class="mr-1">mdi-square-edit-outline</v-icon>決算日設定
+          </v-btn>
+          <v-btn
+            color="error"
+            depressed
+            :disabled="!hasPendingReport || isBillingDone"
+          >
+            <v-icon class="mr-1">mdi-security</v-icon>寮費請求
           </v-btn>
         </v-card-title>
         <v-card-text>
-          <v-divider></v-divider>
-
-          <v-card class="d-flex" flat tile>
-            <v-row class="mt-2">
-              <v-col cols="12" md="6">
-                <v-select
-                  :items="periods"
-                  v-model="periodIndex"
-                  item-text="text"
-                  item-value="indexInFees"
-                  label="決算期"
-                  outlined
-                  @change="showClosing"
-                ></v-select>
-              </v-col>
-              <v-col> </v-col>
-            </v-row>
-            <v-card tile flat class="ml-auto my-3">
-              <v-btn
-                color="error"
-                depressed
-                :disabled="hasPendingReport || !isBillingDone"
-              >
-                <v-icon class="mr-1">mdi-calendar-month</v-icon>決算日の設定
-              </v-btn>
-              <v-btn
-                color="error"
-                depressed
-                :disabled="!hasPendingReport || isBillingDone"
-              >
-                <v-icon class="mr-1">mdi-security</v-icon>各寮生への請求処理
-              </v-btn>
-            </v-card>
+          <v-card class="d-flex mt-5 font-weight-bold" flat tile>
+            <v-chip label outlined color="green darken-2" class="mr-2" dark>
+              決算日：{{ feeComp.closed_at }}
+            </v-chip>
+            <v-chip label outlined color="grey darken-1" class="mr-2"> 承認日：寮生大会未承認 </v-chip>
           </v-card>
           <!-- <v-row class="pb-5">
             <v-col>
@@ -78,7 +62,7 @@
               岡本（監査）
             </v-chip>
           </div> -->
-          <monthly-fee :feeDetailsPromise="feeDetailsPromise"></monthly-fee>
+          <monthly-fee :feeprop="feeComp"></monthly-fee>
           <deduction-table></deduction-table>
           <collection-result-table></collection-result-table>
           <reward-and-penalty-table></reward-and-penalty-table>
@@ -97,41 +81,35 @@
 export default {
   data: function() {
     return {
-      periods: [],
-      // Index of the period selected in fees[]
-      // The first period is the latest, supposedly
-      periodIndex: 0,
       hasPendingReport: false,
       isBillingDone: true,
       fees: []
     };
   },
   computed: {
-    feeDetailsPromise: {
-      get: async function() {
-        await this.loadFees();
-        return this.fees[this.periodIndex];
-      },
-      
+    // To suppress error of "Cannot read property xxx of undefined",
+    // don't try to read deep layer values when the fees[] obj isn't loaded yet
+    feeComp() {
+      return this.fees.length == 0 ? "" : this.fees[0];
     }
   },
   methods: {
     // Load from DB, set fees[]
+    // ASSUMPTION: axios result is ordered by the date of closing; the latest is the first
     async loadFees() {
       const res = await axios.get("./monthly-fees");
       this.fees = res.data;
-      this.fees.map((fee, index) => {
-        this.periods.push({ text: fee.closing_name, indexInFees: index });
-      });
-    },
-    showClosing() {
-      // Set props to be passed to the component
-      this.feeDetails = this.fees[this.periodIndex];
-    },
+    }
   },
-  mounted: async function() {
-    await this.loadFees();
+  async mounted() {
+    this.loadFees();
+    // this.fees = await this.loadFees();
+    // console.log(this.feeIdSelected);
   }
 };
 </script>
-<style scoped></style>
+<style scoped>
+.vmid {
+  vertical-align: middle !important;
+}
+</style>
