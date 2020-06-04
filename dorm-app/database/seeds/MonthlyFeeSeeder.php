@@ -21,7 +21,7 @@ class MonthlyFeeSeeder extends Seeder
             array(2020, 1, Carbon::create(2020, 2, 12), Carbon::create(2020, 2, 18), 855436, 88, 82),
             array(2020, 2, Carbon::create(2020, 3, 10), Carbon::create(2020, 3, 20), 655436, 85, 76.25),
             array(2020, 3, Carbon::create(2020, 4, 10), Carbon::create(2020, 4, 20), 555436, 82, 75.5),
-            array(2020, 4, Carbon::create(2020, 5, 6), Carbon::create(2020, 5, 24), 632438, 84, 75),
+            array(2020, 4, Carbon::create(2020, 5, 6), NULL, 632438, 84, 75),
         );
         foreach ($fees as $fee) {
             $newFee = MonthlyFee::create([
