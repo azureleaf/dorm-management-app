@@ -115,16 +115,6 @@ export default {
           sortable: false,
           value: "role_name"
         },
-        // {
-        //   text: "開始月",
-        //   sortable: false,
-        //   value: "start_at"
-        // },
-        // {
-        //   text: "終了月",
-        //   sortable: false,
-        //   value: "end_at"
-        // },
         {
           text: "負担率",
           sortable: false,
@@ -175,17 +165,41 @@ export default {
 
       // Append committee members to the table
       roleTitles.forEach(roleTitle => {
-        let personCount = 0;
+        // Number of persons per reward of this role title
+        // e.g. {75: 2, 100: 1} means that;
+        // 3 persons have this role, and out of them
+        // 2 get 75% reward, 1 gets 100% reward"
+        let personsByRewards = {};
+
+        // Search for the committee member with this role title
         incumbents.forEach(incumbent => {
-          if (roleTitle.id == incumbent.role_title_id) ++personCount;
+          // If the member has the role of the interest
+          if (roleTitle.id == incumbent.role_title_id) {
+            if (incumbent.reward_pct in personsByRewards) {
+              personsByRewards[incumbent.reward_pct]++;
+            } else {
+              personsByRewards[incumbent.reward_pct] = 1;
+            }
+          }
         });
-        const burden_rate = 1 - roleTitle.default_reward_pct / 100;
-        this.burdens.push({
-          role_name: roleTitle.name,
-          burden_rate: burden_rate,
-          persons: personCount,
-          persons_after_deduction: personCount * burden_rate
-        });
+
+        // Append the result to the array for v-data-table
+        for (const [reward_pct, persons] of Object.entries(personsByRewards)) {
+          const burden_rate = 1 - reward_pct / 100;
+
+          // Change role title when the reward is changed from the default
+          const roleTitleDisplayed =
+            reward_pct == roleTitle.default_reward_pct
+              ? roleTitle.name
+              : roleTitle.name + "（特別報酬額）";
+
+          this.burdens.push({
+            role_name: roleTitleDisplayed,
+            burden_rate: burden_rate,
+            persons: persons,
+            persons_after_deduction: persons * burden_rate
+          });
+        }
       });
 
       // Append normal boarders to the table
@@ -222,6 +236,6 @@ div.formula > span {
 
 .emphasis {
   font-weight: bold;
-  color: blue;
+  color: crimson;
 }
 </style>
