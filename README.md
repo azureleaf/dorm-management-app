@@ -22,6 +22,7 @@
     - [Seeding (with factory)](#seeding-with-factory)
     - [Seeding (without factory)](#seeding-without-factory)
     - [Add vuetify](#add-vuetify)
+    - [Create Controller](#create-controller)
     - [File locations](#file-locations)
   - [Tables](#tables)
     - [Member tables](#member-tables)
@@ -233,6 +234,10 @@ Run these commands in the root directory of the Laravel application.
 5. Make sure that Sass-processed CSS is called in each blade file
    - `<link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" >`
 
+### Create Controller
+
+`php artisan make:controller PhotoController --resource`
+
 ### File locations
 
 - `/app/` Billing.php
@@ -260,6 +265,15 @@ columns except for `id`, `created_at`, `updated_at`
 - [x] `role_titles`
   - name
   - default_reward_pct
+- [x] `role_histories`: for board members
+  - user_id (many2one)
+  - role_id (many2one)
+  - reward_pct
+  - comment
+  - fiscal_year: committee term
+  - term: committee term
+  - start_at: Suggest default term on frontend, not on backend
+  - end_at: Suggest default term on frontend, not on backend
 - [x] `rooms`
   - number
   - block
@@ -270,13 +284,6 @@ columns except for `id`, `created_at`, `updated_at`
   - user_id (many2one)
   - move_in_at
   - move_out_at: nullable
-- [x] `role_histories`: for board members
-  - user_id (many2one)
-  - role_id (many2one)
-  - reward_pct
-  - comment
-  - start_at: Suggest default term on frontend, not on backend
-  - end_at: Suggest default term on frontend, not on backend
 
 ### Finance tables
 
@@ -298,12 +305,16 @@ columns except for `id`, `created_at`, `updated_at`
   - name
   - default_amount: nullable
   - description
-- [ ] `closing_items` History of the monthly closings
-  - closed_at: last day of the month, refers to the fiscal period
+- [ ] `monthly_fees` History of the monthly closings
+  - year
+  - month
+  - closed_at
+  - approved_at
   - abstract
   - total_amount
   - persons
-  - quota_amount
+  - persons_after_deduction
+  - fee_amount
   - ~~assets: JSON~~
   - ~~funds: JSON~~
 - [x] ~~`dorm_balances`~~
@@ -327,16 +338,16 @@ columns except for `id`, `created_at`, `updated_at`
 
 ### Event Tables
 
-- [ ] `event_titles`
+- [ ] ~~`event_titles`~~
   - name: 風呂掃除, ブロック掃除, 寮生大会, コンパ, その他
   - default_reward
   - default_penalty
-- [ ] `event_surveys`
+- [ ] ~~`event_surveys`~~
   - event_title_id (one2many)
   - selectable_at: JSON (array of dates)
   - event_name
   - result: JSON
-- [ ] `event_histories`: Result of the assignment
+- [ ] ~~`event_histories`~~: Result of the assignment
   - event_type_id (one2many)
   - schedule_start_at:
   - schedule_end_at:
@@ -347,14 +358,14 @@ columns except for `id`, `created_at`, `updated_at`
   - done_at: nullable, filled when the result status is "attended"
   - reward_amount:
   - penalty_amount:
-- [ ] `event_availabilities`
+- [ ] ~~`event_availabilities`~~
   - event_inquiry_id (one2many)
   - user_id (one2many)
   - available_at: JSON (array of dates)
 
 ### Document Tables
 
-- [ ] `documents`: Keeping all the edit history consume large HDD resources?
+- [ ] ~~`documents`~~: Keeping all the edit history consume large HDD resources?
   - name
   - category
   - auth: enum (all, boss, sub, )
