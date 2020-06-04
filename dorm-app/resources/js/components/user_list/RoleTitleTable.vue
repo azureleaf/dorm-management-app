@@ -79,7 +79,9 @@ export default {
     },
     async loadIncumbents() {
       // Retrieve role histories of incumbent committee members
-      const res = await axios.get("./role-histories/incumbent");
+      const res = await axios.post("./role-histories/incumbents", {
+        date: this.formatDate(new Date())
+      });
       return res.data;
     }
   },

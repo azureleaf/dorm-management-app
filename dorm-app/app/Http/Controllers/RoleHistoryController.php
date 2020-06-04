@@ -24,15 +24,16 @@ class RoleHistoryController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
+     * Display a list of incumbent committee members
+     * as of the date specified in the request.
+     * 
      * @return \Illuminate\Http\Response
      */
-    public function incumbent()
+    public function incumbents(Request $request)
     {
-        $now = Carbon::now();
-        return RoleHistory::whereDate("start_at", "<=", $now)
-            ->whereDate("end_at", ">=", $now)
+        $date = Carbon::parse($request->date);
+        return RoleHistory::whereDate("start_at", "<=", $date)
+            ->whereDate("end_at", ">=", $date)
             ->with("user")
             ->with("roleTitle")
             ->orderBy("start_at", "desc")

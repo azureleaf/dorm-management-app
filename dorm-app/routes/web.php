@@ -70,7 +70,7 @@ Route::put('/role-titles/{role_title_id}', 'RoleTitleController@update');
 
 // Role Histories
 Route::get('/role-histories', 'RoleHistoryController@index');
-Route::get('/role-histories/incumbent', 'RoleHistoryController@incumbent'); // original
+Route::post('/role-histories/incumbents', 'RoleHistoryController@incumbents'); // original
 Route::post('/role-histories/', 'RoleHistoryController@store');
 Route::put('/role-histories/{hx_id}', 'RoleHistoryController@update');
 Route::delete('/role-histories/{hx_id}', 'RoleHistoryController@destroy');
