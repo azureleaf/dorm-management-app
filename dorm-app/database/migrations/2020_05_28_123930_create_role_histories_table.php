@@ -24,6 +24,8 @@ class CreateRoleHistoriesTable extends Migration
 
             $table->integer('reward_pct');
             $table->string('comment')->nullable();
+            $table->integer('fiscal_year');
+            $table->enum('term', [1, 2, 3]);
             $table->date('start_at');
             $table->date('end_at');
             $table->timestamps();
