@@ -18,6 +18,8 @@ class RoleHistoryController extends Controller
         return RoleHistory::with("user")
             ->with("roleTitle")
             ->orderBy("start_at", "desc")
+            ->orderBy("role_title_id")
+            ->orderBy("reward_pct", "desc")
             ->get();
     }
 
