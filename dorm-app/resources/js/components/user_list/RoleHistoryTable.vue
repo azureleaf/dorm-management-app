@@ -12,7 +12,25 @@
           ></role-history-dialog>
         </v-card-title>
         <v-card-text>
-          <v-data-table :headers="hxHeaders" :items="hxs" :items-per-page="20">
+          <v-row>
+            <v-spacer></v-spacer>
+            <v-col cols="12" md="4" lg="2">
+              <v-text-field
+                v-model="searchKeyword"
+                append-icon="mdi-magnify"
+                single-line
+                outlined
+                dense
+                hide-details
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-data-table
+            :headers="hxHeaders"
+            :items="hxs"
+            :items-per-page="20"
+            :search="searchKeyword"
+          >
             <template v-slot:item.reward_pct="{ item }"
               >{{ item.reward_pct }}%</template
             >
@@ -23,9 +41,9 @@
                 @retrieveAgain="retrieve"
               ></role-history-dialog>
             </template>
-            <template v-slot:item.readable_term="{ item }">
+            <!-- <template v-slot:item.readable_term="{ item }">
               {{ item.fiscal_year }}年度{{ item.term }}期
-            </template>
+            </template> -->
           </v-data-table>
         </v-card-text>
       </v-card>
@@ -37,6 +55,7 @@
 export default {
   data: function() {
     return {
+      searchKeyword: "",
       hxs: [],
       hxHeaders: [
         {

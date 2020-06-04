@@ -8,6 +8,10 @@ class RoleHistory extends Model
 {
     protected $table = "role_histories";
     
+    protected $appends = [
+        'readable_term'
+    ];
+
     public function user()
     {
         return $this->belongsTo('App\User');
@@ -16,5 +20,10 @@ class RoleHistory extends Model
     public function roleTitle()
     {
         return $this->belongsTo('App\RoleTitle');
+    }
+
+    public function getReadableTermAttribute()
+    {
+        return "{$this->fiscal_year}年度{$this->term}期";
     }
 }
