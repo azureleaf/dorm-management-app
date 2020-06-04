@@ -32,38 +32,18 @@
             <v-chip label outlined color="green darken-2" class="mr-2" dark>
               決算日：{{ feeComp.closed_at }}
             </v-chip>
-            <v-chip label outlined color="grey darken-1" class="mr-2"> 承認日：寮生大会未承認 </v-chip>
+            <v-chip label outlined color="grey darken-1" class="mr-2">
+              承認日：寮生大会未承認
+            </v-chip>
           </v-card>
-          <!-- <v-row class="pb-5">
-            <v-col>
-              <v-btn
-                color="error"
-                depressed
-                absolute
-                right
-                :disabled="!hasPendingReport || !isBillingDone"
-              >
-                <v-icon class="mr-1">mdi-security</v-icon>引落依頼情報の生成
-              </v-btn>
-            </v-col>
-          </v-row> -->
-          <!-- <div class="mt-2">
-            報告者：
-            <v-chip class="ma-1" color="grey" text-color="white" label>
-              <v-avatar left> <v-icon>mdi-account-circle</v-icon> </v-avatar>201
-              田中（会計）
-            </v-chip>
-            <v-chip class="ma-1" color="grey" text-color="white" label>
-              <v-avatar left> <v-icon>mdi-account-circle</v-icon> </v-avatar>202
-              鈴木（会計）
-            </v-chip>
-            <v-chip class="ma-1" color="grey" text-color="white" label>
-              <v-avatar left> <v-icon>mdi-account-circle</v-icon> </v-avatar>203
-              岡本（監査）
-            </v-chip>
-          </div> -->
-          <monthly-fee :feeprop="feeComp"></monthly-fee>
-          <deduction-table></deduction-table>
+          <monthly-fee
+            :personsprop="personsAfterDeduction"
+            :totalamountprop="feeComp.total_amount"
+            :feeid="feeComp.id"
+          ></monthly-fee>
+          <deduction-table
+            @updateDeduction="onDeductionUpdate"
+          ></deduction-table>
           <collection-result-table></collection-result-table>
           <reward-and-penalty-table></reward-and-penalty-table>
           <!-- <account-table></account-table> -->
@@ -81,6 +61,7 @@
 export default {
   data: function() {
     return {
+      personsAfterDeduction: null, // will be calculated by child component
       hasPendingReport: false,
       isBillingDone: true,
       fees: []
@@ -99,12 +80,13 @@ export default {
     async loadFees() {
       const res = await axios.get("./monthly-fees");
       this.fees = res.data;
+    },
+    onDeductionUpdate(newPersons) {
+      this.personsAfterDeduction = newPersons;
     }
   },
   async mounted() {
     this.loadFees();
-    // this.fees = await this.loadFees();
-    // console.log(this.feeIdSelected);
   }
 };
 </script>

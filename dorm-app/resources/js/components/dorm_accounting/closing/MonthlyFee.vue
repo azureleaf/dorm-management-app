@@ -1,30 +1,62 @@
 <template>
   <v-card outlined class="my-5">
-    <v-card-title
-      >基本金<v-spacer></v-spacer>
-      <v-btn color="error" depressed absolute right>
-        <v-icon class="mr-1">mdi-square-edit-outline</v-icon>徴収総額の編集
-      </v-btn></v-card-title
-    >
+    <v-card-title>
+      基本金
+      <v-spacer></v-spacer>
+
+      <v-dialog v-model="isDialogOpen" persistent max-width="600px">
+        <template v-slot:activator="{ on }">
+          <v-btn color="error" depressed dark v-on="on" dense>
+            <v-icon class="mr-1">mdi-square-edit-outline</v-icon>徴収総額の設定
+          </v-btn>
+        </template>
+        <v-card>
+          <v-card-title>徴収総額の設定</v-card-title>
+          <v-card-text>
+            <v-row>
+              <v-col>
+                <v-text-field
+                  label="徴収総額"
+                  v-model="totalAmountInput"
+                  type="number"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" text @click="isDialogOpen = false"
+              >Cancel</v-btn
+            >
+            <v-btn color="blue darken-1" text @click="updateTotalAmount"
+              >Save</v-btn
+            >
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-card-title>
     <v-card-text>
       <v-data-table
-        :headers="fundHeaders"
-        :items="funds"
-        :items-per-page="funds.length"
+        :headers="feeHeaders"
+        :items="fees"
+        :items-per-page="1"
         hide-default-footer
       >
-        <template v-slot:item.total_amount="{}">
-          {{ formatCurrency(feeprop.total_amount) }}
+        <template v-slot:item.totalAmount="{ item }">
+          <span v-if="!item.totalAmount">-</span>
+          <span v-else> {{ formatCurrency(item.totalAmount) }} </span>
         </template>
-        <template v-slot:item.persons_after_deduction="{}">
-          {{ feeprop.persons_after_deduction }}
+        <!-- <template v-slot:item.persons="{}">
+          <span v-if="!personsprop">-</span>
+          <span v-else>{{ personsprop }}</span>
         </template>
         <template v-slot:item.quotient="{}">
-          {{
-            (feeprop.total_amount / feeprop.persons_after_deduction).toFixed(2)
-          }}
-        </template>
-        <template v-slot:item.fee="{}">
+          <span v-if="!totalAmount || !persons">-</span>
+          <span v-else>
+            {{ (totalAmount / persons).toFixed(2) }}
+          </span>
+        </template> -->
+        <template v-slot:item.feeAmount="{ item }">
           <v-chip
             color="primary"
             outlined
@@ -32,15 +64,7 @@
             label
             class="my-1 font-weight-bold"
           >
-            {{
-              formatCurrency(
-                Math.ceil(
-                  (
-                    feeprop.total_amount / feeprop.persons_after_deduction
-                  ).toFixed(2)
-                )
-              )
-            }}
+            {{ formatCurrency(item.feeAmount) }}
           </v-chip>
         </template>
       </v-data-table>
@@ -50,27 +74,29 @@
 
 <script>
 export default {
-  props: ["feeprop"],
+  props: ["personsprop", "totalamountprop", "feeid"],
   data: function() {
     return {
-      funds: [
-        {
-          total_amount: "",
-          persons_after_deduction: "",
-          quotient: "",
-          fee: ""
-        }
-      ],
-      fundHeaders: [
+      totalAmountInput: "",
+      isDialogOpen: false,
+      // fees: [
+      //   {
+      //     totalAmount: "",
+      //     persons: "",
+      //     quotient: "",
+      //     feeAmount: ""
+      //   }
+      // ],
+      feeHeaders: [
         {
           text: "徴収総額",
           sortable: false,
-          value: "total_amount"
+          value: "totalAmount"
         },
         {
           text: "負担人数",
           sortable: false,
-          value: "persons_after_deduction"
+          value: "persons"
         },
         {
           text: "除算結果",
@@ -80,11 +106,54 @@ export default {
         {
           text: "基本金（切り上げ）",
           sortable: false,
-          value: "fee"
+          value: "feeAmount"
         }
       ]
     };
   },
+  methods: {
+    async updateTotalAmount() {
+      // await axios.post(`/monthly-fees/`, {});
+      console.log("axio fee id", this.feeid);
+      this.isDialogOpen = false;
+    }
+  },
+  computed: {
+    personsComp() {
+      return !this.personsprop || this.personsprop.length == 0
+        ? ""
+        : this.personsprop;
+    },
+    fees() {
+      // Show temporary empty object when the props aren't loaded
+      if (
+        !this.personsprop ||
+        this.personsprop.length == 0 ||
+        !this.totalamountprop
+      ) {
+        return [
+          {
+            totalAmount: "",
+            persons: "",
+            quotient: "",
+            feeAmount: ""
+          }
+        ];
+      } else {
+        const totalAmount = this.totalamountprop;
+        const quotient = (totalAmount / this.personsprop).toFixed(2);
+        const feeAmount = Math.ceil(quotient);
+        return [
+          {
+            totalAmount,
+            persons: this.personsprop,
+            quotient,
+            feeAmount
+          }
+        ];
+      }
+    }
+  }
 };
 </script>
 <style scoped>
