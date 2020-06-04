@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\RoleHistory;
+use Carbon\Carbon;
 
 class RoleHistoryController extends Controller
 {
@@ -14,7 +15,26 @@ class RoleHistoryController extends Controller
      */
     public function index()
     {
-        return RoleHistory::with("user")->with("roleTitle")->orderBy("start_at", "desc")->get();
+        return RoleHistory::with("user")
+            ->with("roleTitle")
+            ->orderBy("start_at", "desc")
+            ->get();
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function incumbent()
+    {
+        $now = Carbon::now();
+        return RoleHistory::whereDate("start_at", "<=", $now)
+            ->whereDate("end_at", ">=", $now)
+            ->with("user")
+            ->with("roleTitle")
+            ->orderBy("start_at", "desc")
+            ->get();
     }
 
     /**

@@ -77,30 +77,24 @@ export default {
       // Let the v-data-table detect the data update
       this.titles = this.titles.splice(0, this.titles.length, ...this.titles);
     },
-    async loadRoleHistories() {
-      // Retrieve all the role histories
-      const res = await axios.get("./role-histories");
-      let hxs = res.data;
-
-      // Filter out the former / future role histories, keep current ones only
-      return hxs.filter(hx => {
-        const now = new Date();
-        if (now - new Date(hx.start_at) >= 0 && new Date(hx.end_at) - now >= 0)
-          return 1;
-        else return 0;
-      });
+    async loadIncumbents() {
+      // Retrieve role histories of incumbent committee members
+      const res = await axios.get("./role-histories/incumbent");
+      return res.data;
     }
   },
   mounted: async function() {
     await this.loadTitles();
-    const incumbents = await this.loadRoleHistories();
+    const incumbents = await this.loadIncumbents();
 
+    // Append the new column of incumbents to titles table
     // Loop for all the role titles
     this.titles.forEach(title => {
+      // Readable string of incumbents for this role title
       let incumbentsStr = "";
 
       // Loop for all the role histories
-      // Notice that multiple people may be assigned for a role title
+      // Notice that multiple people may be assigned to a single role title
       incumbents.forEach(incumbent => {
         if (title.id == incumbent.role_title_id) {
           incumbentsStr += `${incumbent.user.full_name}　`;
@@ -113,7 +107,7 @@ export default {
 
     // Just copying the array to self
     // Without this, v-data-table doesn't detect the data update of the array
-    // Seemingly this is a sort of bug of the Vuetify / Vue
+    // According to Vue official doc, this is the default behavior for object reactivity
     this.titles = this.titles.splice(0, this.titles.length, ...this.titles);
   }
 };
