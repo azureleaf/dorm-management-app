@@ -67,9 +67,12 @@ class MonthlyFeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $fee_id)
     {
-        //
+        $fee = MonthlyFee::find($fee_id);
+        $fee->total_amount = $request->total_amount;
+        $fee->fee_amount = $request->fee_amount;
+        $fee->save();
     }
 
     /**

@@ -78,15 +78,8 @@ export default {
   data: function() {
     return {
       totalAmountInput: "",
+      isTotalAmountUpdated: false,
       isDialogOpen: false,
-      // fees: [
-      //   {
-      //     totalAmount: "",
-      //     persons: "",
-      //     quotient: "",
-      //     feeAmount: ""
-      //   }
-      // ],
       feeHeaders: [
         {
           text: "徴収総額",
@@ -113,8 +106,15 @@ export default {
   },
   methods: {
     async updateTotalAmount() {
-      // await axios.post(`/monthly-fees/`, {});
-      console.log("axio fee id", this.feeid);
+      // Update the v-data-table
+      this.isTotalAmountUpdated = true;
+
+      // Update the monthly fee table in the DB
+      await axios.put(`/monthly-fees/${this.feeid}`, {
+        total_amount: this.fees[0].totalAmount,
+        fee_amount: this.fees[0].feeAmount
+      });
+
       this.isDialogOpen = false;
     }
   },
@@ -124,33 +124,39 @@ export default {
         ? ""
         : this.personsprop;
     },
-    fees() {
+    fees: {
       // Show temporary empty object when the props aren't loaded
-      if (
-        !this.personsprop ||
-        this.personsprop.length == 0 ||
-        !this.totalamountprop
-      ) {
-        return [
-          {
-            totalAmount: "",
-            persons: "",
-            quotient: "",
-            feeAmount: ""
-          }
-        ];
-      } else {
-        const totalAmount = this.totalamountprop;
-        const quotient = (totalAmount / this.personsprop).toFixed(2);
-        const feeAmount = Math.ceil(quotient);
-        return [
-          {
-            totalAmount,
-            persons: this.personsprop,
-            quotient,
-            feeAmount
-          }
-        ];
+      get() {
+        if (
+          !this.personsprop ||
+          this.personsprop.length == 0 ||
+          !this.totalamountprop
+        ) {
+          return [
+            {
+              totalAmount: "",
+              persons: "",
+              quotient: "",
+              feeAmount: ""
+            }
+          ];
+        } else {
+          // If the new amount is input by dialog, use the value
+          // If not, use the props passed by the parent
+          const totalAmount = this.isTotalAmountUpdated
+            ? this.totalAmountInput
+            : this.totalamountprop;
+          const quotient = (totalAmount / this.personsprop).toFixed(2);
+          const feeAmount = Math.ceil(quotient);
+          return [
+            {
+              totalAmount,
+              persons: this.personsprop,
+              quotient,
+              feeAmount
+            }
+          ];
+        }
       }
     }
   }

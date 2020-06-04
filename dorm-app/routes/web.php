@@ -85,6 +85,7 @@ Route::get('/personal/titles', function () {
 
 // Monthly Fees
 Route::get('monthly-fees', 'MonthlyFeeController@index');
+Route::put('monthly-fees/{fee_id}', 'MonthlyFeeController@update');
 
 /**
  * Auth
