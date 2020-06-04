@@ -13,13 +13,18 @@
         :items-per-page="funds.length"
         hide-default-footer
       >
-        <template v-slot:item.total_amount="{ item }">
-          {{ formatCurrency(item.total_amount) }}
+        <template v-slot:item.total_amount="{}">
+          {{ formatCurrency(feeprop.total_amount) }}
         </template>
-        <template v-slot:item.quotient="{ item }">
-          {{ (item.total_amount / item.persons_after_deduction).toFixed(2) }}
+        <template v-slot:item.persons_after_deduction="{}">
+          {{ feeprop.persons_after_deduction }}
         </template>
-        <template v-slot:item.fee="{ item }">
+        <template v-slot:item.quotient="{}">
+          {{
+            (feeprop.total_amount / feeprop.persons_after_deduction).toFixed(2)
+          }}
+        </template>
+        <template v-slot:item.fee="{}">
           <v-chip
             color="primary"
             outlined
@@ -30,7 +35,9 @@
             {{
               formatCurrency(
                 Math.ceil(
-                  (item.total_amount / item.persons_after_deduction).toFixed(2)
+                  (
+                    feeprop.total_amount / feeprop.persons_after_deduction
+                  ).toFixed(2)
                 )
               )
             }}
@@ -43,71 +50,18 @@
 
 <script>
 export default {
-  props: ["feeDetailsPromise"],
+  props: ["feeprop"],
   data: function() {
     return {
       funds: [
         {
-          type: "一般会計",
           total_amount: "",
           persons_after_deduction: "",
           quotient: "",
           fee: ""
         }
-        // {
-        //   type: "罰金会計",
-        //   burden_rate: "0.25",
-        //   persons: "2",
-        //   persons_after_deduction: "0.5",
-        //   start_at: "",
-        //   end_at: "",
-        //   comment: ""
-        // },
-        // {
-        //   type: "コンパ会計",
-        //   burden_rate: "0.5",
-        //   persons: "1",
-        //   persons_after_deduction: "0.5",
-        //   start_at: "",
-        //   end_at: "",
-        //   comment: ""
-        // },
-        // {
-        //   type: "設備投資会計",
-        //   burden_rate: "0.5",
-        //   persons: "1",
-        //   persons_after_deduction: "0.5",
-        //   start_at: "",
-        //   end_at: "",
-        //   comment: ""
-        // },
-
-        // {
-        //   type: "合計",
-        //   burden_rate: "",
-        //   persons: "60",
-        //   persons_after_deduction: "",
-        //   start_at: "",
-        //   end_at: "",
-        //   comment: ""
-        // }
       ],
       fundHeaders: [
-        // {
-        //   text: "会計区分",
-        //   sortable: false,
-        //   value: "type"
-        // },
-        // {
-        //   text: "積立期間",
-        //   sortable: false,
-        //   value: ""
-        // },
-        // {
-        //   text: "既定額",
-        //   sortable: false,
-        //   value: ""
-        // },
         {
           text: "徴収総額",
           sortable: false,
@@ -131,11 +85,6 @@ export default {
       ]
     };
   },
-  mounted: async function() {
-    const feeDetails = await this.feeDetailsPromise;
-    this.funds[0].total_amount = feeDetails.total_amount;
-    this.funds[0].persons_after_deduction = feeDetails.persons_after_deduction;
-  }
 };
 </script>
 <style scoped>
