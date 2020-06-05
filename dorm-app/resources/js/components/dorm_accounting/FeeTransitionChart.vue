@@ -51,6 +51,11 @@ export default {
           value: "total_amount"
         },
         {
+          text: "実人数",
+          sortable: true,
+          value: "persons"
+        },
+        {
           text: "換算負担人数",
           sortable: true,
           value: "persons_after_deduction"

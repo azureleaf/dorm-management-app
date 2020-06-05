@@ -77,9 +77,9 @@ export default {
           value: "totalAmount"
         },
         {
-          text: "負担人数",
+          text: "換算負担人数",
           sortable: false,
-          value: "persons"
+          value: "personsAfterDeduction"
         },
         {
           text: "除算結果",
@@ -120,7 +120,7 @@ export default {
           return [
             {
               totalAmount: "",
-              persons: "",
+              personsAfterDeduction: "",
               quotient: "",
               feeAmount: ""
             }
@@ -136,7 +136,7 @@ export default {
           return [
             {
               totalAmount,
-              persons: this.personsprop,
+              personsAfterDeduction: this.personsprop,
               quotient,
               feeAmount
             }
