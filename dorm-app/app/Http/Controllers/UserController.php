@@ -32,7 +32,7 @@ class UserController extends Controller
     {
         // First & last day of the month
         $firstDay = Carbon::create($year, $month, 1)->firstOfMonth();
-        $lastDay = $firstDay->endOfMonth();
+        $lastDay =  Carbon::create($year, $month, 1)->endOfMonth();
 
         // Seemingly, date comparison between different format works; e.g.
         // "2020-01-31" < Carbon::create(2020, 2, 3)

@@ -32,7 +32,7 @@
 
 <script>
 export default {
-  props: ["closingdate"],
+  props: ["closingdate"], // YYYY-MM-DD
   data: function() {
     return {
       burdens: [],
@@ -76,13 +76,20 @@ export default {
       const res = await axios.get("/role-titles/");
       return res.data;
     },
-    async countCurrentUsers() {
-      const res = await axios.get("/users");
-      const count = res.data.reduce((acc, curr) => {
-        if (curr.move_out_at == null) return ++acc;
-        else return acc;
-      }, 0);
-      return count;
+    async countUsersBackThen() {
+      // Convert YYYY-MM-DD string to Date obj
+      const dateFmt = new Date(this.closingdate);
+
+      // Number of users in the previous month of the closing date matters
+      // .setMonth() destructively alters the original Date obj
+      dateFmt.setMonth(dateFmt.getMonth() - 1);
+
+      // Note that January in Date() obj is "0"
+      const res = await axios.get(
+        `/users/monthly/${dateFmt.getFullYear()}/${dateFmt.getMonth() + 1}`
+      );
+
+      return res.data.length;
     },
     /**
      * Set burdens[] array which is shown in v-data-table
@@ -90,7 +97,7 @@ export default {
     async setBurdens() {
       const incumbents = await this.loadIncumbents();
       const roleTitles = await this.loadRoleTitles();
-      const currentUsersCount = await this.countCurrentUsers();
+      const usersCount = await this.countUsersBackThen();
 
       // Append committee members to the table
       roleTitles.forEach(roleTitle => {
@@ -132,7 +139,7 @@ export default {
       });
 
       // Append normal boarders to the table
-      const normalUsersCount = currentUsersCount - incumbents.length;
+      const normalUsersCount = usersCount - incumbents.length;
       this.burdens.push({
         role_name: "一般寮生",
         burden_rate: 1,
@@ -147,7 +154,7 @@ export default {
       this.burdens.push({
         role_name: "合計",
         burden_rate: "",
-        persons: currentUsersCount,
+        persons: usersCount,
         persons_after_deduction: personsAfterDeductionTotal,
         isTotalRow: true
       });

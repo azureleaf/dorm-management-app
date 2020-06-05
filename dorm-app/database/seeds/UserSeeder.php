@@ -37,14 +37,14 @@ class UserSeeder extends Seeder
                 'email' => Str::random(10) . '@dc.aoba.ac.jp',
                 'password' => Hash::make('password'),
 
-                // Random dates between 2020-1-1 and 2020-3-31
+                // Random dates between 2020-1-1 and 2020-3-1
                 'move_in_at' => Carbon::create(2020, 01, 01)
-                    ->addMonths(rand(0, 2))
+                    ->addMonths(rand(0, 1))
                     ->addDays(rand(0, 30)),
 
-                // Random dates between 2020-4-1 and 2020-7-1
+                // Random dates between 2020-3-10 and 2020-6-10
                 // Some are null (that is, still lives till today)
-                'move_out_at' => rand(0, 6) > 4 ? Carbon::create(2020, 4, 1)
+                'move_out_at' => rand(0, 2) > 1 ? Carbon::create(2020, 3, 10)
                     ->addMonths(rand(0, 2))
                     ->addDays(rand(0, 30)) :
                     NULL,
