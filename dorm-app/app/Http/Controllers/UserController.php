@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 use App\User;
 use App\Room;
 
@@ -18,6 +19,39 @@ class UserController extends Controller
     {
         // Get all the User models with relations to Room models
         return User::with("room")->orderBy("id")->get();
+    }
+
+    /**
+     * Display a listing of the users who lived in the specific month.
+     * When a user lives in the dorm at least 1 day in the month,
+     * he'll be included in the list returned.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function monthly($year, $month)
+    {
+        // First & last day of the month
+        $firstDay = Carbon::create($year, $month, 1)->firstOfMonth();
+        $lastDay = $firstDay->endOfMonth();
+
+        // Seemingly, date comparison between different format works; e.g.
+        // "2020-01-31" < Carbon::create(2020, 2, 3)
+        // returns "true"
+        return
+            User::where(function ($query) use ($lastDay) {
+                $query
+                    ->where("move_out_at", NULL)
+                    ->where("move_in_at", "<=", $lastDay);
+            })
+            ->orWhere(function ($query) use ($firstDay, $lastDay) {
+                $query
+                    ->where("move_out_at", "!=", NULL)
+                    ->where("move_in_at", "<=", $lastDay)
+                    ->where("move_out_at", ">=", $firstDay);
+            })
+            ->with("room")
+            ->orderBy("id")
+            ->get();
     }
 
     /**
@@ -92,35 +126,35 @@ class UserController extends Controller
     {
         $user = User::find($user_id);
 
-    if ($operation == "names") {
-        $user->name_family_kanji = $request->name["family"]["kanji"];
-        $user->name_first_kanji = $request->name["first"]["kanji"];
-        $user->name_family_kana = $request->name["family"]["kana"];
-        $user->name_first_kana = $request->name["first"]["kana"];
-        $user->email = $request->email;
-        $user->comment = $request->comment;
-        $user->save();
-    } else if ($operation == "password") {
-        $user->password = Hash::make($request->password);
-        $user->save();
-    } else if ($operation == "transfer") {
-        $oldRoom = Room::find($request->old_room_id);
-        $oldRoom->status = "vacant";
-        $oldRoom->user_id = null; // Can this be updated with relationship?
-        $oldRoom->save();
+        if ($operation == "names") {
+            $user->name_family_kanji = $request->name["family"]["kanji"];
+            $user->name_first_kanji = $request->name["first"]["kanji"];
+            $user->name_family_kana = $request->name["family"]["kana"];
+            $user->name_first_kana = $request->name["first"]["kana"];
+            $user->email = $request->email;
+            $user->comment = $request->comment;
+            $user->save();
+        } else if ($operation == "password") {
+            $user->password = Hash::make($request->password);
+            $user->save();
+        } else if ($operation == "transfer") {
+            $oldRoom = Room::find($request->old_room_id);
+            $oldRoom->status = "vacant";
+            $oldRoom->user_id = null; // Can this be updated with relationship?
+            $oldRoom->save();
 
-        $newRoom = Room::find($request->new_room_id);
-        $newRoom->status = "occupied";
-        $user->room()->save($newRoom);
-    } else if ($operation == "leave") {
-        $room = Room::where("user_id", $user_id)->first();
-        $room->status = "vacant";
-        $room->user_id = null;
-        $room->save();
+            $newRoom = Room::find($request->new_room_id);
+            $newRoom->status = "occupied";
+            $user->room()->save($newRoom);
+        } else if ($operation == "leave") {
+            $room = Room::where("user_id", $user_id)->first();
+            $room->status = "vacant";
+            $room->user_id = null;
+            $room->save();
 
-        $user->move_out_at = $request->move_out_at;
-        $user->save();
-    }
+            $user->move_out_at = $request->move_out_at;
+            $user->save();
+        }
     }
 
     /**

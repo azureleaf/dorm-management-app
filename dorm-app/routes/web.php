@@ -59,8 +59,9 @@ Route::get('/rooms', 'RoomController@index');
 Route::get('/rooms/available', 'RoomController@available'); // original
 Route::put('/rooms/{room_id}/', 'RoomController@update');
 
-// User
+// Users
 Route::get('/users', 'UserController@index');
+Route::get('/users/monthly/{year}/{month}', 'UserController@monthly'); // original
 Route::post('/users', 'UserController@store');
 Route::put('/users/{user_id}/operation/{operation}', 'UserController@update');
 
