@@ -4,49 +4,57 @@
       <v-card elevation="10">
         <v-card-title>納付状況</v-card-title>
         <v-card-text>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>
-                <span>次回の引落予定：</span>
-                <span>
-                  <v-chip
-                    label
-                    outlined
-                    large
-                    color="indigo darken-1"
-                    class="px-3"
-                  >
-                    <span class="headline ml-1">{{
-                      formatCurrency(12345)
-                    }}</span>
-                  </v-chip>
-                </span>
-              </v-list-item-title>
-              <v-list-item-subtitle>2020-04-20</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>
-                <span>前回の納付結果：</span>
-                <span>
-                  <span v-if="isDebitSuccess" class="px-4">
-                    <v-icon class="vmid" color="green">mdi-check-circle</v-icon>
-                    <span class="vmid">引落成功</span>
+          <v-card flat outlined class="mb-4 pb-3">
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title>
+                  <span>次回の引落予定：</span>
+                  <span>
+                    <v-chip
+                      label
+                      outlined
+                      large
+                      color="indigo darken-1"
+                      class="px-3"
+                    >
+                      <span class="headline ml-1">{{
+                        formatCurrency(12345)
+                      }}</span>
+                    </v-chip>
                   </span>
-                  <span v-if="isPaidByCash" class="px-4">
-                    <v-icon class="vmid" color="green">mdi-check-circle</v-icon>
-                    <span class="vmid">現金納付</span>
+                </v-list-item-title>
+                <v-list-item-subtitle>2020-04-20</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+          </v-card>
+          <v-card flat outlined class="mb-4 py-3">
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title>
+                  <span>前回の納付結果：</span>
+                  <span>
+                    <span v-if="isDebitSuccess" class="px-4">
+                      <v-icon class="vmid" color="green"
+                        >mdi-check-circle</v-icon
+                      >
+                      <span class="vmid">引落成功</span>
+                    </span>
+                    <span v-if="isPaidByCash" class="px-4">
+                      <v-icon class="vmid" color="green"
+                        >mdi-check-circle</v-icon
+                      >
+                      <span class="vmid">現金納付</span>
+                    </span>
+                    <span v-else class="px-4">
+                      <v-icon class="vmid" color="red">mdi-close-circle</v-icon>
+                      <span class="vmid">引落失敗</span>
+                    </span>
                   </span>
-                  <span v-else class="px-4">
-                    <v-icon class="vmid" color="red">mdi-close-circle</v-icon>
-                    <span class="vmid">引落失敗</span>
-                  </span>
-                </span>
-              </v-list-item-title>
-              <v-list-item-subtitle>2020-03-20</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
+                </v-list-item-title>
+                <v-list-item-subtitle>2020-03-20</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+          </v-card>
           <v-data-table :headers="arrearHeaders" :items="arrears">
             <template v-slot:item.isNextDebit="{ item }">
               <v-checkbox
