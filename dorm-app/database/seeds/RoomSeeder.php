@@ -47,7 +47,7 @@ class RoomSeeder extends Seeder
         }
 
         // List existing user IDs & room numbers in the DB
-        $userIds = App\User::all()->pluck('id')->toArray();
+        $userIds = App\User::where("move_out_at", NULL)->pluck('id')->toArray();
         $roomNums = App\Room::all()->pluck('number')->toArray();
 
         $roomNums = $this->randArray($roomNums); // randomize
