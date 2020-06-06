@@ -25,8 +25,8 @@
             </v-chip>
           </v-card>
           <monthly-fee
-            v-if="feeComp && personsAfterDeduction"
-            :personsprop="personsAfterDeduction"
+            v-if="feeComp && persons.beforeDeduction"
+            :personsprop="persons"
             :totalamountprop="feeComp.total_amount"
             :feeid="feeComp.id"
           ></monthly-fee>
@@ -52,13 +52,13 @@
 export default {
   data: function() {
     return {
-      personsAfterDeduction: null, // will be calculated by child component
+      persons: { beforeDeduction: null, afterDeduction: null }, // will be calculated by child component
       fees: []
     };
   },
   computed: {
     // To suppress error of "Cannot read property xxx of undefined",
-    // don't try to read deep layer values when the fees[] obj isn't loaded yet
+    // program doesn't try to read deep layer values when the fees[] obj isn't loaded yet
     feeComp() {
       return this.fees.length == 0 ? "" : this.fees[0];
     },
@@ -78,8 +78,9 @@ export default {
       const res = await axios.get("./monthly-fees");
       this.fees = res.data;
     },
-    onDeductionUpdate(newPersons) {
-      this.personsAfterDeduction = newPersons;
+    onDeductionUpdate(totals) {
+      this.persons.beforeDeduction = totals.beforeDeduction;
+      this.persons.afterDeduction = totals.afterDeduction;
     }
   },
   async mounted() {

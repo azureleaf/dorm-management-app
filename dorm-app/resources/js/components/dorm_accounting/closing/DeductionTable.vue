@@ -39,7 +39,11 @@ export default {
   data: function() {
     return {
       burdens: [],
-      burdensTotal: {},
+      // sum of the persons in the table
+      personsTotals: {
+        beforeDeduction: null,
+        afterDeduction: null
+      },
       burdenHeaders: [
         {
           text: "職名",
@@ -101,7 +105,7 @@ export default {
     async setBurdens() {
       const incumbents = await this.loadIncumbents();
       const roleTitles = await this.loadRoleTitles();
-      this.burdensTotal.persons = await this.countUsersBackThen();
+      this.personsTotals.beforeDeduction = await this.countUsersBackThen();
 
       // Append committee members to the table
       roleTitles.forEach(roleTitle => {
@@ -143,7 +147,8 @@ export default {
       });
 
       // Append normal boarders to the table
-      const normalUsersCount = this.burdensTotal.persons - incumbents.length;
+      const normalUsersCount =
+        this.personsTotals.beforeDeduction - incumbents.length;
       this.burdens.push({
         role_name: "一般寮生",
         burden_rate: 1,
@@ -152,7 +157,7 @@ export default {
       });
 
       // Append total to the table
-      this.burdensTotal.personsAfterDeduction = this.burdens
+      this.personsTotals.afterDeduction = this.burdens
         .reduce((acc, curr) => {
           return acc + curr.persons_after_deduction;
         }, 0)
@@ -161,8 +166,8 @@ export default {
       this.burdens.push({
         role_name: "合計",
         burden_rate: "",
-        persons: this.burdensTotal.persons,
-        persons_after_deduction: this.burdensTotal.personsAfterDeduction,
+        persons: this.personsTotals.beforeDeduction,
+        persons_after_deduction: this.personsTotals.afterDeduction,
         isTotalRow: true
       });
     }
@@ -171,7 +176,7 @@ export default {
     await this.setBurdens();
 
     // Tell the parent component the number of persons who'll pay for the monthly fee
-    this.$emit("updateDeduction", this.burdensTotal.personsAfterDeduction);
+    this.$emit("updateDeduction", this.personsTotals);
   }
 };
 </script>

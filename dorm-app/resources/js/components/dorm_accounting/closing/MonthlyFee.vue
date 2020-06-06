@@ -110,38 +110,24 @@ export default {
   },
   computed: {
     fees: {
-      // Show temporary empty object when the props aren't loaded
       get() {
-        if (
-          !this.personsprop ||
-          this.personsprop.length == 0 ||
-          !this.totalamountprop
-        ) {
-          return [
-            {
-              totalAmount: "",
-              personsAfterDeduction: "",
-              quotient: "",
-              feeAmount: ""
-            }
-          ];
-        } else {
-          // If the new amount is input by dialog, use the value
-          // If not, use the props passed by the parent
-          const totalAmount = this.isTotalAmountUpdated
-            ? this.totalAmountInput
-            : this.totalamountprop;
-          const quotient = (totalAmount / this.personsprop).toFixed(2);
-          const feeAmount = Math.ceil(quotient);
-          return [
-            {
-              totalAmount,
-              personsAfterDeduction: this.personsprop,
-              quotient,
-              feeAmount
-            }
-          ];
-        }
+        // If the new amount is input by dialog, use the value
+        // If not, use the props passed by the parent
+        const totalAmount = this.isTotalAmountUpdated
+          ? this.totalAmountInput
+          : this.totalamountprop;
+        const quotient = (
+          totalAmount / this.personsprop.afterDeduction
+        ).toFixed(2);
+        const feeAmount = Math.ceil(quotient);
+        return [
+          {
+            totalAmount,
+            personsAfterDeduction: this.personsprop.afterDeduction,
+            quotient,
+            feeAmount
+          }
+        ];
       }
     }
   }
