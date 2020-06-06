@@ -39,6 +39,7 @@ export default {
   data: function() {
     return {
       burdens: [],
+      burdensTotal: {},
       burdenHeaders: [
         {
           text: "職名",
@@ -100,7 +101,7 @@ export default {
     async setBurdens() {
       const incumbents = await this.loadIncumbents();
       const roleTitles = await this.loadRoleTitles();
-      const usersCount = await this.countUsersBackThen();
+      this.burdensTotal.persons = await this.countUsersBackThen();
 
       // Append committee members to the table
       roleTitles.forEach(roleTitle => {
@@ -142,7 +143,7 @@ export default {
       });
 
       // Append normal boarders to the table
-      const normalUsersCount = usersCount - incumbents.length;
+      const normalUsersCount = this.burdensTotal.persons - incumbents.length;
       this.burdens.push({
         role_name: "一般寮生",
         burden_rate: 1,
@@ -151,14 +152,17 @@ export default {
       });
 
       // Append total to the table
-      const personsAfterDeductionTotal = this.burdens.reduce((acc, curr) => {
-        return acc + curr.persons_after_deduction;
-      }, 0).toFixed(2);
+      this.burdensTotal.personsAfterDeduction = this.burdens
+        .reduce((acc, curr) => {
+          return acc + curr.persons_after_deduction;
+        }, 0)
+        .toFixed(2);
+
       this.burdens.push({
         role_name: "合計",
         burden_rate: "",
-        persons: usersCount,
-        persons_after_deduction: personsAfterDeductionTotal,
+        persons: this.burdensTotal.persons,
+        persons_after_deduction: this.burdensTotal.personsAfterDeduction,
         isTotalRow: true
       });
     }
@@ -167,11 +171,7 @@ export default {
     await this.setBurdens();
 
     // Tell the parent component the number of persons who'll pay for the monthly fee
-    // Suppose that the last row is the total of each column
-    this.$emit(
-      "updateDeduction",
-      this.burdens[this.burdens.length - 1].persons_after_deduction
-    );
+    this.$emit("updateDeduction", this.burdensTotal.personsAfterDeduction);
   }
 };
 </script>
