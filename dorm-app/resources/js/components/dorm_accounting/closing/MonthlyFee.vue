@@ -28,7 +28,7 @@
             <v-btn color="blue darken-1" text @click="isDialogOpen = false"
               >Cancel</v-btn
             >
-            <v-btn color="blue darken-1" text @click="updateLatestFee"
+            <v-btn color="blue darken-1" text @click="handleTotalAmountUpdate"
               >Save</v-btn
             >
           </v-card-actions>
@@ -121,7 +121,7 @@ export default {
       };
     },
     // Update the monthly fee table in the DB
-    async updateLatestFee() {
+    async handleTotalAmountUpdate() {
       const newFee = this.calcFee();
 
       // Update UI
@@ -144,15 +144,13 @@ export default {
         fee_amount: newFee.feeAmount
       });
     },
+    /** 
+     *  Check if the calculated fee items in this component is
+     *    identical with those in the DB.
+     *  Calc result may be diverged because number of users can be modified
+     *    after the last writing to the DB.
+     */
     async keepFeeIntegrity(feeStored, feeCalculated) {
-      /** Check if the calculated fee items in this component is
-       *  identical with those in the DB
-       *  Calc result may be diverged because number of users can be modified
-       *  after the last writing to the DB
-       */
-      console.log("stored", feeStored);
-      console.log("calc", feeCalculated);
-
       // If there's at least a discrepancy between 2 arg fees,
       // update the DB with the newly calculate fee
       if (
@@ -162,6 +160,7 @@ export default {
           feeCalculated.personsAfterDeduction ||
         feeStored.fee_amount != feeCalculated.feeAmount
       )
+        console.log("Monthly fee record in the DB is outdated; going to update.")
         this.updateDB(feeCalculated);
 
       this.fees.push(feeCalculated);
