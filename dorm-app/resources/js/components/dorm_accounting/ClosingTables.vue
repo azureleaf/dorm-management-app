@@ -27,8 +27,7 @@
           <monthly-fee
             v-if="feeComp && persons.beforeDeduction"
             :personsprop="persons"
-            :totalamountprop="feeComp.total_amount"
-            :feeid="feeComp.id"
+            :feedb="feeComp"
           ></monthly-fee>
           <deduction-table
             v-if="feeComp"

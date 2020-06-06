@@ -71,7 +71,10 @@ class MonthlyFeeController extends Controller
     {
         $fee = MonthlyFee::find($fee_id);
         $fee->total_amount = $request->total_amount;
+        $fee->persons = $request->persons;
+        $fee->persons_after_deduction = $request->persons_after_deduction;
         $fee->fee_amount = $request->fee_amount;
+
         $fee->save();
     }
 

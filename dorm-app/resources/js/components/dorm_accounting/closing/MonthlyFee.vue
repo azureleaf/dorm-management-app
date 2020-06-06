@@ -28,7 +28,7 @@
             <v-btn color="blue darken-1" text @click="isDialogOpen = false"
               >Cancel</v-btn
             >
-            <v-btn color="blue darken-1" text @click="updateTotalAmount"
+            <v-btn color="blue darken-1" text @click="updateLatestFee"
               >Save</v-btn
             >
           </v-card-actions>
@@ -64,12 +64,16 @@
 
 <script>
 export default {
-  props: ["personsprop", "totalamountprop", "feeid"],
+  // Both props aren't "undefined" by the v-if restriction in the parent component
+  props: [
+    "personsprop", // number of persons calculated in deducation table component
+    "feedb" // fee of the latest month stored in the database
+  ],
   data: function() {
     return {
-      totalAmountInput: "",
-      isTotalAmountUpdated: false,
+      totalAmountInput: null, // New amount inputted in the dialog form
       isDialogOpen: false,
+      fees: [], // used for v-data-table content
       feeHeaders: [
         {
           text: "徴収総額",
@@ -95,41 +99,78 @@ export default {
     };
   },
   methods: {
-    async updateTotalAmount() {
-      // Update the v-data-table
-      this.isTotalAmountUpdated = true;
+    // Calculate the fees based on the props passed by the parent
+    calcFee() {
+      // Items of the fee object
+      const totalAmount = this.totalAmountInput
+        ? this.totalAmountInput
+        : this.feedb.total_amount;
+      const personsBeforeDeduction = this.personsprop.beforeDeduction;
+      const personsAfterDeduction = this.personsprop.afterDeduction;
+      const quotient = (totalAmount / this.personsprop.afterDeduction).toFixed(
+        2
+      );
+      const feeAmount = Math.ceil(quotient);
 
-      // Update the monthly fee table in the DB
-      await axios.put(`/monthly-fees/${this.feeid}`, {
-        total_amount: this.fees[0].totalAmount,
-        fee_amount: this.fees[0].feeAmount
-      });
+      return {
+        totalAmount,
+        personsBeforeDeduction,
+        personsAfterDeduction,
+        quotient,
+        feeAmount
+      };
+    },
+    // Update the monthly fee table in the DB
+    async updateLatestFee() {
+      const newFee = this.calcFee();
 
+      // Update UI
+      // Note that to trigger the UI update with "data:" property array,
+      // you need to use certail methods such as .splice(), .push()
+      // Refer to the Vue.js doc for this
+      this.fees.splice(0, this.fees.length, newFee);
+
+      // Update DB
+      this.updateDB(newFee);
+
+      // Close the dialog box
       this.isDialogOpen = false;
+    },
+    async updateDB(newFee) {
+      await axios.put(`/monthly-fees/${this.feedb.id}`, {
+        total_amount: newFee.totalAmount,
+        persons: newFee.personsBeforeDeduction,
+        persons_after_deduction: newFee.personsAfterDeduction,
+        fee_amount: newFee.feeAmount
+      });
+    },
+    async keepFeeIntegrity(feeStored, feeCalculated) {
+      /** Check if the calculated fee items in this component is
+       *  identical with those in the DB
+       *  Calc result may be diverged because number of users can be modified
+       *  after the last writing to the DB
+       */
+      console.log("stored", feeStored);
+      console.log("calc", feeCalculated);
+
+      // If there's at least a discrepancy between 2 arg fees,
+      // update the DB with the newly calculate fee
+      if (
+        feeStored.total_amount != feeCalculated.totalAmount ||
+        feeStored.persons != feeCalculated.personsBeforeDeduction ||
+        feeStored.persons_after_deduction !=
+          feeCalculated.personsAfterDeduction ||
+        feeStored.fee_amount != feeCalculated.feeAmount
+      )
+        this.updateDB(feeCalculated);
+
+      this.fees.push(feeCalculated);
     }
   },
-  computed: {
-    fees: {
-      get() {
-        // If the new amount is input by dialog, use the value
-        // If not, use the props passed by the parent
-        const totalAmount = this.isTotalAmountUpdated
-          ? this.totalAmountInput
-          : this.totalamountprop;
-        const quotient = (
-          totalAmount / this.personsprop.afterDeduction
-        ).toFixed(2);
-        const feeAmount = Math.ceil(quotient);
-        return [
-          {
-            totalAmount,
-            personsAfterDeduction: this.personsprop.afterDeduction,
-            quotient,
-            feeAmount
-          }
-        ];
-      }
-    }
+  async mounted() {
+    const feeCalculated = this.calcFee();
+
+    this.keepFeeIntegrity(this.feedb, feeCalculated);
   }
 };
 </script>
