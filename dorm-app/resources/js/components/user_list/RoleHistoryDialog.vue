@@ -286,7 +286,6 @@ export default {
     },
     // Clear the input forms and fill with the default values
     initForms() {
-      console.log("current history", this.currHistory);
       this.user_id = "";
       this.start_at = this.isCreation ? "" : this.currHistory.start_at;
       this.end_at = this.isCreation ? "" : this.currHistory.end_at;

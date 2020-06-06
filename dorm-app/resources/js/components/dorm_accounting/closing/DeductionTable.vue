@@ -3,6 +3,9 @@
     <v-card-title>
       <span>負担人数</span>
     </v-card-title>
+    <v-card-subtitle>
+      決算日の前月に１日でも在寮した人は、負担者数に計上されます。<br />決算日の時点で委員会の役職が設定されている寮生は寮費が減免されます。
+    </v-card-subtitle>
     <v-card-text>
       <!-- <v-card class="pa-3 formula" flat outlined>
         <v-chip outlined label large color="green darken-2">一般会計支出： 200000</v-chip>
@@ -150,7 +153,7 @@ export default {
       // Append total to the table
       const personsAfterDeductionTotal = this.burdens.reduce((acc, curr) => {
         return acc + curr.persons_after_deduction;
-      }, 0);
+      }, 0).toFixed(2);
       this.burdens.push({
         role_name: "合計",
         burden_rate: "",
