@@ -2,10 +2,18 @@
   <v-content>
     <v-container>
       <v-card elevation="10">
-        <v-card-title>寮費記録</v-card-title>
-        <v-card-subtitle>寮生個人の請求額と支払額の履歴です。</v-card-subtitle>
+        <v-card-title>請求記録</v-card-title>
+        <v-card-subtitle>寮生個人への月々の請求額の内訳です。</v-card-subtitle>
         <v-card-text>
-          <v-data-table :headers="billingHeaders" :items="billItems" :items-per-page="20"></v-data-table>
+          <v-data-table
+            :headers="billingHeaders"
+            :items="billItems"
+            :items-per-page="20"
+          >
+            <template v-slot:item.amount="{ item }">
+              <span>{{ formatCurrency(item.amount) }}</span>
+            </template>
+          </v-data-table>
         </v-card-text>
       </v-card>
     </v-container>
@@ -18,25 +26,30 @@ export default {
     return {
       billItems: [],
       billingHeaders: [
-        {
-          text: "個人会計処理ID",
-          sortable: true,
-          value: "id"
-        },
+        // {
+        //   text: "個人会計処理ID",
+        //   sortable: true,
+        //   value: "id"
+        // },
         {
           text: "対象寮生ID",
           sortable: true,
-          value: "user_id"
+          value: "billing.user_id"
         },
         {
-          text: "処理登録日",
+          text: "対象寮生",
           sortable: true,
-          value: "created_at"
+          value: "billing.user.full_name"
         },
+        // {
+        //   text: "処理登録日",
+        //   sortable: true,
+        //   value: "created_at"
+        // },
         {
-          text: "区分",
+          text: "発生日",
           sortable: true,
-          value: "category"
+          value: "billing.closed_at"
         },
         {
           text: "摘要",
@@ -46,26 +59,16 @@ export default {
         {
           text: "請求額",
           sortable: true,
-          value: "billing"
-        },
-        {
-          text: "支払額",
-          sortable: true,
-          value: "payment"
-        },
-
-        {
-          text: "債務残高",
-          sortable: true,
-          value: "balance"
+          value: "amount"
         }
       ]
     };
   },
   mounted: async function() {
     // You don't have to require axios; it's already loaded
-    const res = await axios.get("./billings");
+    const res = await axios.get("./billing-details");
     this.billItems = res.data;
+    console.log(this.billItems);
   }
 };
 </script>

@@ -48,11 +48,12 @@ Route::get('/dorm-accounting', function () {
 /**
  * Billing
  */
+Route::get('/billings', 'BillingController@index');
 
-Route::get('/billings', function () {
-    return Billing::all();
-});
-
+/**
+ * Billing Details
+ */
+Route::get('/billing-details', 'BillingDetailController@index');
 
 // Rooms
 Route::get('/rooms', 'RoomController@index');
