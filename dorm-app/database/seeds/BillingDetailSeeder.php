@@ -23,9 +23,24 @@ class BillingDetailSeeder extends Seeder
         foreach ($userIds as $userId) {
 
             $months = array(
-                array("amount" => 14550, "closedAt" => Carbon::create(2020, 01, 31), "abstract" => "１月分基本金請求", "paid_at" => Carbon::create(2020, 2, 16)),
-                array("amount" => 11234, "closedAt" => Carbon::create(2020, 02, 29), "abstract" => "２月分基本金請求"),
-                array("amount" => 12365, "closedAt" => Carbon::create(2020, 03, 30), "abstract" => "３月分基本金請求"),
+                array(
+                    "amount" => 14550,
+                    "closedAt" => Carbon::create(2020, 01, 31),
+                    "abstract" => "１月分基本金請求",
+                    "paidAt" => Carbon::create(2020, 2, 16)
+                ),
+                array(
+                    "amount" => 11234,
+                    "closedAt" => Carbon::create(2020, 02, 29),
+                    "abstract" => "２月分基本金請求",
+                    // Most users pay, while some assholes don't
+                    "paidAt" => rand(1, 6) > 5 ? null : Carbon::create(2020, 3, 21)
+                ),
+                array(
+                    "amount" => 12365,
+                    "closedAt" => Carbon::create(2020, 03, 30),
+                    "abstract" => "３月分基本金請求"
+                ),
             );
 
             foreach ($months as $month) {
@@ -35,8 +50,8 @@ class BillingDetailSeeder extends Seeder
                     "user_id" => $userId,
                     "closed_at" => $month["closedAt"],
                     "amount" => 0, // Will be updated soon
-                    "paid_at" => array_key_exists("paid_at", $month) ? $month["paid_at"] : null,
-                    "is_cash_payment" => array_key_exists("paid_at", $month) ? false : null
+                    "paid_at" => array_key_exists("paidAt", $month) ? $month["paidAt"] : null,
+                    "is_next_debit_target" => array_key_exists("paidAt", $month) ? false : true
                 ]);
                 $bill->save();
 
@@ -49,6 +64,7 @@ class BillingDetailSeeder extends Seeder
                 $amountSum += $month["amount"];
                 $detsQuota->save();
 
+                // Randomly impose penalty
                 if (rand(1, 5) > 4) {
                     $detsPenalty = BillingDetail::create([
                         "billing_id" => $bill->id,
@@ -60,6 +76,7 @@ class BillingDetailSeeder extends Seeder
                     $detsPenalty->save();
                 }
 
+                // Randomly reward
                 if (rand(1, 5) > 4) {
                     $detsReward = BillingDetail::create([
                         "billing_id" => $bill->id,
@@ -76,78 +93,5 @@ class BillingDetailSeeder extends Seeder
                 $bill->save();
             }
         }
-
-        // Apr, user 1
-        $bill = new Billing;
-        $bill->user_id = 1;
-        $bill->closed_at = Carbon::create(2020, 04, 30);
-        $bill->amount = 0; // temporary value
-        $bill->save();
-
-        $detsQuota = new BillingDetail;
-        $detsQuota->billing_id = $bill->id;
-        $detsQuota->personal_account_title_id = PersonalAccountTitle::where('name', '基本金請求')->first()->id;
-        $detsQuota->abstract = "４月分基本金請求"; // this must be automatically generated from the params above
-        $detsQuota->amount = 15434;
-        $detsQuota->save();
-
-        $detsPenalty = new BillingDetail;
-        $detsPenalty->billing_id = $bill->id;
-        $detsPenalty->personal_account_title_id = PersonalAccountTitle::where('name', 'ブロック掃除不履行罰金')->first()->id;
-        $detsPenalty->abstract = "４月分ブロック掃除不履行罰金"; // this must be automatically generated from the params above
-        $detsPenalty->amount = 2000;
-        $detsPenalty->save();
-
-        $bill->amount = $detsQuota->amount + $detsPenalty->amount;
-        $bill->save();
-
-
-        // May, user 1
-        $bill = new Billing;
-        $bill->user_id = 1;
-        $bill->closed_at = Carbon::create(2020, 05, 31);
-        $bill->amount = 0; // temporary value
-        $bill->save();
-
-        $detsQuota = new BillingDetail;
-        $detsQuota->billing_id = $bill->id;
-        $detsQuota->personal_account_title_id = PersonalAccountTitle::where('name', '基本金請求')->first()->id;
-        $detsQuota->abstract = "５月分基本金請求"; // this must be automatically generated from the params above
-        $detsQuota->amount = 19230;
-        $detsQuota->save();
-
-        $detsPenalty = new BillingDetail;
-        $detsPenalty->billing_id = $bill->id;
-        $detsPenalty->personal_account_title_id = PersonalAccountTitle::where('name', '風呂掃除不履行罰金')->first()->id;
-        $detsPenalty->abstract = "５月分風呂掃除不履行罰金"; // this must be automatically generated from the params above
-        $detsPenalty->amount = 4000;
-        $detsPenalty->save();
-
-        $bill->amount = $detsQuota->amount + $detsPenalty->amount;
-        $bill->save();
-
-        // Apr, user 2
-        $bill = new Billing;
-        $bill->user_id = 2;
-        $bill->closed_at = Carbon::create(2020, 04, 30);
-        $bill->amount = 0; // temporary value
-        $bill->save();
-
-        $detsQuota = new BillingDetail;
-        $detsQuota->billing_id = $bill->id;
-        $detsQuota->personal_account_title_id = PersonalAccountTitle::where('name', '基本金請求')->first()->id;
-        $detsQuota->abstract = "４月分基本金請求"; // this must be automatically generated from the params above
-        $detsQuota->amount = 15434;
-        $detsQuota->save();
-
-        $detsReward = new BillingDetail;
-        $detsReward->billing_id = $bill->id;
-        $detsReward->personal_account_title_id = PersonalAccountTitle::where('name', '議長報酬')->first()->id;
-        $detsReward->abstract = "４月分議長報酬"; // this must be automatically generated from the params above
-        $detsReward->amount = -2000;
-        $detsReward->save();
-
-        $bill->amount = $detsQuota->amount + $detsReward->amount;
-        $bill->save();
     }
 }

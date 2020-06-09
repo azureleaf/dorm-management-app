@@ -14,7 +14,10 @@ class BillingController extends Controller
      */
     public function index()
     {
-        return Billing::with("user")->orderBy("id")->get();
+        return Billing::with("user")
+            ->orderBy("paid_at", "desc")
+            ->orderBy("id")
+            ->get();
     }
 
     /**
