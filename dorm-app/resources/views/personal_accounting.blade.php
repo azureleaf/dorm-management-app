@@ -2,8 +2,7 @@
 
 @section('title', '個人記録')
 @section('content')
-<outline></outline>
-<billing-table></billing-table>
+<billing-result-table></billing-result-table>
+<billing-detail-table></billing-detail-table>
 <personal-account-title-table></personal-account-title-table>
-<!-- <penalty-history-table></penalty-history-table> -->
 @endsection
