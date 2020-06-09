@@ -37,17 +37,11 @@
                       <v-icon class="vmid" color="green"
                         >mdi-check-circle</v-icon
                       >
-                      <span class="vmid">引落成功</span>
-                    </span>
-                    <span v-if="isPaidByCash" class="px-4">
-                      <v-icon class="vmid" color="green"
-                        >mdi-check-circle</v-icon
-                      >
-                      <span class="vmid">現金納付</span>
+                      <span class="vmid">納付済</span>
                     </span>
                     <span v-else class="px-4">
                       <v-icon class="vmid" color="red">mdi-close-circle</v-icon>
-                      <span class="vmid">引落失敗</span>
+                      <span class="vmid">滞納中</span>
                     </span>
                   </span>
                 </v-list-item-title>
@@ -55,15 +49,21 @@
               </v-list-item-content>
             </v-list-item>
           </v-card>
-          <v-data-table :headers="arrearHeaders" :items="arrears">
-            <template v-slot:item.isNextDebit="{ item }">
+          <v-data-table :headers="billingResultHeaders" :items="billingResults">
+            <template v-slot:item.amount="{ item }">
+              <span>{{ formatCurrency(item.amount) }}</span>
+            </template>
+            <template v-slot:item.paid_at="{ item }">
+              <span v-if="item.paid_at != null"
+                >納付済（{{ item.paid_at }}）</span
+              >
+              <span v-else>未納</span>
+            </template>
+            <template v-slot:item.is_next_debit_target="{ item }">
               <v-checkbox
-                :disabled="item.status == '新規請求分'"
+                :disabled="item.is_next_debit_target"
                 v-model="isSelected"
               ></v-checkbox>
-            </template>
-            <template v-slot:item.amount="{ item }">
-              {{ formatCurrency(item.amount) }}
             </template>
           </v-data-table>
         </v-card-text>
@@ -81,6 +81,35 @@ export default {
       isSelected: "",
       isDebitSuccess: false,
       isPaidByCash: false,
+      billingResults: [],
+      billingResultHeaders: [
+        {
+          text: "対象寮生",
+          sortable: true,
+          value: "user.full_name"
+        },
+
+        {
+          text: "決算期",
+          sortable: true,
+          value: "abstract"
+        },
+        {
+          text: "請求額",
+          sortable: true,
+          value: "amount"
+        },
+        {
+          text: "状態",
+          sortable: true,
+          value: "paid_at"
+        },
+        {
+          text: "次回引落",
+          sortable: true,
+          value: "is_next_debit_target"
+        }
+      ],
       arrearHeaders: [
         {
           text: "ID",
@@ -139,9 +168,9 @@ export default {
     };
   },
   mounted: async function() {
-    // You don't have to require axios; it's already loaded
-    const res = await axios.get("./users");
-    this.users = res.data;
+    const res = await axios.get("./billings");
+    this.billingResults = res.data;
+    console.log(res.data);
   }
 };
 </script>

@@ -22,43 +22,59 @@ class BillingDetailSeeder extends Seeder
         // Bill the same amount to all the users
         foreach ($userIds as $userId) {
 
-            $monthlyQuota = array("feb" => 11234, "mar" => 12365);
+            $months = array(
+                array("amount" => 14550, "closedAt" => Carbon::create(2020, 01, 31), "abstract" => "１月分基本金請求", "paid_at" => Carbon::create(2020, 2, 16)),
+                array("amount" => 11234, "closedAt" => Carbon::create(2020, 02, 29), "abstract" => "２月分基本金請求"),
+                array("amount" => 12365, "closedAt" => Carbon::create(2020, 03, 30), "abstract" => "３月分基本金請求"),
+            );
 
-            /**
-             * Feb
-             */
-            $billFeb = Billing::create([
-                "user_id" => $userId,
-                "closed_at" => Carbon::create(2020, 02, 29),
-                "amount" => $monthlyQuota["feb"],
-            ]);
-            $billFeb->save();
+            foreach ($months as $month) {
+                $amountSum = 0;
 
-            $detsQuotaFeb =  BillingDetail::create([
-                "billing_id" => $billFeb->id,
-                "personal_account_title_id" => PersonalAccountTitle::where('name', '基本金請求')->first()->id,
-                "abstract" => "２月分基本金請求", // this must be automatically generated from the params above
-                "amount" => $monthlyQuota["feb"],
-            ]);
-            $detsQuotaFeb->save();
+                $bill = Billing::create([
+                    "user_id" => $userId,
+                    "closed_at" => $month["closedAt"],
+                    "amount" => 0, // Will be updated soon
+                    "paid_at" => array_key_exists("paid_at", $month) ? $month["paid_at"] : null,
+                    "is_cash_payment" => array_key_exists("paid_at", $month) ? false : null
+                ]);
+                $bill->save();
 
-            /**
-             * Mar
-             */
-            $billMar = Billing::create([
-                "user_id" => $userId,
-                "closed_at" => Carbon::create(2020, 03, 30),
-                "amount" => $monthlyQuota["mar"],
-            ]);
-            $billMar->save();
+                $detsQuota =  BillingDetail::create([
+                    "billing_id" => $bill->id,
+                    "personal_account_title_id" => PersonalAccountTitle::where('name', '基本金請求')->first()->id,
+                    "abstract" => $month["abstract"], // this must be automatically generated from the params above
+                    "amount" => $month["amount"],
+                ]);
+                $amountSum += $month["amount"];
+                $detsQuota->save();
 
-            $detsQuotaMar =  BillingDetail::create([
-                "billing_id" => $billMar->id,
-                "personal_account_title_id" => PersonalAccountTitle::where('name', '基本金請求')->first()->id,
-                "abstract" => "３月分基本金請求", // this must be automatically generated from the params above
-                "amount" => $monthlyQuota["mar"],
-            ]);
-            $detsQuotaMar->save();
+                if (rand(1, 5) > 4) {
+                    $detsPenalty = BillingDetail::create([
+                        "billing_id" => $bill->id,
+                        "personal_account_title_id" => PersonalAccountTitle::where('name', 'ブロック掃除不履行罰金')->first()->id,
+                        "abstract" => "ブロック掃除不履行罰金",
+                        "amount" => 2000,
+                    ]);
+                    $amountSum += 2000;
+                    $detsPenalty->save();
+                }
+
+                if (rand(1, 5) > 4) {
+                    $detsReward = BillingDetail::create([
+                        "billing_id" => $bill->id,
+                        "personal_account_title_id" => PersonalAccountTitle::where('name', '風呂掃除無許可欠席者代行報酬')->first()->id,
+                        "abstract" => "風呂掃除無許可欠席者代行報酬",
+                        "amount" => -4000,
+                    ]);
+                    $amountSum += -4000;
+
+                    $detsReward->save();
+                }
+
+                $bill->amount = $amountSum;
+                $bill->save();
+            }
         }
 
         // Apr, user 1
