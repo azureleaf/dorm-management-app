@@ -21,6 +21,21 @@ class BillingController extends Controller
     }
 
     /**
+     * Display list of arrear amounts by user
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function unpaid()
+    {
+        return  Billing::with("user")
+            ->where("paid_at", NULL)
+            ->groupBy("user_id")
+            ->selectRaw('sum(amount) as sum, user_id')
+            ->orderBy("sum", "desc")
+            ->get();
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

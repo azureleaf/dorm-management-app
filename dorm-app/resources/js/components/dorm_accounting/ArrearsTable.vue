@@ -3,11 +3,15 @@
     <v-container>
       <v-card elevation="10">
         <v-card-title>滞納者番付</v-card-title>
-        <v-card-subtitle>寮費滞納は最も重大な規定違反です。速やかに返済してください。</v-card-subtitle>
-        <!-- <v-toolbar flat class="white--text" color="grey darken-3" dense dark>滞納者番付</v-toolbar> -->
-        <!-- <v-toolbar flat color="yellow lighten-5" dense>滞納者番付</v-toolbar> -->
+        <v-card-subtitle
+          >寮費滞納は最も重大な規定違反です。速やかに返済してください。</v-card-subtitle
+        >
         <v-card-text>
-          <v-data-table :headers="userHeaders" :items="users" :items-per-page="20"></v-data-table>
+          <v-data-table
+            :headers="nonPayerHeaders"
+            :items="nonPayers"
+            :items-per-page="20"
+          ></v-data-table>
         </v-card-text>
       </v-card>
     </v-container>
@@ -18,22 +22,27 @@
 export default {
   data: function() {
     return {
-      users: [],
-      userHeaders: [
+      nonPayers: [],
+      nonPayerHeaders: [
         {
-          text: "部屋番号",
+          text: "番付",
           sortable: true,
           value: ""
+        },
+        {
+          text: "寮生ID",
+          sortable: true,
+          value: "user_id"
         },
         {
           text: "名前",
           sortable: true,
-          value: "name"
+          value: "user.full_name"
         },
         {
           text: "滞納額",
           sortable: true,
-          value: ""
+          value: "sum"
         },
         {
           text: "滞納期間",
@@ -50,8 +59,9 @@ export default {
   },
   mounted: async function() {
     // You don't have to require axios; it's already loaded
-    const res = await axios.get("./users");
-    this.users = res.data;
+    const res = await axios.get("./billings/unpaid");
+    this.nonPayers = res.data;
+    console.log(res.data);
   }
 };
 </script>

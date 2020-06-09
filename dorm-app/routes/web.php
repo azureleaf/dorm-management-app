@@ -49,6 +49,7 @@ Route::get('/dorm-accounting', function () {
  * Billing
  */
 Route::get('/billings', 'BillingController@index');
+Route::get('/billings/unpaid', 'BillingController@unpaid'); // original
 
 /**
  * Billing Details
