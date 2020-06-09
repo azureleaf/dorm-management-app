@@ -3,6 +3,11 @@
     <v-container>
       <v-card elevation="10">
         <v-card-title>納付状況</v-card-title>
+        <v-card-subtitle>
+          請求から実際に引き落とされるまでは時間がかかるため、一ヶ月分未納状態となるのは通常の処理です。
+          滞納している場合には、古い方から二ヶ月分を次回に引き落します。
+          三ヶ月分以上滞納している場合には、以下のチェックボックスから選択することで三ヶ月分以上を引落予約することができます。
+        </v-card-subtitle>
         <v-card-text>
           <v-row>
             <v-spacer></v-spacer>
@@ -71,10 +76,14 @@
               <span>{{ formatCurrency(item.amount) }}</span>
             </template>
             <template v-slot:item.paid_at="{ item }">
-              <span v-if="item.paid_at != null"
-                >納付済（{{ item.paid_at }}）</span
+              <span v-if="item.paid_at != null">
+                <v-icon class="vmid" color="green">mdi-check-circle</v-icon>
+                納付済（{{ item.paid_at }}）</span
               >
-              <span v-else>未納</span>
+              <span v-else>
+                <v-icon class="vmid" color="orange">mdi-alert-circle</v-icon>
+                未納</span
+              >
             </template>
             <template v-slot:item.is_next_debit_target="{ item }">
               <span v-if="item.paid_at == null">
@@ -190,7 +199,6 @@ export default {
   mounted: async function() {
     const res = await axios.get("./billings");
     this.billingResults = res.data;
-    console.log(res.data);
   }
 };
 </script>
