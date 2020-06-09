@@ -4,6 +4,19 @@
       <v-card elevation="10">
         <v-card-title>納付状況</v-card-title>
         <v-card-text>
+          <v-row>
+            <v-spacer></v-spacer>
+            <v-col cols="12" md="4" lg="2">
+              <v-text-field
+                v-model="searchKeyword"
+                append-icon="mdi-magnify"
+                single-line
+                outlined
+                dense
+                hide-details
+              ></v-text-field>
+            </v-col>
+          </v-row>
           <v-card flat outlined class="mb-4 pb-3">
             <v-list-item>
               <v-list-item-content>
@@ -49,7 +62,11 @@
               </v-list-item-content>
             </v-list-item>
           </v-card>
-          <v-data-table :headers="billingResultHeaders" :items="billingResults">
+          <v-data-table
+            :headers="billingResultHeaders"
+            :items="billingResults"
+            :search="searchKeyword"
+          >
             <template v-slot:item.amount="{ item }">
               <span>{{ formatCurrency(item.amount) }}</span>
             </template>
@@ -60,10 +77,12 @@
               <span v-else>未納</span>
             </template>
             <template v-slot:item.is_next_debit_target="{ item }">
-              <v-checkbox
-                :disabled="item.is_next_debit_target"
-                v-model="isSelected"
-              ></v-checkbox>
+              <span v-if="item.paid_at == null">
+                <v-checkbox
+                  :disabled="item.is_next_debit_target"
+                  v-model="isSelected"
+                ></v-checkbox>
+              </span>
             </template>
           </v-data-table>
         </v-card-text>
@@ -76,6 +95,7 @@
 export default {
   data: function() {
     return {
+      searchKeyword: "",
       users: "",
       selected: [],
       isSelected: "",
