@@ -57,6 +57,12 @@ class User extends Authenticatable
         return $this->hasMany('App\RoleHistory');
     }
 
+    // A user can have multiple billings
+    public function billings()
+    {
+        return $this->hasMany('App\Billing');
+    }
+
     // Accessor
     // By naming the function as follows, the value can be accessed as "$user->full_name"
     // Don't forget to add accessor to "$appends"
