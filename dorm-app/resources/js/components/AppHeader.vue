@@ -10,7 +10,7 @@
       <template v-slot:img="{ props }">
         <v-img
           v-bind="props"
-          gradient="to top right, rgba(0,0,128,.1), rgba(0,0,128,.8)"
+          gradient="to top right, rgba(0,0,128,.4), rgba(0,0,128,.8)"
         ></v-img>
       </template>
       <!-- <v-avatar>
@@ -20,7 +20,7 @@
         class="headline vmid"
         style="font-family: 'Titillium Web' !important;"
       >
-        <v-icon large class="mr-1">mdi-weather-snowy-heavy</v-icon>
+        <v-icon large class="mr-1" color="orange">mdi-weather-snowy-heavy</v-icon>
         <span class="font-weight-black">Aobaryo</span>
         <span class="font-weight-light">Cloud</span>
       </v-toolbar-title>
@@ -68,11 +68,11 @@ export default {
       pages: [
         { title: "寮紹介", uri: "/", icon: "mdi-home" },
         {
-          title: "個人記録",
+          title: "納付記録",
           uri: "/personal-accounting",
-          icon: "mdi-account-circle"
+          icon: "mdi-currency-jpy"
         },
-        { title: "寮会計", uri: "/dorm-accounting", icon: "mdi-currency-jpy" },
+        { title: "寮会計決算", uri: "/dorm-accounting", icon: "mdi-finance" },
         { title: "寮生一覧", uri: "/user-list", icon: "mdi-account-group" },
         // { title: "日程管理", uri: "/schedule", icon: "mdi-clock" },
         // { title: "寮文書", uri: "/document", icon: "mdi-file-document" },
