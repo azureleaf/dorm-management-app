@@ -31,6 +31,7 @@ class BillingController extends Controller
             ->where("paid_at", NULL)
             ->groupBy("user_id")
             ->selectRaw('sum(amount) as sum, user_id')
+            ->selectRaw('count(user_id) as months, user_id')
             ->orderBy("sum", "desc")
             ->get();
     }

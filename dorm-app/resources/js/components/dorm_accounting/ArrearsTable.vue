@@ -11,7 +11,14 @@
             :headers="nonPayerHeaders"
             :items="nonPayers"
             :items-per-page="20"
-          ></v-data-table>
+          >
+            <template v-slot:item.sum="{ item }">
+              {{ formatCurrency(item.sum) }}
+            </template>
+            <template v-slot:item.months="{ item }">
+              {{ item.months }}ヶ月
+            </template>
+          </v-data-table>
         </v-card-text>
       </v-card>
     </v-container>
@@ -25,40 +32,29 @@ export default {
       nonPayers: [],
       nonPayerHeaders: [
         {
-          text: "番付",
-          sortable: true,
-          value: ""
-        },
-        {
           text: "寮生ID",
-          sortable: true,
+          sortable: false,
           value: "user_id"
         },
         {
           text: "名前",
-          sortable: true,
+          sortable: false,
           value: "user.full_name"
         },
         {
           text: "滞納額",
-          sortable: true,
+          sortable: false,
           value: "sum"
         },
         {
           text: "滞納期間",
-          sortable: true,
-          value: ""
-        },
-        {
-          text: "特記事項",
-          sortable: true,
-          value: ""
+          sortable: false,
+          value: "months"
         }
       ]
     };
   },
   mounted: async function() {
-    // You don't have to require axios; it's already loaded
     const res = await axios.get("./billings/unpaid");
     this.nonPayers = res.data;
     console.log(res.data);
