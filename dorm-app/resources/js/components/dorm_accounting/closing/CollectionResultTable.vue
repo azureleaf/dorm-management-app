@@ -3,18 +3,36 @@
     <v-card-title>
       <span>寮費徴収結果</span>
       <v-spacer></v-spacer>
-      <v-btn color="error" depressed absolute right>
+      <!-- <v-btn color="error" depressed absolute right>
         <v-icon class="mr-1">mdi-security</v-icon>徴収結果の登録
-      </v-btn>
+      </v-btn> -->
     </v-card-title>
+    <v-card-subtitle
+      >以下の未納請求一覧から、入金のあったものを選択してください。</v-card-subtitle
+    >
     <v-card-text>
+      <v-chip
+        color="primary"
+        outlined
+        large
+        label
+        class="my-1 font-weight-bold"
+      >
+        選択項目の合計額：{{ formatCurrency(paidSum) }}
+      </v-chip>
       <v-row>
         <v-col>
           <v-data-table
-            :headers="billingHeaders"
-            :items="billItems"
+            :headers="unpaidHeaders"
+            :items="unpaids"
             :items-per-page="20"
-          ></v-data-table>
+            show-select
+            v-model="isPaid"
+          >
+            <template v-slot:item.amount="{ item }">
+              {{ formatCurrency(item.amount) }}
+            </template>
+          </v-data-table>
         </v-col>
       </v-row>
     </v-card-text>
@@ -26,54 +44,43 @@ export default {
   data: function() {
     return {
       isAdmin: true,
-      billItems: [],
-      billingHeaders: [
+      isPaid: [],
+      unpaids: [],
+      unpaidHeaders: [
         {
-          text: "寮会計ID",
+          text: "請求ID",
           sortable: false,
           value: "id"
         },
         {
-          text: "徴収日",
+          text: "氏名",
           sortable: false,
-          value: "accrued_at"
+          value: "user.full_name"
         },
         {
           text: "決算期",
           sortable: false,
-          value: ""
-        },
-        {
-          text: "会計",
-          sortable: false,
-          value: "account"
-        },
-        {
-          text: "科目",
-          sortable: false,
-          value: "cat"
-        },
-        {
-          text: "摘要",
-          sortable: false,
           value: "abstract"
         },
         {
-          text: "合計額",
+          text: "金額",
           sortable: false,
           value: "amount"
-        },
-        {
-          text: "編集",
-          sortable: false,
-          value: ""
         }
       ]
     };
   },
+  computed: {
+    paidSum() {
+      return this.isPaid.reduce((acc, cur) => {
+        return acc + cur.amount;
+      }, 0);
+    }
+  },
   mounted: async function() {
-    const res = await axios.get("./billings");
-    this.billItems = res.data;
+    const res = await axios.get("./billings/unpaid");
+    this.unpaids = res.data;
+    console.log(res.data);
   }
 };
 </script>

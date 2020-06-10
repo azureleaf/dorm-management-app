@@ -4,7 +4,7 @@
       <v-card elevation="10">
         <v-card-title>滞納者番付</v-card-title>
         <v-card-subtitle
-          >寮費滞納は最も重大な規定違反です。速やかに返済してください。</v-card-subtitle
+          >寮費滞納は最も重大な寮規約違反です。悪質な滞納者には罰金を課し、大学への通知、実家からの債権回収、強制退寮処分を行います。</v-card-subtitle
         >
         <v-card-text>
           <v-data-table
@@ -55,7 +55,7 @@ export default {
     };
   },
   mounted: async function() {
-    const res = await axios.get("./billings/unpaid");
+    const res = await axios.get("./billings/unpaid/ranking");
     this.nonPayers = res.data;
     console.log(res.data);
   }
