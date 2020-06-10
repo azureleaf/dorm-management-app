@@ -17,29 +17,45 @@ class BillingDetailSeeder extends Seeder
     public function run()
     {
         // List all the users
-        $userIds = App\User::all()->pluck('id')->toArray();
+        $userIds = User::all()->pluck('id')->toArray();
 
         // Bill the same amount to all the users
         foreach ($userIds as $userId) {
 
+            // 25 % of the users have unpaid fees
+            // Non-payers has arrears for 1 / 2 / 3 months
+            $unpaidMonths = rand(0, 3) == 3 ? rand(1, 3) : 0;
+
             $months = array(
+                array(
+                    "amount" => 15764,
+                    "closedAt" => Carbon::create(2019, 11, 30),
+                    "abstract" => "基本金請求",
+                    "paidAt" => Carbon::create(2020, 12, 14)
+                ),
+                array(
+                    "amount" => 16202,
+                    "closedAt" => Carbon::create(2019, 12, 31),
+                    "abstract" => "基本金請求",
+                    "paidAt" => $unpaidMonths > 2 ? null : Carbon::create(2020, 1, 15)
+                ),
                 array(
                     "amount" => 14550,
                     "closedAt" => Carbon::create(2020, 01, 31),
-                    "abstract" => "１月分基本金請求",
-                    "paidAt" => Carbon::create(2020, 2, 16)
+                    "abstract" => "基本金請求",
+                    "paidAt" => $unpaidMonths > 1 ? null : Carbon::create(2020, 2, 16)
                 ),
                 array(
                     "amount" => 11234,
                     "closedAt" => Carbon::create(2020, 02, 29),
-                    "abstract" => "２月分基本金請求",
-                    // Most users pay, while some assholes don't
-                    "paidAt" => rand(1, 6) > 5 ? null : Carbon::create(2020, 3, 21)
+                    "abstract" => "基本金請求",
+                    "paidAt" => $unpaidMonths > 0 ? null : Carbon::create(2020, 3, 21)
                 ),
                 array(
                     "amount" => 12365,
-                    "closedAt" => Carbon::create(2020, 03, 30),
-                    "abstract" => "３月分基本金請求"
+                    "closedAt" => Carbon::create(2020, 03, 31),
+                    "abstract" => "基本金請求"
+                    // "paidAt" => // All the users are at unpaid status for the latest billing
                 ),
             );
 
