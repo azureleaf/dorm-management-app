@@ -20,9 +20,9 @@
             <v-chip label outlined color="green darken-2" class="mr-2" dark>
               決算日：{{ closingDate }}
             </v-chip>
-            <v-chip label outlined color="grey darken-1" class="mr-2">
+            <!-- <v-chip label outlined color="grey darken-1" class="mr-2">
               承認日：{{ approvalDate }}
-            </v-chip>
+            </v-chip> -->
           </v-card>
           <monthly-fee
             v-if="feeComp && persons.beforeDeduction"
