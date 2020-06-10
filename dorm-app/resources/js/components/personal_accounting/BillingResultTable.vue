@@ -4,9 +4,7 @@
       <v-card elevation="10">
         <v-card-title>納付状況</v-card-title>
         <v-card-subtitle>
-          請求から実際に引き落とされるまでは時間がかかるため、一ヶ月分未納状態となるのは通常の処理です。
-          滞納している場合には、古い方から二ヶ月分を次回に引き落します。
-          三ヶ月分以上滞納している場合には、以下のチェックボックスから選択することで三ヶ月分以上を引落予約することができます。
+          請求から実際に引き落とされるまで時間がかかるため、最新の一ヶ月分が「未納」と表示されるのは正常です。
         </v-card-subtitle>
         <v-card-text>
           <v-row>
@@ -85,14 +83,14 @@
                 未納</span
               >
             </template>
-            <template v-slot:item.is_next_debit_target="{ item }">
+            <!-- <template v-slot:item.is_next_debit_target="{ item }">
               <span v-if="item.paid_at == null">
                 <v-checkbox
                   :disabled="item.is_next_debit_target"
                   v-model="isSelected"
                 ></v-checkbox>
               </span>
-            </template>
+            </template> -->
           </v-data-table>
         </v-card-text>
       </v-card>
@@ -132,67 +130,12 @@ export default {
           text: "状態",
           sortable: true,
           value: "paid_at"
-        },
-        {
-          text: "次回引落",
-          sortable: true,
-          value: "is_next_debit_target"
         }
-      ],
-      arrearHeaders: [
-        {
-          text: "ID",
-          sortable: true,
-          value: "id"
-        },
-        {
-          text: "請求日",
-          sortable: true,
-          value: "billed_at"
-        },
-        {
-          text: "摘要",
-          sortable: false,
-          value: "abstract"
-        },
-        {
-          text: "金額",
-          sortable: false,
-          value: "amount"
-        },
-        {
-          text: "状態",
-          sortable: false,
-          value: "status"
-        },
-        {
-          text: "次回引落",
-          sortable: false,
-          value: "isNextDebit"
-        }
-      ],
-      arrears: [
-        {
-          id: 3,
-          billed_at: "2020-04-01",
-          abstract: "2020年３月分",
-          amount: 12345,
-          status: "新規請求分"
-        },
-        {
-          id: 4,
-          billed_at: "2020-04-01",
-          abstract: "2020年３月分",
-          amount: 12345,
-          status: "新規請求分"
-        },
-        {
-          id: 5,
-          billed_at: "2020-04-01",
-          abstract: "2020年３月分",
-          amount: 12345,
-          status: "滞納分"
-        }
+        // {
+        //   text: "次回引落",
+        //   sortable: true,
+        //   value: "is_next_debit_target"
+        // }
       ]
     };
   },

@@ -292,8 +292,8 @@ columns except for `id`, `created_at`, `updated_at`
   - closed_at: date (last day of the month)
   - paid_at: date
   - amount
-  - is_next_debit_target: Boolean
-  - is_cash_payment: Boolean
+  - ~~is_next_debit_target: Boolean~~
+  - ~~is_cash_payment: Boolean~~
 - [ ] `billing_details`
   - billing_id (many2one with `billings`)
   - personal_account_title_id (many2one with `personal_account_titles`)
