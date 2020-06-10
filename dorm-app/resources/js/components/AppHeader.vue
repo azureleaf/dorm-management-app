@@ -1,6 +1,18 @@
 <template>
   <v-container>
-    <v-app-bar class="blue darken-4" dense dark app>
+    <v-app-bar
+      class="blue darken-4"
+      dense
+      dark
+      app
+      src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg"
+    >
+      <template v-slot:img="{ props }">
+        <v-img
+          v-bind="props"
+          gradient="to top right, rgba(0,0,128,.1), rgba(0,0,128,.8)"
+        ></v-img>
+      </template>
       <!-- <v-avatar>
         <v-img class="mx-2" :src="avatarurl" max-height="50" max-width="50" contain></v-img>
       </v-avatar>-->
@@ -22,11 +34,11 @@
           :href="page.uri"
           :title="page.title"
           class="mx-0 px-0 d-none d-sm-flex"
-          style="border-right: solid 1px #2266aa;"
         >
           <v-icon>{{ page.icon }}</v-icon>
           <!-- <span class="d-none d-lg-flex d-xl-flex">{{ page.title }}</span> -->
         </v-btn>
+        <v-divider vertical></v-divider>
       </v-toolbar-items>
       <v-menu :offsetY="true">
         <template v-slot:activator="{ on }">
