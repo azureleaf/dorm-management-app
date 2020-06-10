@@ -27,35 +27,41 @@ class BillingDetailSeeder extends Seeder
             $unpaidMonths = rand(0, 3) == 3 ? rand(1, 3) : 0;
 
             $months = array(
+                // All the users paid for the fee of this month
                 array(
                     "amount" => 15764,
                     "closedAt" => Carbon::create(2019, 11, 30),
                     "abstract" => "基本金請求",
-                    "paidAt" => Carbon::create(2020, 12, 14)
+                    "paidAt" => Carbon::create(2020, 12, 14),
+                    "isNextDebitTarget" => false
                 ),
                 array(
                     "amount" => 16202,
                     "closedAt" => Carbon::create(2019, 12, 31),
                     "abstract" => "基本金請求",
-                    "paidAt" => $unpaidMonths > 2 ? null : Carbon::create(2020, 1, 15)
+                    "paidAt" => $unpaidMonths > 2 ? null : Carbon::create(2020, 1, 15),
+                    "isNextDebitTarget" => $unpaidMonths > 2 ? true : false
                 ),
                 array(
                     "amount" => 14550,
                     "closedAt" => Carbon::create(2020, 01, 31),
                     "abstract" => "基本金請求",
-                    "paidAt" => $unpaidMonths > 1 ? null : Carbon::create(2020, 2, 16)
+                    "paidAt" => $unpaidMonths > 1 ? null : Carbon::create(2020, 2, 16),
+                    "isNextDebitTarget" => $unpaidMonths > 1 ? true : false
                 ),
                 array(
                     "amount" => 11234,
                     "closedAt" => Carbon::create(2020, 02, 29),
                     "abstract" => "基本金請求",
-                    "paidAt" => $unpaidMonths > 0 ? null : Carbon::create(2020, 3, 21)
+                    "paidAt" => $unpaidMonths > 0 ? null : Carbon::create(2020, 3, 21),
+                    "isNextDebitTarget" => ($unpaidMonths == 1 || $unpaidMonths == 2) ? true : false
                 ),
                 array(
                     "amount" => 12365,
                     "closedAt" => Carbon::create(2020, 03, 31),
-                    "abstract" => "基本金請求"
+                    "abstract" => "基本金請求",
                     // "paidAt" => // All the users are at unpaid status for the latest billing
+                    "isNextDebitTarget" => ($unpaidMonths == 0 || $unpaidMonths == 1) ? true : false
                 ),
             );
 
@@ -67,7 +73,7 @@ class BillingDetailSeeder extends Seeder
                     "closed_at" => $month["closedAt"],
                     "amount" => 0, // Will be updated soon
                     "paid_at" => array_key_exists("paidAt", $month) ? $month["paidAt"] : null,
-                    "is_next_debit_target" => array_key_exists("paidAt", $month) ? false : true
+                    "is_next_debit_target" => $month["isNextDebitTarget"]
                 ]);
                 $bill->save();
 
