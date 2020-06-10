@@ -22,7 +22,7 @@
               ></v-text-field>
             </v-col>
           </v-row>
-          <v-card flat outlined class="mb-4 pb-3">
+          <!-- <v-card flat outlined class="mb-4 pb-3">
             <v-list-item>
               <v-list-item-content>
                 <v-list-item-title>
@@ -44,8 +44,8 @@
                 <v-list-item-subtitle>2020-04-20</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
-          </v-card>
-          <v-card flat outlined class="mb-4 py-3">
+          </v-card> -->
+          <!-- <v-card flat outlined class="mb-4 py-3">
             <v-list-item>
               <v-list-item-content>
                 <v-list-item-title>
@@ -66,7 +66,7 @@
                 <v-list-item-subtitle>2020-03-20</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
-          </v-card>
+          </v-card> -->
           <v-data-table
             :headers="billingResultHeaders"
             :items="billingResults"
