@@ -29,6 +29,20 @@ class BillingController extends Controller
     {
         return  Billing::with("user")
             ->where("paid_at", NULL)
+            ->orderBy("closed_at", "desc")
+            ->get();
+    }
+
+    /**
+     * Display list of arrear amounts by user
+     * with sum & count of the unpaid fees
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function ranking()
+    {
+        return  Billing::with("user")
+            ->where("paid_at", NULL)
             ->groupBy("user_id")
             ->selectRaw('sum(amount) as sum, user_id')
             ->selectRaw('count(user_id) as months, user_id')
