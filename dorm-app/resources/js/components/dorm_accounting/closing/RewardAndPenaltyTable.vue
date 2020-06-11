@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  props: ["year", "month"],
+  props: ["closedat"],
   data: function() {
     return {
       isAdmin: true,
@@ -56,7 +56,10 @@ export default {
     };
   },
   mounted: async function() {
-    const res = await axios.get(`./users/monthly/${this.year}/${this.month}`);
+    // Parse YYYY-MM-DD into Date object
+    const d = new Date(this.closedat);
+
+    const res = await axios.get(`./users/monthly/${d.getFullYear()}/${d.getMonth()}`);
     this.users = res.data;
     console.log("retrieved", res.data);
   }
