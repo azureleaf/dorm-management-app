@@ -20,19 +20,28 @@
           </v-btn>
         </v-card-title>
         <v-card-text v-if="hasSessionStorage">
-          <v-chip
-            label
-            outlined
-            color="green darken-2"
-            class="ml-4 font-weight-bold"
-            dark
-          >
-            決算日：{{ closingDate }}
-          </v-chip>
-          <!-- <monthly-fee
+          <v-row>
+            <v-spacer></v-spacer>
+            <v-card flat>
+              <v-card-text>
+                <v-chip
+                  label
+                  outlined
+                  color="green darken-2"
+                  class="px-4 ml-4 font-weight-bold"
+                  large
+                  dark
+                >
+                  決算日：{{ draft.closingDate }}
+                </v-chip>
+              </v-card-text>
+            </v-card>
+          </v-row>
+          <monthly-fee
             v-if="feeComp && persons.beforeDeduction"
             :personsprop="persons"
-          ></monthly-fee> -->
+            @updateSS="updateDraftDiff"
+          ></monthly-fee>
           <deduction-table
             v-if="feeComp"
             :closingdate="feeComp.closed_at"
@@ -40,7 +49,7 @@
           ></deduction-table>
           <collection-result-table></collection-result-table>
           <reward-and-penalty-table
-            :closedat="closedAt"
+            :closedat="draft.closingDate"
           ></reward-and-penalty-table>
           <v-btn color="error" block x-large depressed class="mx-1">
             <v-icon class="mr-1">mdi-security</v-icon
@@ -58,8 +67,7 @@ export default {
     return {
       hasSessionStorage: false,
       persons: { beforeDeduction: null, afterDeduction: null }, // will be calculated by child component
-      fees: [],
-      closedAt: "2020-04-30"
+      fees: []
     };
   },
   computed: {
@@ -75,6 +83,17 @@ export default {
       return this.feeComp.approved_at
         ? this.feeComp.approved_at
         : "寮生大会未承認";
+    },
+    // This computed draft behaves as a proxy of the sessionStorage item
+    draft: {
+      get() {
+        return JSON.parse(sessionStorage.getItem("draft"));
+      },
+      set(newDraft) {
+        sessionStorage.clear(); // To avoid unexpected collision
+        sessionStorage.setItem("draft", JSON.stringify(newDraft));
+        this.hasSessionStorage = true; // For certainty
+      }
     }
   },
   methods: {
@@ -89,16 +108,17 @@ export default {
       this.persons.afterDeduction = totals.afterDeduction;
     },
     createDraft(closingDate) {
-      const draft = {
+      const newDraft = {
         closingDate: closingDate
       };
-      sessionStorage.clear(); // Avoid unexpected collision
-      sessionStorage.setItem("draft", JSON.stringify(draft));
-      this.hasSessionStorage = true;
+      this.draft = newDraft;
     },
     clearDraft() {
-      sessionStorage.clear(); // Avoid unexpected collision
+      sessionStorage.clear();
       this.hasSessionStorage = false;
+    },
+    updateDraftDiff(draftDiff) {
+      console.log("got:", draftDiff);
     }
   },
   async mounted() {
