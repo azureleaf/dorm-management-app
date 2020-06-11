@@ -3,27 +3,25 @@
     <v-container>
       <v-card elevation="10">
         <v-card-title>
-          <span>{{ feeComp.closing_name }}寮費請求</span>
+          <span>寮費請求原稿</span>
+          <v-chip
+            label
+            outlined
+            color="green darken-2"
+            class="ml-4 font-weight-bold"
+            dark
+          >
+            決算日：{{ closingDate }}
+          </v-chip>
           <v-spacer></v-spacer>
-          <v-btn color="error" depressed class="mx-1">
-            <v-icon class="mr-1">mdi-plus-circle</v-icon>決算期追加
+          <v-btn v-if="hasSessionStorage" color="error" depressed class="mx-1">
+            <v-icon class="mr-1">mdi-close-circle</v-icon>作成中の請求原稿を破棄
           </v-btn>
-          <v-btn color="error" depressed class="mx-1">
-            <v-icon class="mr-1">mdi-square-edit-outline</v-icon>決算日設定
-          </v-btn>
-          <v-btn color="error" depressed class="mx-1">
-            <v-icon class="mr-1">mdi-security</v-icon>寮費請求
+          <v-btn v-else color="error" depressed class="mx-1">
+            <v-icon class="mr-1">mdi-plus-circle</v-icon>請求原稿の新規作成
           </v-btn>
         </v-card-title>
         <v-card-text>
-          <v-card class="d-flex mt-5 font-weight-bold" flat tile>
-            <v-chip label outlined color="green darken-2" class="mr-2" dark>
-              決算日：{{ closingDate }}
-            </v-chip>
-            <!-- <v-chip label outlined color="grey darken-1" class="mr-2">
-              承認日：{{ approvalDate }}
-            </v-chip> -->
-          </v-card>
           <monthly-fee
             v-if="feeComp && persons.beforeDeduction"
             :personsprop="persons"
@@ -35,12 +33,14 @@
             @updateDeduction="onDeductionUpdate"
           ></deduction-table>
           <collection-result-table></collection-result-table>
-          <reward-and-penalty-table></reward-and-penalty-table>
-          <!-- <account-table></account-table> -->
-          <!-- <income-table></income-table> -->
-          <!-- <expenditure-table></expenditure-table> -->
-          <!-- <assets-table></assets-table> -->
-          <!-- <total-balance-table></total-balance-table> -->
+          <reward-and-penalty-table
+            :year="year"
+            :month="month"
+          ></reward-and-penalty-table>
+          <v-btn color="error" block x-large depressed class="mx-1">
+            <v-icon class="mr-1">mdi-security</v-icon
+            >この内容で確定して寮費請求を実行
+          </v-btn>
         </v-card-text>
       </v-card>
     </v-container>
@@ -51,8 +51,11 @@
 export default {
   data: function() {
     return {
+      hasSessionStorage: true,
       persons: { beforeDeduction: null, afterDeduction: null }, // will be calculated by child component
-      fees: []
+      fees: [],
+      year: 2020,
+      month: 5
     };
   },
   computed: {

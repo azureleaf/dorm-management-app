@@ -2,18 +2,15 @@
   <v-card outlined class="my-5">
     <v-card-title>
       <span>賞罰処理</span>
-      <v-spacer></v-spacer>
-      <v-btn color="error" depressed absolute right>
-        <v-icon class="mr-1">mdi-security</v-icon>賞罰結果の登録
-      </v-btn>
     </v-card-title>
+    <v-card-subtitle>当該月の在寮者名簿です。</v-card-subtitle>
     <v-card-text>
       <v-row>
         <v-col>
           <v-data-table
-            :headers="billingHeaders"
-            :items="billItems"
-            :items-per-page="20"
+            :headers="userHeaders"
+            :items="users"
+            :items-per-page="users.length"
           ></v-data-table>
         </v-col>
       </v-row>
@@ -23,57 +20,45 @@
 
 <script>
 export default {
+  props: ["year", "month"],
   data: function() {
     return {
       isAdmin: true,
-      billItems: [],
-      billingHeaders: [
+      users: [],
+      userHeaders: [
         {
-          text: "寮会計ID",
+          text: "寮生ID",
           sortable: false,
           value: "id"
         },
         {
-          text: "徴収日",
+          text: "氏名",
           sortable: false,
-          value: "accrued_at"
+          value: "full_name"
         },
         {
-          text: "決算期",
+          text: "賞罰詳細金額",
           sortable: false,
-          value: ""
+          value: "items"
         },
         {
-          text: "会計",
+          text: "賞罰合計額",
           sortable: false,
-          value: "account"
+          value: "balance"
         },
+        
         {
-          text: "科目",
+          text: "新規追加",
           sortable: false,
-          value: "cat"
-        },
-        {
-          text: "摘要",
-          sortable: false,
-          value: "abstract"
-        },
-        {
-          text: "合計額",
-          sortable: false,
-          value: "amount"
-        },
-        {
-          text: "編集",
-          sortable: false,
-          value: ""
+          value: "create"
         }
       ]
     };
   },
   mounted: async function() {
-    const res = await axios.get("./billings");
-    this.billItems = res.data;
+    const res = await axios.get(`./users/monthly/${this.year}/${this.month}`);
+    this.users = res.data;
+    console.log("retrieved", res.data);
   }
 };
 </script>

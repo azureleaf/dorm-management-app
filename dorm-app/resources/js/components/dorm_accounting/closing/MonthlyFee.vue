@@ -94,6 +94,11 @@ export default {
           text: "基本金（切り上げ）",
           sortable: false,
           value: "feeAmount"
+        },
+        {
+          text: "編集",
+          sortable: false,
+          value: "edit"
         }
       ]
     };
@@ -144,7 +149,7 @@ export default {
         fee_amount: newFee.feeAmount
       });
     },
-    /** 
+    /**
      *  Check if the calculated fee items in this component is
      *    identical with those in the DB.
      *  Calc result may be diverged because number of users can be modified
@@ -160,8 +165,10 @@ export default {
           feeCalculated.personsAfterDeduction ||
         feeStored.fee_amount != feeCalculated.feeAmount
       )
-        console.log("Monthly fee record in the DB is outdated; going to update.")
-        this.updateDB(feeCalculated);
+        console.log(
+          "Monthly fee record in the DB is outdated; going to update."
+        );
+      this.updateDB(feeCalculated);
 
       this.fees.push(feeCalculated);
     }
