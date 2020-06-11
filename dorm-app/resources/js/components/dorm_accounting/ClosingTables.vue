@@ -38,18 +38,17 @@
             </v-card>
           </v-row>
           <monthly-fee
-            v-if="feeComp && persons.beforeDeduction"
+            v-if="persons.beforeDeduction"
             :personsprop="persons"
             @updateSS="updateDraftDiff"
           ></monthly-fee>
           <deduction-table
-            v-if="feeComp"
-            :closingdate="feeComp.closed_at"
+            :closingdate="draft.closingDate"
             @updateDeduction="onDeductionUpdate"
           ></deduction-table>
           <collection-result-table></collection-result-table>
           <reward-and-penalty-table
-            :closedat="draft.closingDate"
+            :closingdate="draft.closingDate"
           ></reward-and-penalty-table>
           <v-btn color="error" block x-large depressed class="mx-1">
             <v-icon class="mr-1">mdi-security</v-icon
@@ -65,17 +64,11 @@
 export default {
   data: function() {
     return {
-      hasSessionStorage: false,
-      persons: { beforeDeduction: null, afterDeduction: null }, // will be calculated by child component
-      fees: []
+      hasSessionStorage: false, // should be a computed value instead?
+      persons: { beforeDeduction: null, afterDeduction: null } // will be calculated by child component
     };
   },
   computed: {
-    // To suppress error of "Cannot read property xxx of undefined",
-    // program doesn't try to read deep layer values when the fees[] obj isn't loaded yet
-    feeComp() {
-      return this.fees.length == 0 ? "" : this.fees[0];
-    },
     // This computed draft behaves as a proxy of the sessionStorage item
     draft: {
       get() {
@@ -89,21 +82,17 @@ export default {
     }
   },
   methods: {
-    // Load from DB, set fees[]
-    // ASSUMPTION: axios result is ordered by the date of closing; the latest is the first
-    async loadFees() {
-      const res = await axios.get("./monthly-fees");
-      this.fees = res.data;
-    },
-    onDeductionUpdate(totals) {
-      this.persons.beforeDeduction = totals.beforeDeduction;
-      this.persons.afterDeduction = totals.afterDeduction;
+    // Handle the emitted values from the deduction component
+    onDeductionUpdate(totalPersons) {
+      this.persons.beforeDeduction = totalPersons.beforeDeduction;
+      this.persons.afterDeduction = totalPersons.afterDeduction;
     },
     createDraft(closingDate) {
       const newDraft = {
         closingDate: closingDate
       };
       this.draft = newDraft;
+      console.log("new draft created:", this.draft);
     },
     clearDraft() {
       sessionStorage.clear();
@@ -117,16 +106,13 @@ export default {
       let draftCopy = JSON.parse(JSON.stringify(this.draft));
 
       for (let [key, value] of Object.entries(draftDiff)) {
-        // "this.draft[key] = value;" won't trigger computed set()
+        // "this.draft[key] = value;" will NOT trigger computed set()
         draftCopy[key] = value;
       }
 
       // This does trigger the set()
       this.draft = draftCopy;
     }
-  },
-  async mounted() {
-    this.loadFees();
   }
 };
 </script>

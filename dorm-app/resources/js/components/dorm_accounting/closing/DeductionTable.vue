@@ -7,13 +7,6 @@
       決算日の前月に１日でも在寮した人は、負担者数に計上されます。<br />決算日の時点で委員会の役職が設定されている寮生は寮費が減免されます。
     </v-card-subtitle>
     <v-card-text>
-      <!-- <v-card class="pa-3 formula" flat outlined>
-        <v-chip outlined label large color="green darken-2">一般会計支出： 200000</v-chip>
-        <span class="display-1">÷</span>
-        <v-chip outlined label large color="green darken-2">負担人数： 45.2</v-chip>
-        <span class="display-1">=</span>
-        <v-chip outlined label large color="red">寮費（端数切り上げ）： 12345</v-chip>
-      </v-card>-->
       <v-data-table
         :headers="burdenHeaders"
         :items="burdens"
