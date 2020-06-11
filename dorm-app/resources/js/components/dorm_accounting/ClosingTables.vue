@@ -76,14 +76,6 @@ export default {
     feeComp() {
       return this.fees.length == 0 ? "" : this.fees[0];
     },
-    closingDate() {
-      return this.feeComp.closed_at ? this.feeComp.closed_at : "決算日未定";
-    },
-    approvalDate() {
-      return this.feeComp.approved_at
-        ? this.feeComp.approved_at
-        : "寮生大会未承認";
-    },
     // This computed draft behaves as a proxy of the sessionStorage item
     draft: {
       get() {
@@ -117,8 +109,20 @@ export default {
       sessionStorage.clear();
       this.hasSessionStorage = false;
     },
+    /**
+     * Get a new part of the draft, update the part in the draft.
+     * The other parts will be kept as they are if not affected by the part.
+     */
     updateDraftDiff(draftDiff) {
-      console.log("got:", draftDiff);
+      let draftCopy = JSON.parse(JSON.stringify(this.draft));
+
+      for (let [key, value] of Object.entries(draftDiff)) {
+        // "this.draft[key] = value;" won't trigger computed set()
+        draftCopy[key] = value;
+      }
+
+      // This does trigger the set()
+      this.draft = draftCopy;
     }
   },
   async mounted() {
