@@ -29,7 +29,8 @@ class BillingController extends Controller
     {
         return  Billing::with("user")
             ->where("paid_at", NULL)
-            ->orderBy("closed_at", "desc")
+            ->orderBy("user_id")
+            ->orderBy("closed_at")
             ->get();
     }
 
