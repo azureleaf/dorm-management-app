@@ -57,7 +57,6 @@ export default {
   mounted: async function() {
     const res = await axios.get("./billings/unpaid/ranking");
     this.nonPayers = res.data;
-    console.log(res.data);
   }
 };
 </script>

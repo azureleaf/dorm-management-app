@@ -25,6 +25,7 @@
             <v-card flat>
               <v-card-text>
                 <v-chip
+                  v-if="draft"
                   label
                   outlined
                   color="green darken-2"
@@ -43,11 +44,13 @@
             @updateSS="updateDraftDiff"
           ></monthly-fee>
           <deduction-table
+            v-if="draft"
             :closingdate="draft.closingDate"
             @updateDeduction="onDeductionUpdate"
           ></deduction-table>
           <collection-result-table></collection-result-table>
           <reward-and-penalty-table
+            v-if="draft"
             :closingdate="draft.closingDate"
           ></reward-and-penalty-table>
           <v-btn color="error" block x-large depressed class="mx-1">
@@ -75,6 +78,7 @@ export default {
         return JSON.parse(sessionStorage.getItem("draft"));
       },
       set(newDraft) {
+        console.log("setter called! Got:", newDraft);
         sessionStorage.clear(); // To avoid unexpected collision
         sessionStorage.setItem("draft", JSON.stringify(newDraft));
         this.hasSessionStorage = true; // For certainty
@@ -87,12 +91,15 @@ export default {
       this.persons.beforeDeduction = totalPersons.beforeDeduction;
       this.persons.afterDeduction = totalPersons.afterDeduction;
     },
-    createDraft(closingDate) {
+    createDraft(newClosingDate) {
       const newDraft = {
-        closingDate: closingDate
+        closingDate: newClosingDate
       };
+      // Object.assign({}, newDraft); doesn't work. Mysterious. Why???
+      // this.draft = Object.assign(this.draft || {}, newDraft);
+      // this.draft = Object.assign({}, newDraft);
+      // this.draft = JSON.parse(JSON.stringify(newDraft));
       this.draft = newDraft;
-      console.log("new draft created:", this.draft);
     },
     clearDraft() {
       sessionStorage.clear();
@@ -113,6 +120,9 @@ export default {
       // This does trigger the set()
       this.draft = draftCopy;
     }
+  },
+  mounted() {
+    this.clearDraft();
   }
 };
 </script>
