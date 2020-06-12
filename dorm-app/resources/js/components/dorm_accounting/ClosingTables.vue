@@ -112,11 +112,7 @@ export default {
      */
     updateDraftDiff(draftDiff) {
       let draftCopy = JSON.parse(JSON.stringify(this.readDraft()));
-
-      for (let [key, value] of Object.entries(draftDiff)) {
-        draftCopy[key] = value;
-      }
-
+      Object.assign(draftCopy, draftDiff);
       this.setDraft(draftCopy);
     }
   },
