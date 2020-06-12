@@ -2,8 +2,17 @@
   <v-card outlined class="my-5">
     <v-card-title>
       <span>賞罰処理</span>
+      <v-spacer></v-spacer>
+      <reward-and-penalty-dialog
+        v-if="users.length != 0 && titles.length != 0"
+        :users="users"
+        :titles="titles"
+        @setRewards="onRewardsSet"
+      ></reward-and-penalty-dialog>
     </v-card-title>
-    <v-card-subtitle>当該月の在寮者名簿です。</v-card-subtitle>
+    <v-card-subtitle
+      >委員会報酬についてはここでは編集できません。</v-card-subtitle
+    >
     <v-card-text>
       <v-row>
         <v-col>
@@ -24,6 +33,7 @@ export default {
   data: function() {
     return {
       isAdmin: true,
+      titles: [],
       users: [],
       userHeaders: [
         {
@@ -46,7 +56,6 @@ export default {
           sortable: false,
           value: "balance"
         },
-        
         {
           text: "新規追加",
           sortable: false,
@@ -55,13 +64,27 @@ export default {
       ]
     };
   },
-  mounted: async function() {
-    // Parse YYYY-MM-DD into Date object
-    const d = new Date(this.closingdate);
+  methods: {
+    onRewardsSet(rewards) {
+      console.log("rewards emitted:", rewards);
+    },
+    async retrieveAccountTitles() {
+      const res = await axios.get("./personal/titles");
+      this.titles = res.data;
+    },
+    async retrieveUsers() {
+      // Parse YYYY-MM-DD into Date object
+      const d = new Date(this.closingdate);
 
-    const res = await axios.get(`./users/monthly/${d.getFullYear()}/${d.getMonth()}`);
-    this.users = res.data;
-    console.log("retrieved", res.data);
+      const res = await axios.get(
+        `./users/monthly/${d.getFullYear()}/${d.getMonth()}`
+      );
+      this.users = res.data;
+    }
+  },
+  mounted: async function() {
+    this.retrieveUsers();
+    this.retrieveAccountTitles();
   }
 };
 </script>
