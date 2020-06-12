@@ -3,23 +3,24 @@
     <v-card-title>
       <span>寮費徴収結果</span>
       <v-spacer></v-spacer>
-      <!-- <v-btn color="error" depressed absolute right>
-        <v-icon class="mr-1">mdi-security</v-icon>徴収結果の登録
-      </v-btn> -->
     </v-card-title>
     <v-card-subtitle
       >以下の未納請求一覧から、入金のあったものを選択してください。</v-card-subtitle
     >
     <v-card-text>
-      <v-chip
-        color="primary"
-        outlined
-        large
-        label
-        class="my-1 font-weight-bold"
-      >
-        選択項目の合計額：{{ formatCurrency(paidSum) }}
-      </v-chip>
+      <v-card class="d-flex flex-row-reverse" flat tile>
+        <v-card flat tile>
+          <v-chip
+            color="primary"
+            outlined
+            large
+            label
+            class="my-1 font-weight-bold"
+          >
+            選択項目の合計額：{{ formatCurrency(paidSum) }}
+          </v-chip>
+        </v-card>
+      </v-card>
       <v-row>
         <v-col>
           <v-data-table
@@ -70,6 +71,11 @@ export default {
       ]
     };
   },
+  watch: {
+    isPaid: function(val, oldVal) {
+      this.$emit("updatePaidList", val);
+    }
+  },
   computed: {
     paidSum() {
       return this.isPaid.reduce((acc, cur) => {
@@ -80,7 +86,6 @@ export default {
   mounted: async function() {
     const res = await axios.get("./billings/unpaid");
     this.unpaids = res.data;
-    console.log(res.data);
   }
 };
 </script>

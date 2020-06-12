@@ -48,7 +48,9 @@
             :closingdate="readDraft().closingDate"
             @updateDeduction="onDeductionUpdate"
           ></deduction-table>
-          <collection-result-table></collection-result-table>
+          <collection-result-table
+            @updatePaidList="onPaidListUpdate"
+          ></collection-result-table>
           <reward-and-penalty-table
             v-if="hasSessionStorage"
             :closingdate="readDraft().closingDate"
@@ -76,6 +78,15 @@ export default {
     onDeductionUpdate(totalPersons) {
       this.persons.beforeDeduction = totalPersons.beforeDeduction;
       this.persons.afterDeduction = totalPersons.afterDeduction;
+    },
+    onPaidListUpdate(paidList) {
+      const paidIds = {
+        paidIds: paidList.reduce((acc, cur) => {
+          acc.push(cur.id);
+          return acc;
+        }, [])
+      };
+      this.updateDraftDiff(paidIds);
     },
     readDraft() {
       return JSON.parse(sessionStorage.getItem("draft"));
