@@ -120,11 +120,8 @@ export default {
       // and its value will be set null
       if (!newId) return;
 
-      const titleSelected = this.titles.filter(item => {
-        return item.id == newId;
-      });
-
-      this.amount = titleSelected[0].default_amount;
+      const titleSelected = this.titles.find(title => title.id == newId);
+      this.amount = titleSelected.default_amount;
     }
   },
   methods: {
