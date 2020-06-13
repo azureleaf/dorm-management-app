@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="isDialogOpen" persistent max-width="600px">
     <template v-slot:activator="{ on }">
-      <v-btn color="error" depressed dark v-on="on" dense>
+      <v-btn color="error" depressed dark v-on="on" dense @click="initForms">
         <v-icon class="mr-1">mdi-square-edit-outline</v-icon>賞罰の追加
       </v-btn>
     </template>
@@ -82,9 +82,8 @@ export default {
       itemCat: null,
       title: null,
       amount: null,
-      isDialogOpen: false,
-      rewards: [],
       comment: null,
+      isDialogOpen: false,
       userHeaders: [
         {
           text: "寮生ID",
@@ -107,25 +106,41 @@ export default {
   computed: {
     filteredTitles() {
       return this.titles.filter(item => {
-        return this.isPayment == item.is_payment;
+        // Exclude id: 200 item (基本金請求)
+        // because it shouldn't be selectable as a penalty
+        return this.isPayment == item.is_payment && item.id != 200;
       });
     }
   },
   watch: {
+    // Autofill the amount when the title is selected
     title: function(val, oldVal) {
+      // Abort if the title inputted is null
+      // When the title is cleared, watcher is also called
+      // and its value will be set null
+      if (!val) return;
+
       const titleSelected = this.titles.filter(item => {
         return item.id == val;
       });
+
       this.amount = titleSelected[0].default_amount;
     }
   },
   methods: {
     save() {
-      this.$emit("setRewards", this.rewards);
+      this.$emit("setRewards", {});
       this.isDialogOpen = false;
+    },
+    initForms() {
+      this.isTarget = [];
+      this.isPayment = true;
+      this.itemCat = null;
+      this.title = null;
+      this.amount = null;
+      this.comment = null;
     }
-  },
-  mounted() {}
+  }
 };
 </script>
 <style scoped></style>
