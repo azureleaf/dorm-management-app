@@ -90,17 +90,17 @@ export default {
       userHeaders: [
         {
           text: "寮生ID",
-          sortable: false,
+          sortable: true,
           value: "id"
         },
         {
           text: "氏名",
-          sortable: false,
+          sortable: true,
           value: "full_name"
         },
         {
           text: "部屋番号",
-          sortable: false,
+          sortable: true,
           value: "room.number"
         }
       ]

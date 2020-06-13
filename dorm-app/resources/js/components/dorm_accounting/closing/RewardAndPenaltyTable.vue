@@ -88,11 +88,11 @@ export default {
   },
   methods: {
     onRewardsSet(rewards) {
-      console.log("rewards emitted:", rewards);
-
+      // Get emitted values, format them,
+      // then push them to the v-data-table arrays
       rewards.targetUsers.forEach(targetUser => {
         this.targetUsers.push({
-          rowId: ++this.lastRowIndex, // increment then assign
+          rowId: ++this.lastRowIndex, // increment then assign. Must be UNIQUE 
           userId: targetUser.id,
           fullName: targetUser.full_name,
           title: rewards.title.name_with_id,
@@ -104,15 +104,18 @@ export default {
       this.emitCurrentTargets();
     },
     emitCurrentTargets() {
+      // Emit the entire rewards / penalty info to the parent component
       this.$emit("updateRewardAndPenalty", this.targetUsers);
     },
     deleteItem(rowId) {
+      // Delete the element with the specified ID in the array
       // Row index is always sequential,
       // while row IDs may come at intervals
       const rowIndex = this.targetUsers.findIndex(user => {
         return user.rowId == rowId;
       });
       this.targetUsers.splice(rowIndex, 1);
+      this.emitCurrentTargets();
     },
     async retrieveAccountTitles() {
       const res = await axios.get("./personal/titles");

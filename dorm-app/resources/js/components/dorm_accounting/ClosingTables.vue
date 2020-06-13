@@ -82,7 +82,7 @@ export default {
     },
     onPaidListUpdate(paidList) {
       const paidIds = {
-        paidIds: paidList.reduce((acc, cur) => {
+        paidBillIds: paidList.reduce((acc, cur) => {
           acc.push(cur.id);
           return acc;
         }, [])
@@ -90,7 +90,7 @@ export default {
       this.updateDraftDiff(paidIds);
     },
     onRewardAndPenaltyUpdate(rewards) {
-      console.log("Got this:", rewards);
+      this.updateDraftDiff({ rewards });
     },
     readDraft() {
       return JSON.parse(sessionStorage.getItem("draft"));
@@ -111,7 +111,8 @@ export default {
       this.hasSessionStorage = false;
     },
     /**
-     * Get a new part of the draft, update the part in the draft.
+     * Get a new part of the draft as a object,
+     * update the part in the draft.
      * The other parts will be kept as they are if not affected by the part.
      */
     updateDraftDiff(draftDiff) {
