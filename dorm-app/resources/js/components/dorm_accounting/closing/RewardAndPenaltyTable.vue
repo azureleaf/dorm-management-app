@@ -20,7 +20,22 @@
             :headers="targetUserHeaders"
             :items="targetUsers"
             :items-per-page="targetUsers.length"
-          ></v-data-table>
+          >
+            <template v-slot:item.amount="{ item }">
+              <span>{{ formatCurrency(item.amount) }}</span>
+            </template>
+            <template v-slot:item.delete="{ item }">
+              <v-btn
+                color="error"
+                depressed
+                dark
+                dense
+                @click="deleteItem(item.rowId)"
+              >
+                <v-icon class="mr-1">mdi-trash-can</v-icon>
+              </v-btn>
+            </template>
+          </v-data-table>
         </v-col>
       </v-row>
     </v-card-text>
@@ -33,6 +48,7 @@ export default {
   data: function() {
     return {
       isAdmin: true,
+      lastRowIndex: 0, // used to index every v-data-table row
       titles: [],
       targetUsers: [],
       users: [],
@@ -76,6 +92,7 @@ export default {
 
       rewards.targetUsers.forEach(targetUser => {
         this.targetUsers.push({
+          rowId: ++this.lastRowIndex, // increment then assign
           userId: targetUser.id,
           fullName: targetUser.full_name,
           title: rewards.title.name_with_id,
@@ -88,6 +105,14 @@ export default {
     },
     emitCurrentTargets() {
       this.$emit("updateRewardAndPenalty", this.targetUsers);
+    },
+    deleteItem(rowId) {
+      // Row index is always sequential,
+      // while row IDs may come at intervals
+      const rowIndex = this.targetUsers.findIndex(user => {
+        return user.rowId == rowId;
+      });
+      this.targetUsers.splice(rowIndex, 1);
     },
     async retrieveAccountTitles() {
       const res = await axios.get("./personal/titles");
