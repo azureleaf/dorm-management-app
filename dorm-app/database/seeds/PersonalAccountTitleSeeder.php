@@ -15,9 +15,9 @@ class PersonalAccountTitleSeeder extends Seeder
         $items = array(
             // substraction
             array(101, false, "寮費修正返還", "寮費の徴収ミス修正などのための返還", null),
-            array(102, false, "風呂掃除無許可欠席者代行報酬", "", 4000),
-            array(103, false, "ブロック掃除無許可欠席者代行報酬", "", 2000),
-            array(104, false, "クリーンデー参加者報酬", "欠席者の罰金合計を出席者で頭割り", null),
+            array(102, false, "風呂掃除代行報酬", "", 4000),
+            array(103, false, "ブロック掃除代行報酬", "", 2000),
+            array(104, false, "クリーンデー参加報酬", "欠席者の罰金合計を出席者で頭割り", null),
             array(105, false, "議長報酬", "", 2000),
             array(106, false, "監査報酬", "", null),
             array(199, false, "その他の寮費減額", "", null),

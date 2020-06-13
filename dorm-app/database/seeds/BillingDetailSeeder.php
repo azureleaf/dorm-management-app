@@ -96,7 +96,7 @@ class BillingDetailSeeder extends Seeder
                 if (rand(1, 5) > 4) {
                     $detsReward = BillingDetail::create([
                         "billing_id" => $bill->id,
-                        "personal_account_title_id" => PersonalAccountTitle::where('name', '風呂掃除無許可欠席者代行報酬')->first()->id,
+                        "personal_account_title_id" => PersonalAccountTitle::where('name', '風呂掃除代行報酬')->first()->id,
                         "abstract" => "風呂掃除無許可欠席者代行報酬",
                         "amount" => -4000,
                     ]);
