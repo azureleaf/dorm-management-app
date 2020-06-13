@@ -40,7 +40,7 @@ export default {
         {
           text: "寮生ID",
           sortable: false,
-          value: "id"
+          value: "userId"
         },
         {
           text: "氏名",
@@ -76,7 +76,7 @@ export default {
 
       rewards.targetUsers.forEach(targetUser => {
         this.targetUsers.push({
-          id: targetUser.id,
+          userId: targetUser.id,
           fullName: targetUser.full_name,
           title: rewards.title.name_with_id,
           amount: rewards.amount,
@@ -84,9 +84,10 @@ export default {
         });
       });
 
-      /**
-       *  Emit to the parent here!
-       * */
+      this.emitCurrentTargets();
+    },
+    emitCurrentTargets() {
+      this.$emit("updateRewardAndPenalty", this.targetUsers);
     },
     async retrieveAccountTitles() {
       const res = await axios.get("./personal/titles");

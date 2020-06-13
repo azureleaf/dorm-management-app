@@ -54,6 +54,7 @@
           <reward-and-penalty-table
             v-if="hasSessionStorage"
             :closingdate="readDraft().closingDate"
+            @updateRewardAndPenalty="onRewardAndPenaltyUpdate"
           ></reward-and-penalty-table>
           <v-btn color="error" block x-large depressed class="mx-1">
             <v-icon class="mr-1">mdi-security</v-icon
@@ -87,6 +88,9 @@ export default {
         }, [])
       };
       this.updateDraftDiff(paidIds);
+    },
+    onRewardAndPenaltyUpdate(rewards) {
+      console.log("Got this:", rewards);
     },
     readDraft() {
       return JSON.parse(sessionStorage.getItem("draft"));
