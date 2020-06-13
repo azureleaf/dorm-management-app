@@ -24,7 +24,7 @@
               :items="filteredTitles"
               item-text="name_with_id"
               item-value="id"
-              v-model="title"
+              v-model="titleId"
               label="賞罰項目"
             ></v-select>
           </v-col>
@@ -53,7 +53,7 @@
           :items="users"
           :items-per-page="users.length"
           show-select
-          v-model="isTarget"
+          v-model="targetUsers"
           hide-default-footer
         ></v-data-table>
       </v-card-text>
@@ -77,10 +77,10 @@ export default {
         { isPayment: false, text: "報酬" },
         { isPayment: true, text: "罰金" }
       ],
-      isTarget: [],
+      targetUsers: [],
       isPayment: true,
       itemCat: null,
-      title: null,
+      titleId: null,
       amount: null,
       comment: null,
       isDialogOpen: false,
@@ -114,14 +114,14 @@ export default {
   },
   watch: {
     // Autofill the amount when the title is selected
-    title: function(val, oldVal) {
+    titleId: function(newId, oldId) {
       // Abort if the title inputted is null
       // When the title is cleared, watcher is also called
       // and its value will be set null
-      if (!val) return;
+      if (!newId) return;
 
       const titleSelected = this.titles.filter(item => {
-        return item.id == val;
+        return item.id == newId;
       });
 
       this.amount = titleSelected[0].default_amount;
@@ -129,14 +129,21 @@ export default {
   },
   methods: {
     save() {
-      this.$emit("setRewards", {});
+      this.$emit("setRewards", {
+        targetUsers: this.targetUsers,
+        title: this.titles.filter(item => {
+          return item.id == this.titleId;
+        })[0],
+        amount: this.amount,
+        comment: this.comment
+      });
       this.isDialogOpen = false;
     },
     initForms() {
-      this.isTarget = [];
+      this.targetUsers = [];
       this.isPayment = true;
       this.itemCat = null;
-      this.title = null;
+      this.titleId = null;
       this.amount = null;
       this.comment = null;
     }

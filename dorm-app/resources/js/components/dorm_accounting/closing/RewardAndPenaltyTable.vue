@@ -17,9 +17,9 @@
       <v-row>
         <v-col>
           <v-data-table
-            :headers="userHeaders"
-            :items="users"
-            :items-per-page="users.length"
+            :headers="targetUserHeaders"
+            :items="targetUsers"
+            :items-per-page="targetUsers.length"
           ></v-data-table>
         </v-col>
       </v-row>
@@ -34,8 +34,9 @@ export default {
     return {
       isAdmin: true,
       titles: [],
+      targetUsers: [],
       users: [],
-      userHeaders: [
+      targetUserHeaders: [
         {
           text: "寮生ID",
           sortable: false,
@@ -44,22 +45,27 @@ export default {
         {
           text: "氏名",
           sortable: false,
-          value: "full_name"
+          value: "fullName"
         },
         {
-          text: "賞罰詳細金額",
+          text: "賞罰科目",
           sortable: false,
-          value: "items"
+          value: "title"
         },
         {
-          text: "賞罰合計額",
+          text: "金額",
           sortable: false,
-          value: "balance"
+          value: "amount"
         },
         {
-          text: "新規追加",
+          text: "特記事項",
           sortable: false,
-          value: "create"
+          value: "comment"
+        },
+        {
+          text: "削除",
+          sortable: false,
+          value: "delete"
         }
       ]
     };
@@ -67,6 +73,20 @@ export default {
   methods: {
     onRewardsSet(rewards) {
       console.log("rewards emitted:", rewards);
+
+      rewards.targetUsers.forEach(targetUser => {
+        this.targetUsers.push({
+          id: targetUser.id,
+          fullName: targetUser.full_name,
+          title: rewards.title.name_with_id,
+          amount: rewards.amount,
+          comment: rewards.comment
+        });
+      });
+
+      /**
+       *  Emit to the parent here!
+       * */
     },
     async retrieveAccountTitles() {
       const res = await axios.get("./personal/titles");
