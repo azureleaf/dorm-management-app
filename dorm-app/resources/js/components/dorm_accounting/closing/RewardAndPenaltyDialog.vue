@@ -9,22 +9,23 @@
       <v-card-title>賞罰の追加</v-card-title>
       <v-card-text>
         <v-row justify="center">
-          <v-radio-group v-model="isReward" row>
+          <v-radio-group v-model="isPayment" row>
             <v-radio
               v-for="itemCat in itemCats"
               :key="itemCat.en"
               :label="itemCat.text"
-              :value="itemCat.isReward"
+              :value="itemCat.isPayment"
             ></v-radio>
           </v-radio-group>
         </v-row>
         <v-row>
           <v-col cols="12" md="6">
             <v-select
-              :items="titles"
-              item-text="name"
+              :items="filteredTitles"
+              item-text="name_with_id"
+              item-value="id"
               v-model="title"
-              label="賞罰"
+              label="賞罰項目"
             ></v-select>
           </v-col>
           <v-col cols="12" md="6">
@@ -34,6 +35,18 @@
               type="number"
             ></v-text-field>
           </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="12">
+            <v-text-field
+              label="特記事項"
+              v-model="comment"
+              required
+            ></v-text-field>
+          </v-col>
+        </v-row>
+        <v-row justify="center">
+          <v-subheader>対象寮生</v-subheader>
         </v-row>
         <v-data-table
           :headers="userHeaders"
@@ -61,16 +74,17 @@ export default {
   data: function() {
     return {
       itemCats: [
-        { isReward: true, text: "報酬" },
-        { isReward: false, text: "罰金" }
+        { isPayment: false, text: "報酬" },
+        { isPayment: true, text: "罰金" }
       ],
       isTarget: [],
-      isReward: null,
+      isPayment: true,
       itemCat: null,
       title: null,
       amount: null,
       isDialogOpen: false,
       rewards: [],
+      comment: null,
       userHeaders: [
         {
           text: "寮生ID",
@@ -90,12 +104,28 @@ export default {
       ]
     };
   },
+  computed: {
+    filteredTitles() {
+      return this.titles.filter(item => {
+        return this.isPayment == item.is_payment;
+      });
+    }
+  },
+  watch: {
+    title: function(val, oldVal) {
+      const titleSelected = this.titles.filter(item => {
+        return item.id == val;
+      });
+      this.amount = titleSelected[0].default_amount;
+    }
+  },
   methods: {
     save() {
       this.$emit("setRewards", this.rewards);
       this.isDialogOpen = false;
     }
   },
+  mounted() {}
 };
 </script>
 <style scoped></style>

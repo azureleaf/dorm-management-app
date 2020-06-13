@@ -11,7 +11,7 @@
       ></reward-and-penalty-dialog>
     </v-card-title>
     <v-card-subtitle
-      >委員会報酬についてはここでは編集できません。</v-card-subtitle
+      >委員会報酬についてはここでは編集できませんので、役職記録から変更してください。</v-card-subtitle
     >
     <v-card-text>
       <v-row>
