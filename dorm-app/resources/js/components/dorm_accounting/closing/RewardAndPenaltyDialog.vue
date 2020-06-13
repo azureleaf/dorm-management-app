@@ -7,6 +7,9 @@
     </template>
     <v-card>
       <v-card-title>賞罰の追加</v-card-title>
+      <v-card-subtitle
+        >罰金の場合は正、報酬の場合は負の金額にしてください。</v-card-subtitle
+      >
       <v-card-text>
         <v-row justify="center">
           <v-radio-group v-model="isPayment" row>
@@ -30,7 +33,7 @@
           </v-col>
           <v-col cols="12" md="6">
             <v-text-field
-              label="金額"
+              label="寮費加算額"
               v-model="amount"
               type="number"
             ></v-text-field>
