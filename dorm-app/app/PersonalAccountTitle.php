@@ -12,4 +12,13 @@ class PersonalAccountTitle extends Model
     {
         return $this->hasMany('App\BillingDetails');
     }
+
+    protected $appends = [
+        'name_with_id'
+    ];
+
+    public function getNameWithIdAttribute()
+    {
+        return "{$this->id}: {$this->name}";
+    }
 }
