@@ -14,6 +14,7 @@ class PersonalAccountTitleSeeder extends Seeder
     {
         $items = array(
             // substraction
+            array(100, false, "委員会報酬", "", null),
             array(101, false, "寮費修正返還", "寮費の徴収ミス修正などのための返還", null),
             array(102, false, "風呂掃除代行報酬", "", -4000),
             array(103, false, "ブロック掃除代行報酬", "", -2000),

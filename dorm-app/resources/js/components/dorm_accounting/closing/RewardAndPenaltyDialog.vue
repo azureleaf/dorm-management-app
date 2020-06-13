@@ -109,9 +109,13 @@ export default {
   computed: {
     filteredTitles() {
       return this.titles.filter(item => {
-        // Exclude id: 200 item (基本金請求)
-        // because it shouldn't be selectable as a penalty
-        return this.isPayment == item.is_payment && item.id != 200;
+        // Exclude some items from the v-select options:
+        //    id: 100 (委員会報酬)
+        //    id: 200 (基本金請求)
+        // because these shouldn't be selectable in this context
+        return (
+          this.isPayment == item.is_payment && item.id != 200 && item.id != 100
+        );
       });
     }
   },
