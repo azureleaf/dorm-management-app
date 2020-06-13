@@ -31,6 +31,7 @@ export default {
   props: ["closingdate"], // YYYY-MM-DD
   data: function() {
     return {
+      incumbents: null,
       burdens: [],
       // sum of the persons in the table
       personsTotals: {
@@ -96,7 +97,7 @@ export default {
      * Set burdens[] array which is shown in v-data-table
      */
     async setBurdens() {
-      const incumbents = await this.loadIncumbents();
+      this.incumbents = await this.loadIncumbents();
       const roleTitles = await this.loadRoleTitles();
       this.personsTotals.beforeDeduction = await this.countUsersBackThen();
 
@@ -109,7 +110,7 @@ export default {
         let personsByRewards = {};
 
         // Search for the committee member with this role title
-        incumbents.forEach(incumbent => {
+        this.incumbents.forEach(incumbent => {
           // If the member has the role of the interest
           if (roleTitle.id == incumbent.role_title_id) {
             if (incumbent.reward_pct in personsByRewards) {
@@ -141,7 +142,7 @@ export default {
 
       // Append normal boarders to the table
       const normalUsersCount =
-        this.personsTotals.beforeDeduction - incumbents.length;
+        this.personsTotals.beforeDeduction - this.incumbents.length;
       this.burdens.push({
         role_name: "一般寮生",
         burden_rate: 1,
@@ -169,7 +170,10 @@ export default {
     await this.setBurdens();
 
     // Tell the parent component the number of persons who'll pay for the monthly fee
-    this.$emit("updateDeduction", this.personsTotals);
+    this.$emit("updateDeduction", {
+      personsTotal: this.personsTotals,
+      incumbents: this.incumbents
+    });
   }
 };
 </script>

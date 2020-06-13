@@ -52,8 +52,9 @@
             @updatePaidList="onPaidListUpdate"
           ></collection-result-table>
           <reward-and-penalty-table
-            v-if="hasSessionStorage"
+            v-if="hasSessionStorage && incumbents"
             :closingdate="readDraft().closingDate"
+            :incumbents="incumbents"
             @updateRewardAndPenalty="onRewardAndPenaltyUpdate"
           ></reward-and-penalty-table>
           <v-btn color="error" block x-large depressed class="mx-1">
@@ -71,14 +72,16 @@ export default {
   data: function() {
     return {
       hasSessionStorage: false, // should be a computed value instead?
-      persons: { beforeDeduction: null, afterDeduction: null } // will be calculated by child component
+      persons: { beforeDeduction: null, afterDeduction: null }, // will be calculated by child component
+      incumbents: null
     };
   },
   methods: {
     // Handle the emitted values from the deduction component
-    onDeductionUpdate(totalPersons) {
-      this.persons.beforeDeduction = totalPersons.beforeDeduction;
-      this.persons.afterDeduction = totalPersons.afterDeduction;
+    onDeductionUpdate(payload) {
+      this.persons.beforeDeduction = payload.personsTotal.beforeDeduction;
+      this.persons.afterDeduction = payload.personsTotal.afterDeduction;
+      this.incumbents = payload.incumbents;
     },
     onPaidListUpdate(paidList) {
       const paidIds = {
