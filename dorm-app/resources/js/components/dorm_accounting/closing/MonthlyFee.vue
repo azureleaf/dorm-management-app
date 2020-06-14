@@ -101,7 +101,7 @@ export default {
       this.fees.splice(0, this.fees.length, newFee);
 
       // Urge the parent component to update the sessionStorage
-      this.$emit("updateSS", { feeAmount: this.fees[0].feeAmount });
+      this.$emit("updateMonthlyFee", { feeAmount: this.fees[0].feeAmount });
 
       this.isDialogOpen = false;
     }

@@ -14,7 +14,7 @@
             color="error"
             depressed
             class="mx-1"
-            @click="clearDraft"
+            @click="initParams"
           >
             <v-icon class="mr-1">mdi-close-circle</v-icon>作成中の請求原稿を破棄
           </v-btn>
@@ -41,7 +41,7 @@
           <monthly-fee
             v-if="persons.beforeDeduction"
             :personsprop="persons"
-            @updateSS="updateDraftDiff"
+            @updateMonthlyFee="onMonthlyFeeUpdate"
           ></monthly-fee>
           <deduction-table
             v-if="hasSessionStorage"
@@ -52,9 +52,10 @@
             @updatePaidList="onPaidListUpdate"
           ></collection-result-table>
           <reward-and-penalty-table
-            v-if="hasSessionStorage && incumbents"
+            v-if="hasSessionStorage && incumbents && monthlyFee"
             :closingdate="readDraft().closingDate"
             :incumbents="incumbents"
+            :monthlyfee="monthlyFee"
             @updateRewardAndPenalty="onRewardAndPenaltyUpdate"
           ></reward-and-penalty-table>
           <v-btn color="error" block x-large depressed class="mx-1">
@@ -71,13 +72,17 @@
 export default {
   data: function() {
     return {
+      monthlyFee: null,
       hasSessionStorage: false, // should be a computed value instead?
       persons: { beforeDeduction: null, afterDeduction: null }, // will be calculated by child component
       incumbents: null
     };
   },
   methods: {
-    // Handle the emitted values from the deduction component
+    onMonthlyFeeUpdate(payload) {
+      this.monthlyFee = payload.feeAmount;
+      this.updateDraftDiff(payload);
+    },
     onDeductionUpdate(payload) {
       this.persons.beforeDeduction = payload.personsTotal.beforeDeduction;
       this.persons.afterDeduction = payload.personsTotal.afterDeduction;
@@ -122,10 +127,13 @@ export default {
       let draftCopy = JSON.parse(JSON.stringify(this.readDraft()));
       Object.assign(draftCopy, draftDiff);
       this.setDraft(draftCopy);
+    },
+    initParams() {
+      this.monthlyFee = null;
+      this.persons = { beforeDeduction: null, afterDeduction: null };
+      this.incumbents = null;
+      this.clearDraft();
     }
-  },
-  mounted() {
-    this.clearDraft();
   }
 };
 </script>
