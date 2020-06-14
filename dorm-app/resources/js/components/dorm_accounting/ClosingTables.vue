@@ -157,19 +157,7 @@ export default {
         }
       });
     },
-    async confirmClosing() {
-      const draft = this.readDraft();
-
-      // Abort submission when required fields aren't fully set
-      if (!this.isDraftFilledOut(draft)) return;
-
-      // Register to billings table (add new items & update paid_at status)
-      // Register to billing_details table (add new items)
-
-      /**
-       *  Register to monthly_fees table
-       */
-
+    async storeMonthlyFee(draft) {
       // Get the last day of the previous month
       const d = new Date(draft.closingDate);
       d.setDate(1);
@@ -189,6 +177,40 @@ export default {
       } catch (e) {
         console.error(e);
       }
+
+      console.debug("Successfully stored new monthly fee.");
+    },
+    async storePaidBillings(draft) {
+      try {
+        const res = await axios.put("/billings/update/paid", {
+          billingIds: draft.paidBillIds,
+          closingDate: draft.closingDate
+        });
+      } catch (e) {
+        console.error(e);
+      }
+
+      console.debug("Successfully stored paid billings.");
+    },
+    async storeNewBillings(draft) {
+      console.debug("Successfully stored new billings.");
+    },
+    async confirmClosing() {
+      // Confirm the draft and finalize the billing process on button click
+
+      const draft = this.readDraft();
+
+      // Abort submission when required fields aren't fully set
+      if (!this.isDraftFilledOut(draft)) return;
+
+      // Update paid billings
+      await this.storePaidBillings(draft);
+
+      // Register to billings &billing_details table (add new items)
+      await this.storeNewBillings(draft);
+
+      // Register to monthly_fees table
+      await this.storeMonthlyFee(draft);
 
       // Clear sessionStorage
       this.clearDraft();

@@ -106,6 +106,22 @@ class BillingController extends Controller
         //
     }
 
+     /**
+     * Update the billings which are paid.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function paid(Request $request)
+    {
+        // Assign the "paid_at" date to the newly paid billings
+        foreach($request->billingIds as $billingId) {
+            $billing = Billing::find($billingId);
+            $billing->paid_at = $request->closingDate;
+            $billing->save();
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      *
