@@ -28,11 +28,11 @@
               <v-btn
                 color="error"
                 depressed
-                dark
                 dense
                 @click="deleteItem(item.rowId)"
+                :disabled="!item.isDeletable"
               >
-                <v-icon class="mr-1">mdi-trash-can</v-icon>
+                <v-icon>mdi-trash-can</v-icon>
               </v-btn>
             </template>
           </v-data-table>
@@ -44,7 +44,7 @@
 
 <script>
 export default {
-  props: ["closingdate"],
+  props: ["closingdate", "incumbents", "monthlyfee"],
   data: function() {
     return {
       isAdmin: true,
@@ -92,12 +92,13 @@ export default {
       // then push them to the v-data-table arrays
       rewards.targetUsers.forEach(targetUser => {
         this.targetUsers.push({
-          rowId: ++this.lastRowIndex, // increment then assign. Must be UNIQUE 
+          rowId: ++this.lastRowIndex, // increment then assign. Must be UNIQUE
           userId: targetUser.id,
           fullName: targetUser.full_name,
           title: rewards.title.name_with_id,
           amount: rewards.amount,
-          comment: rewards.comment
+          comment: rewards.comment,
+          isDeletable: true
         });
       });
 
@@ -117,6 +118,22 @@ export default {
       this.targetUsers.splice(rowIndex, 1);
       this.emitCurrentTargets();
     },
+    // Set the rewards to the incumbent users with committee roles
+    addRoleRewards() {
+      this.incumbents.forEach(incumbent => {
+        this.targetUsers.push({
+          rowId: ++this.lastRowIndex, // increment then assign. Must be UNIQUE
+          userId: incumbent.user.id,
+          fullName: incumbent.user.full_name,
+          title: "100: 委員会報酬",
+          amount: -Math.ceil(incumbent.reward_pct * 0.01 * this.monthlyfee),
+          comment: incumbent.role_title.name,
+          isDeletable: false
+        });
+      });
+
+      this.emitCurrentTargets();
+    },
     async retrieveAccountTitles() {
       const res = await axios.get("./personal/titles");
       this.titles = res.data;
@@ -131,9 +148,10 @@ export default {
       this.users = res.data;
     }
   },
-  mounted: async function() {
+  mounted() {
     this.retrieveUsers();
     this.retrieveAccountTitles();
+    this.addRoleRewards();
   }
 };
 </script>
