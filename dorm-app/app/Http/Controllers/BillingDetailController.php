@@ -28,14 +28,17 @@ class BillingDetailController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created billing details: fee, rewards, penalties.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        // Loop each 
+        // foreach($request->users as $user) {
+
+        // }
     }
 
     /**

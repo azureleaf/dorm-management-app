@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-use App\Billing;
 use App\PersonalAccountTitle;
 
 /**
@@ -36,27 +35,20 @@ Route::get('/dorm-accounting', function () {
     return view('dorm_accounting');
 });
 
-// Route::get('/schedule', function () {
-//     return view('schedule');
-// });
-
-// Route::get('/document', function () {
-//     return view('document');
-// });
-
 
 /**
- * Billing
+ * Controllers
  */
+
+// Billing
 Route::get('/billings', 'BillingController@index');
 Route::get('/billings/unpaid', 'BillingController@unpaid'); // original
 Route::get('/billings/unpaid/ranking', 'BillingController@ranking'); // original
 Route::put('/billings/update/paid', 'BillingController@paid'); // original
 
-/**
- * Billing Details
- */
+//Billing Details
 Route::get('/billing-details', 'BillingDetailController@index');
+Route::post('/billing-details', 'BillingDetailController@store');
 
 // Rooms
 Route::get('/rooms', 'RoomController@index');
@@ -80,10 +72,7 @@ Route::post('/role-histories', 'RoleHistoryController@store');
 Route::put('/role-histories/{hx_id}', 'RoleHistoryController@update');
 Route::delete('/role-histories/{hx_id}', 'RoleHistoryController@destroy');
 
-/**
- * Personal accounting
- */
-
+// Personal Accounting
 Route::get('/personal/titles', function () {
     return PersonalAccountTitle::orderBy("id")->get();
 });

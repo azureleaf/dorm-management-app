@@ -16,7 +16,7 @@
     <v-card>
       <v-card-title>決算原稿の新規作成</v-card-title>
       <v-card-subtitle
-        >決算日は必ず決算名目月の翌月に設定するのが基本です。</v-card-subtitle
+        >決算日は基本的に決算名目月の翌月のどこかに設定してください。</v-card-subtitle
       >
       <v-card-text>
         <v-container>
