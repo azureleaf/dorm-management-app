@@ -39,7 +39,7 @@ class MonthlyFeeController extends Controller
             "year" => $request->year,
             "month" => $request->month,
             "closed_at" => $request->closed_at,
-            "persons" => $request->persons,
+            "persons_before_deduction" => $request->persons_before_deduction,
             "persons_after_deduction" => $request->persons_after_deduction,
             "total_amount" => $request->total_amount,
             "fee_amount" => $request->fee_amount

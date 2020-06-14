@@ -162,7 +162,7 @@ export default {
           year: draft.year,
           month: draft.month,
           closed_at: draft.closingDate,
-          persons: draft.personsTotal.beforeDeduction,
+          persons_before_deduction: draft.personsTotal.beforeDeduction,
           persons_after_deduction: draft.personsTotal.afterDeduction,
           total_amount: draft.totalAmount,
           fee_amount: draft.feeAmount

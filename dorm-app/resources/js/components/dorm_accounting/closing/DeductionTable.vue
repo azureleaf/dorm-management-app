@@ -13,8 +13,10 @@
         :items-per-page="burdens.length"
         hide-default-footer
       >
-        <template v-slot:item.persons="{ item }">
-          <span :class="{ emphasis: item.isTotalRow }">{{ item.persons }}</span>
+        <template v-slot:item.persons_before_deduction="{ item }">
+          <span :class="{ emphasis: item.isTotalRow }">{{
+            item.persons_before_deduction
+          }}</span>
         </template>
         <template v-slot:item.persons_after_deduction="{ item }">
           <span :class="{ emphasis: item.isTotalRow }">{{
@@ -52,7 +54,7 @@ export default {
         {
           text: "実人数",
           sortable: false,
-          value: "persons"
+          value: "persons_before_deduction"
         },
         {
           text: "換算負担人数",
@@ -134,7 +136,7 @@ export default {
           this.burdens.push({
             role_name: roleTitleDisplayed,
             burden_rate: burden_rate,
-            persons: persons,
+            persons_before_deduction: persons,
             persons_after_deduction: persons * burden_rate
           });
         }
@@ -146,7 +148,7 @@ export default {
       this.burdens.push({
         role_name: "一般寮生",
         burden_rate: 1,
-        persons: normalUsersCount,
+        persons_before_deduction: normalUsersCount,
         persons_after_deduction: normalUsersCount * 1
       });
 
@@ -160,7 +162,7 @@ export default {
       this.burdens.push({
         role_name: "合計",
         burden_rate: "",
-        persons: this.personsTotals.beforeDeduction,
+        persons_before_deduction: this.personsTotals.beforeDeduction,
         persons_after_deduction: this.personsTotals.afterDeduction,
         isTotalRow: true
       });

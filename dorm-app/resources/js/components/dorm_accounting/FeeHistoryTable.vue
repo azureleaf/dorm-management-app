@@ -53,7 +53,7 @@ export default {
         {
           text: "実人数",
           sortable: true,
-          value: "persons"
+          value: "persons_before_deduction"
         },
         {
           text: "換算負担人数",

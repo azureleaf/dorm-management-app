@@ -19,7 +19,7 @@ class CreateMonthlyFeesTable extends Migration
             $table->integer('month');
             $table->date('closed_at');
             $table->integer('total_amount');
-            $table->integer('persons');
+            $table->integer('persons_before_deduction');
             $table->decimal('persons_after_deduction', 5, 2);
             $table->integer('fee_amount');
             $table->timestamps();

@@ -29,7 +29,7 @@ class MonthlyFeeSeeder extends Seeder
                 "month" => $fee[1],
                 "closed_at" => $fee[2],
                 "total_amount" => $fee[3],
-                "persons" => $fee[4],
+                "persons_before_deduction" => $fee[4],
                 "persons_after_deduction" => $fee[5],
                 "fee_amount" => ceil($fee[3] / $fee[5]),
             ]);
