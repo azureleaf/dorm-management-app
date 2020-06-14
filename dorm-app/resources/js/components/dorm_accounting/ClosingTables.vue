@@ -187,9 +187,39 @@ export default {
 
       console.debug("Successfully stored paid billings.");
     },
+    /**
+     * Register items to both billing & billing details table
+     */
     async storeNewBillings(draft) {
+
+      // Retrieve all the users who lived in the month of interest
+      const res = await axios.get(
+        `./users/monthly/${this.readDraft().year}/${this.readDraft().month}`
+      );
+      const users = res.data;
+
+      console.log("users", users);
+      return;
+
+      const billingDetsByUsers = users.reduce((acc, user)=>{
+        acc.push(
+          {
+            userId: user.id,
+            billingDets: [] // NOT COMPLETED HERE
+          }
+        )
+        return acc;
+      }, []);
+
+      let axiosPayload = {
+        closed_at: readDraft().closingDate,
+        year: readDraft().year,
+        month: readDraft().month,
+        users: billingDetsByUsers
+      };
+
       try {
-        // const res = await axios.put("/billings/update/paid", {});
+        const res = await axios.post("/billing-details/", axiosPayload);
       } catch (e) {
         console.error(e);
         return 1;
@@ -218,7 +248,7 @@ export default {
 
       // Trigger page reload
       // in order to update arrears component & monthly fees component
-      location.reload();
+      // location.reload();
     },
     initParams() {
       // Init JS cache
