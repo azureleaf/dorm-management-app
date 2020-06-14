@@ -58,7 +58,14 @@
             :monthlyfee="monthlyFee"
             @updateRewardAndPenalty="onRewardAndPenaltyUpdate"
           ></reward-and-penalty-table>
-          <v-btn color="error" block x-large depressed class="mx-1">
+          <v-btn
+            color="error"
+            block
+            x-large
+            depressed
+            class="mx-1"
+            @click="confirmClosing()"
+          >
             <v-icon class="mr-1">mdi-security</v-icon
             >この内容で確定して寮費請求を実行
           </v-btn>
@@ -87,15 +94,16 @@ export default {
       this.persons.beforeDeduction = payload.personsTotal.beforeDeduction;
       this.persons.afterDeduction = payload.personsTotal.afterDeduction;
       this.incumbents = payload.incumbents;
+      this.updateDraftDiff(payload);
     },
     onPaidListUpdate(paidList) {
-      const paidIds = {
+      const paidBillIds = {
         paidBillIds: paidList.reduce((acc, cur) => {
           acc.push(cur.id);
           return acc;
         }, [])
       };
-      this.updateDraftDiff(paidIds);
+      this.updateDraftDiff(paidBillIds);
     },
     onRewardAndPenaltyUpdate(rewards) {
       this.updateDraftDiff({ rewards });
@@ -128,12 +136,27 @@ export default {
       Object.assign(draftCopy, draftDiff);
       this.setDraft(draftCopy);
     },
+    confirmClosing(){
+      // Register to billings table (add new items, update paid_at status)
+      // Register to billing_details table
+      // Register to monthly_fees table
+      // Trigger reload of arrears component & monthly fees component
+
+      this.clearDraft();
+    },
     initParams() {
+      // Init JS cache
       this.monthlyFee = null;
       this.persons = { beforeDeduction: null, afterDeduction: null };
       this.incumbents = null;
+
+      // Init sessionStorage
       this.clearDraft();
     }
+  },
+  mounted() {
+    // When the page is newly opened, or reloaded
+    this.initParams();
   }
 };
 </script>
