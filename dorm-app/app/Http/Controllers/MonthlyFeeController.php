@@ -28,14 +28,23 @@ class MonthlyFeeController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created monthly fee in the storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $fee = MonthlyFee::create([
+            "year" => $request->year,
+            "month" => $request->month,
+            "closed_at" => $request->closed_at,
+            "persons" => $request->persons,
+            "persons_after_deduction" => $request->persons_after_deduction,
+            "total_amount" => $request->total_amount,
+            "fee_amount" => $request->fee_amount
+        ]);
+        $fee->save();
     }
 
     /**
@@ -61,7 +70,7 @@ class MonthlyFeeController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the existing monthly fee details
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id

@@ -9,6 +9,9 @@ class MonthlyFee extends Model
 {
     protected $table = "monthly_fees";
 
+    // Black list of columns which this model shouldn't alter
+    protected $guarded = [];
+
     protected $appends = [
         'closing_name'
     ];

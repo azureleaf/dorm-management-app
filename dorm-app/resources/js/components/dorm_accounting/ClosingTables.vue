@@ -157,7 +157,7 @@ export default {
         }
       });
     },
-    confirmClosing() {
+    async confirmClosing() {
       const draft = this.readDraft();
 
       // Abort submission when required fields aren't fully set
@@ -165,14 +165,37 @@ export default {
 
       // Register to billings table (add new items & update paid_at status)
       // Register to billing_details table (add new items)
-      // Register to monthly_fees table
+
+      /**
+       *  Register to monthly_fees table
+       */
+
+      // Get the last day of the previous month
+      const d = new Date(draft.closingDate);
+      d.setDate(1);
+      d.setHours(-1);
+
+      // Save to the DB
+      try {
+        const res = await axios.post("/monthly-fees", {
+          year: d.getFullYear(),
+          month: d.getMonth() + 1,
+          closed_at: draft.closingDate,
+          persons: draft.personsTotal.beforeDeduction,
+          persons_after_deduction: draft.personsTotal.afterDeduction,
+          total_amount: draft.totalAmount,
+          fee_amount: draft.feeAmount
+        });
+      } catch (e) {
+        console.error(e);
+      }
 
       // Clear sessionStorage
       this.clearDraft();
 
       // Trigger page reload
       // in order to update arrears component & monthly fees component
-      location.reload();
+      // location.reload();
     },
     initParams() {
       // Init JS cache

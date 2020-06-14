@@ -75,7 +75,7 @@ Route::put('/role-titles/{role_title_id}', 'RoleTitleController@update');
 // Role Histories
 Route::get('/role-histories', 'RoleHistoryController@index');
 Route::post('/role-histories/incumbents', 'RoleHistoryController@incumbents'); // original
-Route::post('/role-histories/', 'RoleHistoryController@store');
+Route::post('/role-histories', 'RoleHistoryController@store');
 Route::put('/role-histories/{hx_id}', 'RoleHistoryController@update');
 Route::delete('/role-histories/{hx_id}', 'RoleHistoryController@destroy');
 
@@ -89,7 +89,7 @@ Route::get('/personal/titles', function () {
 
 // Monthly Fees
 Route::get('monthly-fees', 'MonthlyFeeController@index');
-Route::put('monthly-fees/{fee_id}', 'MonthlyFeeController@update');
+Route::post('monthly-fees', 'MonthlyFeeController@store');
 
 /**
  * Auth
