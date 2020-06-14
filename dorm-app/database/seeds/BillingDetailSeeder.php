@@ -32,7 +32,7 @@ class BillingDetailSeeder extends Seeder
                     "amount" => 15764,
                     "closedAt" => Carbon::create(2019, 11, 30),
                     "abstract" => "基本金請求",
-                    "paidAt" => Carbon::create(2020, 12, 14),
+                    "paidAt" => Carbon::create(2019, 12, 14),
                 ),
                 array(
                     "amount" => 16202,
