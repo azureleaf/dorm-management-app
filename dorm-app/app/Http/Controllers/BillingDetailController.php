@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\BillingDetail;
+use App\Billing;
 
 class BillingDetailController extends Controller
 {
@@ -31,14 +32,62 @@ class BillingDetailController extends Controller
      * Store a newly created billing details: fee, rewards, penalties.
      *
      * @param  \Illuminate\Http\Request  $request
+     *      Example of original JS Axios payload:
+     *      {
+     *          closedAt: "2020-06-04",
+     *          year: 2020,
+     *          month: 5,
+     *          users: [
+     *              {
+     *                  userId: 20,
+     *                  billingDets: [
+     *                      { accountTitleId: 200, amount: 12345, comment: ""},
+     *                      { accountTitleId: 105, amount: -2000, comment: ""},
+     *                  ]
+     *              },
+     *              {
+     *                  userId: 24,
+     *                  billingDets: [
+     *                      { accountTitleId: 200, amount: 12345, comment: ""},
+     *                  ]
+     *              },
+     *          ]
+     *      }
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        // Loop each 
-        // foreach($request->users as $user) {
 
-        // }
+        // Loop for all the users
+        foreach ($request->users as $user) {
+
+            $bill = Billing::create([
+                "closed_at" => $request->closedAt,
+                "user_id" => $user->userId,
+                "amount" => 0, // will be updated later
+                "year" => $request->year,
+                "month" => $request->month,
+            ]);
+            $bill->save();
+
+            // Sum
+            $billingSum = 0;
+
+            foreach ($user->billingDets as $billingDet) {
+                $det = BillingDetail::create([
+                    "personal_account_title_id" => $billingDet->accountTitleId,
+                    "amount" => $billingDet->amount,
+                    "comment" => $billingDet->comment,
+                    "billing_id" => $bill->id,
+                ]);
+                $det->save();
+
+                $billingSum += $billingDet->amount;
+            }
+
+            $bill->amount = $billingSum;
+            $bill->save();
+        }
     }
 
     /**

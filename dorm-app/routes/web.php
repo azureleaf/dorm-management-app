@@ -48,7 +48,7 @@ Route::put('/billings/update/paid', 'BillingController@paid'); // original
 
 //Billing Details
 Route::get('/billing-details', 'BillingDetailController@index');
-Route::post('/billing-details', 'BillingDetailController@store');
+Route::post('/billing-details', 'BillingDetailController@store'); // alters billings table as well
 
 // Rooms
 Route::get('/rooms', 'RoomController@index');
