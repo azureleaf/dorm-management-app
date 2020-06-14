@@ -29,7 +29,7 @@
                 color="error"
                 depressed
                 dense
-                @click="deleteItem(item.rowId)"
+                @click="deleteRow(item.rowId)"
                 :disabled="!item.isDeletable"
               >
                 <v-icon>mdi-trash-can</v-icon>
@@ -53,6 +53,11 @@ export default {
       targetUsers: [],
       users: [],
       targetUserHeaders: [
+        {
+          text: "項目ID",
+          sortable: false,
+          value: "rowId"
+        },
         {
           text: "寮生ID",
           sortable: false,
@@ -108,7 +113,7 @@ export default {
       // Emit the entire rewards / penalty info to the parent component
       this.$emit("updateRewardAndPenalty", this.targetUsers);
     },
-    deleteItem(rowId) {
+    deleteRow(rowId) {
       // Delete the element with the specified ID in the array
       // Row index is always sequential,
       // while row IDs may come at intervals
@@ -119,14 +124,35 @@ export default {
       this.emitCurrentTargets();
     },
     // Set the rewards to the incumbent users with committee roles
-    addRoleRewards() {
+    setRoleRewards(monthlyFee) {
+      /**
+       * Need to clear all the existing rows of committee roles, but keep other rows
+       */
+      // Create the list of row IDs to be deleted
+      const oldCommitteeRewardRowIds = this.targetUsers.reduce((acc, row) => {
+        if (row.isDeletable == false) {
+          acc.push(row.rowId);
+        }
+        return acc;
+      }, []);
+
+      // Remove the rows of old committee rewards
+      oldCommitteeRewardRowIds.forEach(id => {
+        this.deleteRow(id);
+      });
+
+      /**
+       * Calculate the new reward amount
+       * based on the monthly fee & reward ratio
+       */
       this.incumbents.forEach(incumbent => {
         this.targetUsers.push({
-          rowId: ++this.lastRowIndex, // increment then assign. Must be UNIQUE
+          // rowId must be UNIQUE, and the same value mustn't be reused
+          rowId: ++this.lastRowIndex, // increment then assign
           userId: incumbent.user.id,
           fullName: incumbent.user.full_name,
           title: "100: 委員会報酬",
-          amount: -Math.ceil(incumbent.reward_pct * 0.01 * this.monthlyfee),
+          amount: -Math.ceil(incumbent.reward_pct * 0.01 * monthlyFee),
           comment: `${incumbent.role_title.name}（${incumbent.reward_pct}％免除）`,
           isDeletable: false
         });
@@ -148,10 +174,17 @@ export default {
       this.users = res.data;
     }
   },
+  watch: {
+    // Detect the update of the props,
+    // then update source array for v-data-table accordingly
+    monthlyfee(newFee, oldFee) {
+      this.setRoleRewards(newFee);
+    }
+  },
   mounted() {
     this.retrieveUsers();
     this.retrieveAccountTitles();
-    this.addRoleRewards();
+    this.setRoleRewards(this.monthlyfee);
   }
 };
 </script>
