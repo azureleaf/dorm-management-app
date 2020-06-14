@@ -11,7 +11,11 @@
           </v-row>
           <v-row>
             <v-col>
-              <v-data-table :headers="billingHeaders" :items="billItems" :items-per-page="20"></v-data-table>
+              <v-data-table
+                :headers="billingHeaders"
+                :items="billItems"
+                :items-per-page="10"
+              ></v-data-table>
             </v-col>
           </v-row>
         </v-card-text>

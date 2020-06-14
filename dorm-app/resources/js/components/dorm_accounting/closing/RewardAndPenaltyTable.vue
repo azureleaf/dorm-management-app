@@ -11,7 +11,7 @@
       ></reward-and-penalty-dialog>
     </v-card-title>
     <v-card-subtitle
-      >委員会報酬についてはここでは編集できませんので、役職記録から変更してください。</v-card-subtitle
+      >委員会報酬の割合についてはここでは編集できません。役職記録から変更してください。</v-card-subtitle
     >
     <v-card-text>
       <v-row>
@@ -19,7 +19,7 @@
           <v-data-table
             :headers="targetUserHeaders"
             :items="targetUsers"
-            :items-per-page="targetUsers.length"
+            :items-per-page="10"
           >
             <template v-slot:item.amount="{ item }">
               <span>{{ formatCurrency(item.amount) }}</span>
@@ -127,7 +127,7 @@ export default {
           fullName: incumbent.user.full_name,
           title: "100: 委員会報酬",
           amount: -Math.ceil(incumbent.reward_pct * 0.01 * this.monthlyfee),
-          comment: incumbent.role_title.name,
+          comment: `${incumbent.role_title.name}（${incumbent.reward_pct}％免除）`,
           isDeletable: false
         });
       });

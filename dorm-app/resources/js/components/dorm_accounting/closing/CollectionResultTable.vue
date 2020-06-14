@@ -26,7 +26,7 @@
           <v-data-table
             :headers="unpaidHeaders"
             :items="unpaids"
-            :items-per-page="20"
+            :items-per-page="10"
             show-select
             v-model="isPaid"
           >

@@ -10,7 +10,7 @@
           <v-data-table
             :headers="nonPayerHeaders"
             :items="nonPayers"
-            :items-per-page="20"
+            :items-per-page="10"
           >
             <template v-slot:item.sum="{ item }">
               {{ formatCurrency(item.sum) }}
