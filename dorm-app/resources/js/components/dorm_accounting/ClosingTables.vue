@@ -136,13 +136,40 @@ export default {
       Object.assign(draftCopy, draftDiff);
       this.setDraft(draftCopy);
     },
-    confirmClosing(){
+    confirmClosing() {
+      /** 
+       * Check if all the required items are set in the sessionStorage
+       */
+      const draft = this.readDraft();
+      const requiredKeys = [
+        { value: "closingDate", text: "決算日" },
+        { value: "totalAmount", text: "徴収総額" },
+        { value: "feeAmount", text: "基本金" },
+        { value: "personsTotal", text: "負担人数・換算負担人数" },
+        { value: "paidBillIds", text: "寮費徴収結果" },
+        { value: "rewards", text: "賞罰処理" }
+      ];
+      const isFilledOut = requiredKeys.every(key => {
+        if (!(key.value in draft)) {
+          alert(`${key.text}が入力されていません。`);
+          return false; // this breaks the "every" loop
+        } else {
+          return true;
+        }
+      });
+      // Abort submission when some required fields aren't set
+      if (!isFilledOut) return;
+
       // Register to billings table (add new items, update paid_at status)
       // Register to billing_details table
       // Register to monthly_fees table
-      // Trigger reload of arrears component & monthly fees component
 
+      // Clear sessionStorage
       this.clearDraft();
+
+      // Trigger page reload
+      // in order to update arrears component & monthly fees component
+      location.reload();
     },
     initParams() {
       // Init JS cache
