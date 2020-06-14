@@ -169,7 +169,7 @@ export default {
         });
       } catch (e) {
         console.error(e);
-        return;
+        return 1;
       }
 
       console.debug("Successfully stored new monthly fee.");
@@ -182,7 +182,7 @@ export default {
         });
       } catch (e) {
         console.error(e);
-        return;
+        return 1;
       }
 
       console.debug("Successfully stored paid billings.");
@@ -192,7 +192,7 @@ export default {
         // const res = await axios.put("/billings/update/paid", {});
       } catch (e) {
         console.error(e);
-        return;
+        return 1;
       }
       console.debug("Successfully stored new billings.");
     },

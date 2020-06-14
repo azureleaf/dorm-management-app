@@ -20,39 +20,47 @@
       >
       <v-card-text>
         <v-container>
-          <v-row justify="center">
-            <v-subheader>決算日の設定</v-subheader>
-          </v-row>
-          <v-row justify="center">
-            <v-date-picker
-              v-model="picker"
-              locale="ja-jp"
-              :day-format="date => new Date(date).getDate()"
-              style="box-shadow: 0 0 0; border: solid 1px gainsboro"
-              @change="fillTerm"
-            ></v-date-picker>
-          </v-row>
-          <v-row justify="center">
-            <v-subheader>決算期の設定</v-subheader>
-          </v-row>
-          <v-row justify="center">
-            <v-col>
-              <v-text-field
-                label=""
-                v-model="year"
-                type="number"
-                suffix="年"
-              ></v-text-field
-            ></v-col>
-            <v-col>
-              <v-text-field
-                label=""
-                v-model="month"
-                type="number"
-                suffix="月分決算"
-              ></v-text-field>
-            </v-col>
-          </v-row>
+          <v-card class="mb-4" flat outlined
+            ><v-card-text>
+              <v-row justify="center">
+                <v-subheader>決算日の設定</v-subheader>
+              </v-row>
+              <v-row justify="center">
+                <v-date-picker
+                  v-model="picker"
+                  locale="ja-jp"
+                  :day-format="date => new Date(date).getDate()"
+                  style="box-shadow: 0 0 0; border: solid 1px gainsboro"
+                  @change="fillTerm"
+                ></v-date-picker>
+              </v-row>
+            </v-card-text>
+          </v-card>
+          <v-card class="mb-4" flat outlined
+            ><v-card-text>
+              <v-row justify="center">
+                <v-subheader>決算期の設定</v-subheader>
+              </v-row>
+              <v-row justify="center">
+                <v-col>
+                  <v-text-field
+                    label=""
+                    v-model="year"
+                    type="number"
+                    suffix="年"
+                  ></v-text-field
+                ></v-col>
+                <v-col>
+                  <v-text-field
+                    label=""
+                    v-model="month"
+                    type="number"
+                    suffix="月分決算"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+            </v-card-text>
+          </v-card>
         </v-container>
       </v-card-text>
       <v-card-actions>
