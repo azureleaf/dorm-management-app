@@ -136,11 +136,10 @@ export default {
       Object.assign(draftCopy, draftDiff);
       this.setDraft(draftCopy);
     },
-    confirmClosing() {
-      /** 
+    isDraftFilledOut(draft) {
+      /**
        * Check if all the required items are set in the sessionStorage
        */
-      const draft = this.readDraft();
       const requiredKeys = [
         { value: "closingDate", text: "決算日" },
         { value: "totalAmount", text: "徴収総額" },
@@ -149,7 +148,7 @@ export default {
         { value: "paidBillIds", text: "寮費徴収結果" },
         { value: "rewards", text: "賞罰処理" }
       ];
-      const isFilledOut = requiredKeys.every(key => {
+      return requiredKeys.every(key => {
         if (!(key.value in draft)) {
           alert(`${key.text}が入力されていません。`);
           return false; // this breaks the "every" loop
@@ -157,11 +156,15 @@ export default {
           return true;
         }
       });
-      // Abort submission when some required fields aren't set
-      if (!isFilledOut) return;
+    },
+    confirmClosing() {
+      const draft = this.readDraft();
 
-      // Register to billings table (add new items, update paid_at status)
-      // Register to billing_details table
+      // Abort submission when required fields aren't fully set
+      if (!this.isDraftFilledOut(draft)) return;
+
+      // Register to billings table (add new items & update paid_at status)
+      // Register to billing_details table (add new items)
       // Register to monthly_fees table
 
       // Clear sessionStorage
