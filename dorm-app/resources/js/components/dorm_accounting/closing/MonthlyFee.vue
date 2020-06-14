@@ -74,6 +74,12 @@ export default {
     };
   },
   methods: {
+    /**
+     * MISC: Get the total amount, calculate the monthly fee with it
+     * 
+     * @param {Number} newTotalAmount Total amount to be paid by the users
+     * @returns {Object} Monthly fee params to be displayed in v-data-table
+     */
     calcFee(newTotalAmount) {
       const totalAmount = newTotalAmount ? newTotalAmount : 0; // When the arg is empty, assign 0
       const personsBeforeDeduction = this.personsprop.beforeDeduction;
@@ -91,6 +97,11 @@ export default {
         feeAmount
       };
     },
+    /**
+     * MISC: Calculate fee params, update UI, then emit the result
+     * 
+     * @param {Number} newTotalAmount Total amount to be paid by the users
+     */
     setTotalAmount(newTotalAmount) {
       const newFee = this.calcFee(newTotalAmount);
 

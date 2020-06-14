@@ -33,13 +33,17 @@ export default {
   props: ["closingdate"], // YYYY-MM-DD
   data: function() {
     return {
+      // Currently serving committee members
       incumbents: null,
-      burdens: [],
-      // sum of the persons in the table
+      // Sum of the persons in the table
       personsTotals: {
         beforeDeduction: null,
         afterDeduction: null
       },
+      /**
+       * v-data-table attrs
+       */
+      burdens: [],
       burdenHeaders: [
         {
           text: "職名",
@@ -70,16 +74,25 @@ export default {
     }
   },
   methods: {
+    /**
+     * Axios: Get the list of commitee members at the specified date
+     */
     async loadIncumbents() {
       const res = await axios.post("/role-histories/incumbents", {
         date: this.closingdate
       });
       return res.data;
     },
+    /**
+     * Axios: Get the committee role titles with details
+     */
     async loadRoleTitles() {
       const res = await axios.get("/role-titles/");
       return res.data;
     },
+    /**
+     * Axios: Get the list of users who lived in the specified month
+     */
     async countUsersBackThen() {
       // Convert YYYY-MM-DD string to Date obj
       const dateFmt = new Date(this.closingdate);
@@ -96,7 +109,8 @@ export default {
       return res.data.length;
     },
     /**
-     * Set burdens[] array which is shown in v-data-table
+     * v-data-table: Set array to count the persons to pay for the fees
+     * Every element reprensets for a role
      */
     async setBurdens() {
       this.incumbents = await this.loadIncumbents();
@@ -158,7 +172,6 @@ export default {
           return acc + curr.persons_after_deduction;
         }, 0)
         .toFixed(2);
-
       this.burdens.push({
         role_name: "合計",
         burden_rate: "",

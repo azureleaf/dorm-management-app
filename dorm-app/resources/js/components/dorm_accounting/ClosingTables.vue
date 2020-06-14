@@ -5,10 +5,12 @@
         <v-card-title>
           <span>寮費請求</span>
           <v-spacer></v-spacer>
+          <!-- Conditionally display creation buttons -->
           <closing-tables-dialog
             v-if="!hasSessionStorage"
             @setClosingDate="onDraftCreation"
           ></closing-tables-dialog>
+          <!-- Conditionally display deletion buttons -->
           <v-btn
             v-else
             color="error"
@@ -40,6 +42,7 @@
               </v-card-text>
             </v-card>
           </v-row>
+          <!-- Tables -->
           <monthly-fee
             v-if="persons.beforeDeduction"
             :personsprop="persons"
@@ -60,6 +63,7 @@
             :monthlyfee="monthlyFee"
             @updateRewardAndPenalty="onRewardAndPenaltyUpdate"
           ></reward-and-penalty-table>
+          <!-- Settlement button -->
           <v-btn
             color="error"
             block
@@ -81,23 +85,42 @@
 export default {
   data: function() {
     return {
-      monthlyFee: null,
-      hasSessionStorage: false, // should be a computed value instead?
-      persons: { beforeDeduction: null, afterDeduction: null }, // will be calculated by child component
+      // should be a computed value instead?
+      hasSessionStorage: false,
+
+      /**
+       *  Vars for props-down & $emit
+       */
+      monthlyFee: null, // calculated by child component
+      persons: { beforeDeduction: null, afterDeduction: null }, // calculated by child component
       incumbents: null
     };
   },
   methods: {
+    /**
+     * $emit Event handlers: MonthlyFee.vue
+     * @param {Object} payload
+     */
     onMonthlyFeeUpdate(payload) {
       this.monthlyFee = payload.feeAmount;
       this.updateDraftDiff(payload);
     },
+    /**
+     * $emit Event handlers: DeductionTable.vue
+     * @param {Object} payload
+     *
+     */
     onDeductionUpdate(payload) {
       this.persons.beforeDeduction = payload.personsTotal.beforeDeduction;
       this.persons.afterDeduction = payload.personsTotal.afterDeduction;
       this.incumbents = payload.incumbents;
       this.updateDraftDiff(payload);
     },
+    /**
+     * $emit Event handlers: CollectionResultTable.vue
+     *
+     * @param {Array} paidList
+     */
     onPaidListUpdate(paidList) {
       const paidBillIds = {
         paidBillIds: paidList.reduce((acc, cur) => {
@@ -107,38 +130,62 @@ export default {
       };
       this.updateDraftDiff(paidBillIds);
     },
+    /**
+     * $emit Event handlers: RewardAndPenaltyTable.vue
+     *
+     * @param {Object} rewards
+     */
     onRewardAndPenaltyUpdate(rewards) {
       this.updateDraftDiff({ rewards });
     },
+    /**
+     * sessionStorage: Read
+     */
     readDraft() {
       return JSON.parse(sessionStorage.getItem("draft"));
     },
+    /**
+     * sessionStorage: Update (Replacement)
+     */
     setDraft(newDraft) {
       sessionStorage.clear(); // To avoid unexpected side-effect
       sessionStorage.setItem("draft", JSON.stringify(newDraft));
       this.hasSessionStorage = true; // For certainty
     },
+    /**
+     * sessionStorage: Create
+     * @param {Object} payload
+     */
     onDraftCreation(payload) {
       this.setDraft(payload);
     },
+    /**
+     * sessionStorage: Delete
+     */
     clearDraft() {
       sessionStorage.clear();
       this.hasSessionStorage = false;
     },
     /**
-     * Get a new part of the draft as a object,
-     * update the part in the draft.
-     * The other parts will be kept as they are if not affected by the part.
+     * sessionStorage: Update (Partial replacement / Append)
+     * Get a new part of the draft as a object, and update with it.
+     * The other parts will be kept as they are.
+     *
+     * @param {Object} draftDiff item(s) of sessionStorage
      */
     updateDraftDiff(draftDiff) {
       let draftCopy = JSON.parse(JSON.stringify(this.readDraft()));
       Object.assign(draftCopy, draftDiff);
       this.setDraft(draftCopy);
     },
+    /**
+     * SessionStorage: Validate
+     * Check if all the required items are set in the sessionStorage
+     *
+     * @param {Object} draft sessionStorage contents
+     * @returns {Boolean}
+     */
     isDraftFilledOut(draft) {
-      /**
-       * Check if all the required items are set in the sessionStorage
-       */
       const requiredKeys = [
         { value: "closingDate", text: "決算日" },
         { value: "totalAmount", text: "徴収総額" },
@@ -156,6 +203,12 @@ export default {
         }
       });
     },
+    /**
+     * Axios: Insert the calcuated new monthly fee
+     *
+     * @param {Object} draft sessionStorage contents
+     * @returns {Number|undefined}
+     */
     async storeMonthlyFee(draft) {
       try {
         const res = await axios.post("/monthly-fees", {
@@ -174,6 +227,13 @@ export default {
 
       console.debug("Successfully stored new monthly fee.");
     },
+    /**
+     * Axios: Update paid / unpaid status of the former billings
+     *
+     * @param {Object} draft sessionStorage contents
+     * @returns {Number|undefined}
+     *
+     */
     async storePaidBillings(draft) {
       try {
         const res = await axios.put("/billings/update/paid", {
@@ -188,10 +248,13 @@ export default {
       console.debug("Successfully stored paid billings.");
     },
     /**
-     * Register items to both billing & billing details table
+     * Axios: Insert items to both billing & billing details table
+     *
+     * @param {Object} draft sessionStorage contents
+     * @returns {Number|undefined}
+     *
      */
     async storeNewBillings(draft) {
-
       // Retrieve all the users who lived in the month of interest
       const res = await axios.get(
         `./users/monthly/${this.readDraft().year}/${this.readDraft().month}`
@@ -201,13 +264,11 @@ export default {
       console.log("users", users);
       return;
 
-      const billingDetsByUsers = users.reduce((acc, user)=>{
-        acc.push(
-          {
-            userId: user.id,
-            billingDets: [] // NOT COMPLETED HERE
-          }
-        )
+      const billingDetsByUsers = users.reduce((acc, user) => {
+        acc.push({
+          userId: user.id,
+          billingDets: [] // NOT COMPLETED HERE
+        });
         return acc;
       }, []);
 
@@ -226,21 +287,25 @@ export default {
       }
       console.debug("Successfully stored new billings.");
     },
+    /**
+     * Axios: Settle the draft and finalize the billing process
+     *
+     * @param {Object} draft sessionStorage contents
+     * @returns {Number|undefined}
+     */
     async confirmClosing() {
-      // Confirm the draft and finalize the billing process on button click
-
       const draft = this.readDraft();
 
       // Abort submission when required fields aren't fully set
       if (!this.isDraftFilledOut(draft)) return;
 
-      // Update paid billings
+      // Update paid / unpaid status of the former billings
       await this.storePaidBillings(draft);
 
-      // Register to billings &billing_details table (add new items)
+      // Insert to billings & billing_details table
       await this.storeNewBillings(draft);
 
-      // Register to monthly_fees table
+      // Insert to monthly_fees table
       await this.storeMonthlyFee(draft);
 
       // Clear sessionStorage
@@ -261,7 +326,7 @@ export default {
     }
   },
   mounted() {
-    // When the page is newly opened, or reloaded
+    // When the page is opened, or reloaded
     this.initParams();
   }
 };

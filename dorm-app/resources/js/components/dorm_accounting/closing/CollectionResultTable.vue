@@ -45,7 +45,10 @@ export default {
   data: function() {
     return {
       isAdmin: true,
+      // Array of billing IDs paid in this closing term
       isPaid: [],
+
+      // Array of objects of unpaid billings
       unpaids: [],
       unpaidHeaders: [
         {
@@ -72,11 +75,19 @@ export default {
     };
   },
   watch: {
+    /**
+     * Emit the list of billing IDs which are paid
+     *   every time the list is updated
+     *   to be stored in the sessionStorage
+     */
     isPaid: function(val, oldVal) {
       this.$emit("updatePaidList", val);
     }
   },
   computed: {
+    /**
+     * Sum the amount of all the billings newly paid
+     */
     paidSum() {
       return this.isPaid.reduce((acc, cur) => {
         return acc + cur.amount;
