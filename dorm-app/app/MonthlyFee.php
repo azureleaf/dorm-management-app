@@ -20,6 +20,6 @@ class MonthlyFee extends Model
     {
         // Prepend 0 when the month has only 1 digit
         $month = (intval($this->month) > 9) ? strval($this->month) : "0" . strval($this->month);
-        return "{$this->year}年{$month}月期";
+        return "{$this->year}年{$month}月分";
     }
 }
