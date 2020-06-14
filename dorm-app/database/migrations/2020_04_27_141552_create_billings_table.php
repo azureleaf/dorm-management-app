@@ -20,6 +20,8 @@ class CreateBillingsTable extends Migration
             $table->date("paid_at")->nullable();
             $table->foreignId('user_id')->constrained();
             $table->integer("amount");
+            $table->integer("year");
+            $table->integer("month");
             // $table->boolean("is_next_debit_target")->nullable();
             // $table->boolean("is_cash_payment")->nullable();
         });

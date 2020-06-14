@@ -30,33 +30,39 @@ class BillingDetailSeeder extends Seeder
                 // All the users paid for the fee of this month
                 array(
                     "amount" => 15764,
-                    "closedAt" => Carbon::create(2019, 11, 30),
-                    "abstract" => "基本金請求",
+                    "closedAt" => Carbon::create(2019, 12, 5),
                     "paidAt" => Carbon::create(2019, 12, 14),
+                    "year" => 2020,
+                    "month" => 11
                 ),
                 array(
                     "amount" => 16202,
-                    "closedAt" => Carbon::create(2019, 12, 31),
+                    "closedAt" => Carbon::create(2019, 1, 6),
                     "abstract" => "基本金請求",
                     "paidAt" => $unpaidMonths > 2 ? null : Carbon::create(2020, 1, 15),
+                    "year" => 2020,
+                    "month" => 12
                 ),
                 array(
                     "amount" => 14550,
-                    "closedAt" => Carbon::create(2020, 01, 31),
-                    "abstract" => "基本金請求",
+                    "closedAt" => Carbon::create(2020, 2, 6),
                     "paidAt" => $unpaidMonths > 1 ? null : Carbon::create(2020, 2, 16),
+                    "year" => 2020,
+                    "month" => 1
                 ),
                 array(
                     "amount" => 11234,
-                    "closedAt" => Carbon::create(2020, 02, 29),
-                    "abstract" => "基本金請求",
+                    "closedAt" => Carbon::create(2020, 3, 8),
                     "paidAt" => $unpaidMonths > 0 ? null : Carbon::create(2020, 3, 21),
+                    "year" => 2020,
+                    "month" => 2
                 ),
                 array(
                     "amount" => 12365,
-                    "closedAt" => Carbon::create(2020, 03, 31),
-                    "abstract" => "基本金請求",
+                    "closedAt" => Carbon::create(2020, 4, 6),
                     // "paidAt" => // All the users are at unpaid status for the latest billing
+                    "year" => 2020,
+                    "month" => 3
                 ),
             );
 
@@ -68,13 +74,14 @@ class BillingDetailSeeder extends Seeder
                     "closed_at" => $month["closedAt"],
                     "amount" => 0, // Will be updated soon
                     "paid_at" => array_key_exists("paidAt", $month) ? $month["paidAt"] : null,
+                    "year" => $month["year"],
+                    "month" => $month["month"]
                 ]);
                 $bill->save();
 
                 $detsQuota =  BillingDetail::create([
                     "billing_id" => $bill->id,
                     "personal_account_title_id" => PersonalAccountTitle::where('name', '基本金請求')->first()->id,
-                    "abstract" => $month["abstract"], // this must be automatically generated from the params above
                     "amount" => $month["amount"],
                 ]);
                 $amountSum += $month["amount"];
@@ -85,7 +92,6 @@ class BillingDetailSeeder extends Seeder
                     $detsPenalty = BillingDetail::create([
                         "billing_id" => $bill->id,
                         "personal_account_title_id" => PersonalAccountTitle::where('name', 'ブロック掃除不履行罰金')->first()->id,
-                        "abstract" => "ブロック掃除不履行罰金",
                         "amount" => 2000,
                     ]);
                     $amountSum += 2000;
@@ -97,7 +103,6 @@ class BillingDetailSeeder extends Seeder
                     $detsReward = BillingDetail::create([
                         "billing_id" => $bill->id,
                         "personal_account_title_id" => PersonalAccountTitle::where('name', '風呂掃除代行報酬')->first()->id,
-                        "abstract" => "風呂掃除無許可欠席者代行報酬",
                         "amount" => -4000,
                     ]);
                     $amountSum += -4000;

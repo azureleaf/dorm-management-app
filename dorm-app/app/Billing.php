@@ -25,8 +25,8 @@ class Billing extends Model
 
     public function getAbstractAttribute()
     {
-        $closedAt = Carbon::parse($this->closed_at);
-        $month2digits = $closedAt->month > 9 ? $closedAt->month : "0" . strval($closedAt->month);
-        return "{$closedAt->year}年{$month2digits}月分";
+        // Fill with 0 to make month strings 2 digits: 08, 09, 10...
+        $month2digits = $this->month > 9 ? $this->month : "0" . strval($this->month);
+        return "{$this->year}年{$month2digits}月分";
     }
 }

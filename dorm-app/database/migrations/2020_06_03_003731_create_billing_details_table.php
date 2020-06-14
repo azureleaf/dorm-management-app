@@ -18,7 +18,6 @@ class CreateBillingDetailsTable extends Migration
             $table->timestamps();
             $table->foreignId('billing_id')->constrained();
             $table->foreignId('personal_account_title_id')->constrained();
-            $table->string('abstract');
             $table->integer('amount');
             $table->string('comment')->nullable();
         });
