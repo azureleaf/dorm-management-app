@@ -14,19 +14,44 @@
       </v-btn>
     </template>
     <v-card>
-      <v-card-title>決算日</v-card-title>
+      <v-card-title>決算原稿の新規作成</v-card-title>
       <v-card-subtitle
-        >決算日は必ず決算名目月の翌月のどこかに設定してください。</v-card-subtitle
+        >決算日は必ず決算名目月の翌月に設定するのが基本です。</v-card-subtitle
       >
       <v-card-text>
         <v-container>
+          <v-row justify="center">
+            <v-subheader>決算日の設定</v-subheader>
+          </v-row>
           <v-row justify="center">
             <v-date-picker
               v-model="picker"
               locale="ja-jp"
               :day-format="date => new Date(date).getDate()"
               style="box-shadow: 0 0 0; border: solid 1px gainsboro"
+              @change="fillTerm"
             ></v-date-picker>
+          </v-row>
+          <v-row justify="center">
+            <v-subheader>決算期の設定</v-subheader>
+          </v-row>
+          <v-row justify="center">
+            <v-col>
+              <v-text-field
+                label=""
+                v-model="year"
+                type="number"
+                suffix="年"
+              ></v-text-field
+            ></v-col>
+            <v-col>
+              <v-text-field
+                label=""
+                v-model="month"
+                type="number"
+                suffix="月分決算"
+              ></v-text-field>
+            </v-col>
           </v-row>
         </v-container>
       </v-card-text>
@@ -46,16 +71,30 @@ export default {
   data: function() {
     return {
       picker: "",
+      year: null,
+      month: null, // January is 1
       isDialogOpen: false
     };
   },
   methods: {
+    fillTerm() {
+      const d = new Date(this.picker);
+      d.setDate(1); // first day of the month
+      d.setHours(-1); // last day of the prev month
+      this.year = d.getFullYear();
+      this.month = d.getMonth() + 1;
+    },
     saveInput() {
       this.isDialogOpen = false;
-      this.$emit("setClosingDate", this.picker);
+      this.$emit("setClosingDate", {
+        closingDate: this.picker,
+        year: this.year,
+        month: this.month
+      });
     },
     initForms() {
       this.picker = new Date().toISOString().substr(0, 10);
+      this.fillTerm();
     }
   }
 };

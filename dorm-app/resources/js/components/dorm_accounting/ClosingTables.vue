@@ -3,11 +3,11 @@
     <v-container>
       <v-card elevation="10">
         <v-card-title>
-          <span>寮費請求原稿</span>
+          <span>寮費請求</span>
           <v-spacer></v-spacer>
           <closing-tables-dialog
             v-if="!hasSessionStorage"
-            @setClosingDate="createDraft"
+            @setClosingDate="onDraftCreation"
           ></closing-tables-dialog>
           <v-btn
             v-else
@@ -33,7 +33,9 @@
                   large
                   dark
                 >
-                  決算日：{{ readDraft().closingDate }}
+                  決算日：{{ readDraft().closingDate }} （{{
+                    readDraft().year
+                  }}年{{ readDraft().month }}月分決算）
                 </v-chip>
               </v-card-text>
             </v-card>
@@ -116,11 +118,8 @@ export default {
       sessionStorage.setItem("draft", JSON.stringify(newDraft));
       this.hasSessionStorage = true; // For certainty
     },
-    createDraft(newClosingDate) {
-      const newDraft = {
-        closingDate: newClosingDate
-      };
-      this.setDraft(newDraft);
+    onDraftCreation(payload) {
+      this.setDraft(payload);
     },
     clearDraft() {
       sessionStorage.clear();
@@ -158,16 +157,10 @@ export default {
       });
     },
     async storeMonthlyFee(draft) {
-      // Get the last day of the previous month
-      const d = new Date(draft.closingDate);
-      d.setDate(1);
-      d.setHours(-1);
-
-      // Save to the DB
       try {
         const res = await axios.post("/monthly-fees", {
-          year: d.getFullYear(),
-          month: d.getMonth() + 1,
+          year: draft.year,
+          month: draft.month,
           closed_at: draft.closingDate,
           persons: draft.personsTotal.beforeDeduction,
           persons_after_deduction: draft.personsTotal.afterDeduction,
@@ -176,6 +169,7 @@ export default {
         });
       } catch (e) {
         console.error(e);
+        return;
       }
 
       console.debug("Successfully stored new monthly fee.");
@@ -188,11 +182,18 @@ export default {
         });
       } catch (e) {
         console.error(e);
+        return;
       }
 
       console.debug("Successfully stored paid billings.");
     },
     async storeNewBillings(draft) {
+      try {
+        // const res = await axios.put("/billings/update/paid", {});
+      } catch (e) {
+        console.error(e);
+        return;
+      }
       console.debug("Successfully stored new billings.");
     },
     async confirmClosing() {
@@ -217,7 +218,7 @@ export default {
 
       // Trigger page reload
       // in order to update arrears component & monthly fees component
-      // location.reload();
+      location.reload();
     },
     initParams() {
       // Init JS cache
