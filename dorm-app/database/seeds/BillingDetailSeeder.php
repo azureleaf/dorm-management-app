@@ -32,7 +32,7 @@ class BillingDetailSeeder extends Seeder
                     "amount" => 15764,
                     "closedAt" => Carbon::create(2019, 12, 5),
                     "paidAt" => Carbon::create(2019, 12, 14),
-                    "year" => 2020,
+                    "year" => 2019,
                     "month" => 11
                 ),
                 array(
@@ -40,7 +40,7 @@ class BillingDetailSeeder extends Seeder
                     "closedAt" => Carbon::create(2019, 1, 6),
                     "abstract" => "基本金請求",
                     "paidAt" => $unpaidMonths > 2 ? null : Carbon::create(2020, 1, 15),
-                    "year" => 2020,
+                    "year" => 2019,
                     "month" => 12
                 ),
                 array(
