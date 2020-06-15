@@ -107,12 +107,13 @@ export default {
     };
   },
   computed: {
+    /** Exclude some items from the v-select options:
+     *    id: 100 (委員会報酬)
+     *    id: 200 (基本金請求)
+     *  because these shouldn't be selectable in this context
+     */
     filteredTitles() {
       return this.titles.filter(item => {
-        // Exclude some items from the v-select options:
-        //    id: 100 (委員会報酬)
-        //    id: 200 (基本金請求)
-        // because these shouldn't be selectable in this context
         return (
           this.isPayment == item.is_payment && item.id != 200 && item.id != 100
         );
@@ -120,10 +121,15 @@ export default {
     }
   },
   watch: {
-    // Autofill the amount when the title is selected
+    /**
+     * Autofill the amount when the reward title is selected
+     * 
+     * @param {Number} newId
+     * @param {Number} oldId
+     */
     titleId: function(newId, oldId) {
-      // Abort if the title inputted is null
-      // When the title is cleared, watcher is also called
+      // Abort if the reward title inputted is null;
+      // when the reward title is cleared, watcher is also called
       // and its value will be set null
       if (!newId) return;
 
@@ -132,6 +138,10 @@ export default {
     }
   },
   methods: {
+    /**
+     * Emit the list of users for this single reward / penalty with an amount
+     * to the parent component
+     */
     save() {
       this.$emit("setRewards", {
         targetUsers: this.targetUsers,
@@ -143,6 +153,9 @@ export default {
       });
       this.isDialogOpen = false;
     },
+    /**
+     * Empty the form input
+     */
     initForms() {
       this.targetUsers = [];
       this.isPayment = true;
