@@ -30,6 +30,7 @@ class BillingDetailController extends Controller
 
     /**
      * Store a newly created billing details: fee, rewards, penalties.
+     * This controller updates both billing details table & billings table.
      *
      * @param  \Illuminate\Http\Request  $request
      *      Example of original JS Axios payload:
@@ -62,27 +63,27 @@ class BillingDetailController extends Controller
         foreach ($request->users as $user) {
 
             $bill = Billing::create([
-                "closed_at" => $request->closedAt,
-                "user_id" => $user->userId,
+                "closed_at" => $request->closedAt, // YYYY-MM-DD
+                "user_id" => $user["userId"],
                 "amount" => 0, // will be updated later
                 "year" => $request->year,
                 "month" => $request->month,
             ]);
-            $bill->save();
+            $bill->save(); // This sets "id" to $bill
 
-            // Sum
+            // Sum up all the amount of billing details
             $billingSum = 0;
 
-            foreach ($user->billingDets as $billingDet) {
+            foreach ($user["billingDets"] as $billingDet) {
                 $det = BillingDetail::create([
-                    "personal_account_title_id" => $billingDet->accountTitleId,
-                    "amount" => $billingDet->amount,
-                    "comment" => $billingDet->comment,
+                    "personal_account_title_id" => $billingDet["accountTitleId"],
+                    "amount" => $billingDet["amount"],
+                    "comment" => $billingDet["comment"],
                     "billing_id" => $bill->id,
                 ]);
                 $det->save();
 
-                $billingSum += $billingDet->amount;
+                $billingSum += $billingDet["amount"];
             }
 
             $bill->amount = $billingSum;
