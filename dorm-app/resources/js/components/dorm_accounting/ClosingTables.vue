@@ -225,7 +225,7 @@ export default {
         return 1;
       }
 
-      console.debug("Successfully stored new monthly fee.");
+      // console.debug("Successfully stored new monthly fee.");
     },
     /**
      * Axios: Update paid / unpaid status of the former billings
@@ -245,7 +245,7 @@ export default {
         return 1;
       }
 
-      console.debug("Successfully stored paid billings.");
+      // console.debug("Successfully stored paid billings.");
     },
     /**
      * Axios: Insert items to both billing & billing details table
@@ -261,31 +261,68 @@ export default {
       );
       const users = res.data;
 
-      console.log("users", users);
-      return;
+      // Retrieve all the rewards & penalties from the sessionStorage
+      // This is the array of billing detail items
+      const rewards = this.readDraft().rewards;
 
-      const billingDetsByUsers = users.reduce((acc, user) => {
-        acc.push({
+      /**
+       * Billing details for every user.
+       * Outcome will be like;
+       *   [
+       *     {userId: 3, billingDets: [
+       *        {accountTitleId: 200, ...},
+       *        {accountTitleId: 102, ...},
+       *     ]},
+       *     {userId: 5, billingDets: [
+       *        {accountTitleId: 200, ...},
+       *     },
+       *   ]
+       */
+      let billingDetsByUser = users.map(user => {
+        // A container of all the billing details for this user for this billing
+        //    e.g. monthly fee, reward 1, reward 2, penalty 1...
+        const billingDets = [
+          // First, append the monthly fee to every body
+          {
+            accountTitleId: 200, // 基本金請求. Note that this id is hard-coded
+            amount: Number(this.readDraft().feeAmount),
+            comment: null
+          },
+          // Second, append Rewards & Penalties for this user if any
+          ...rewards
+            .filter(reward => reward.userId == user.id) // filter items for this user
+            .map(reward => {
+              return {
+                accountTitleId: reward.titleId,
+                amount: Number(reward.amount),
+                comment: reward.comment
+              };
+            })
+        ];
+
+        return {
           userId: user.id,
-          billingDets: [] // NOT COMPLETED HERE
-        });
-        return acc;
-      }, []);
+          billingDets
+        };
+      });
 
-      let axiosPayload = {
-        closed_at: readDraft().closingDate,
-        year: readDraft().year,
-        month: readDraft().month,
-        users: billingDetsByUsers
+      // Wrap the billing details with other params
+      const axiosPayload = {
+        closedAt: this.readDraft().closingDate,
+        year: this.readDraft().year,
+        month: this.readDraft().month,
+        users: billingDetsByUser
       };
 
+      // Store to the DB
       try {
         const res = await axios.post("/billing-details/", axiosPayload);
       } catch (e) {
         console.error(e);
         return 1;
       }
-      console.debug("Successfully stored new billings.");
+
+      // console.debug("Successfully stored new billings.");
     },
     /**
      * Axios: Settle the draft and finalize the billing process
@@ -299,7 +336,7 @@ export default {
       // Abort submission when required fields aren't fully set
       if (!this.isDraftFilledOut(draft)) return;
 
-      // Update paid / unpaid status of the former billings
+      // Update Paid / Unpaid status of the former billings
       await this.storePaidBillings(draft);
 
       // Insert to billings & billing_details table
@@ -311,9 +348,8 @@ export default {
       // Clear sessionStorage
       this.clearDraft();
 
-      // Trigger page reload
-      // in order to update arrears component & monthly fees component
-      // location.reload();
+      // Trigger page reload to update the components affected in this page
+      location.reload();
     },
     initParams() {
       // Init JS cache
