@@ -62,9 +62,9 @@ export default {
           value: "billing.abstract"
         },
         {
-          text: "摘要",
+          text: "寮費科目",
           sortable: true,
-          value: "abstract"
+          value: "personal_account_title.name"
         },
         {
           text: "請求額",

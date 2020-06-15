@@ -15,7 +15,7 @@ class BillingDetailController extends Controller
      */
     public function index()
     {
-        return BillingDetail::with("billing", "billing.user")->orderBy("id")->get();
+        return BillingDetail::with("billing", "billing.user", "personalAccountTitle")->orderBy("id")->get();
     }
 
     /**
