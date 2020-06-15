@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class BillingDetail extends Model
 {
     protected $table = "billing_details";
-    
+
+    protected $guarded = [];
+
     public function billing()
     {
         return $this->belongsTo('App\Billing');
