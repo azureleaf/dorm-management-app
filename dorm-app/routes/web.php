@@ -17,6 +17,13 @@ use Illuminate\Support\Facades\Route;
 use App\PersonalAccountTitle;
 
 /**
+ * Vue Router
+ */
+Route::get('/', function () {
+    return view('show');
+});
+
+/**
  * Views
  */
 Route::get('/', function () {

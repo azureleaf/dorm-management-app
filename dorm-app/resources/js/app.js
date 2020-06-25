@@ -6,10 +6,12 @@
 
 require("./bootstrap");
 import Vuetify from "vuetify";
+import VueRouter from "vue-router";
 
 window.Vue = require("vue");
 
 Vue.use(Vuetify);
+Vue.use(VueRouter);
 
 Vue.mixin({
     methods: {
@@ -35,7 +37,6 @@ Vue.mixin({
  *
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
-
 const files = require.context("./", true, /\.vue$/i);
 files.keys().map(key =>
     Vue.component(
@@ -46,6 +47,32 @@ files.keys().map(key =>
         files(key).default
     )
 );
+
+
+import Introduction from './components/introduction/Introduction';
+import Users from './components/Users';
+import Accounting from './components/Accounting';
+
+const router = new VueRouter({
+    mode: "history",
+    routes: [
+        {
+            path: "/intro",
+            name: "intro",
+            component: Introduction
+        },
+        {
+            path: "/users",
+            name: "users",
+            component: Users
+        },
+        {
+            path: "/accounting",
+            name: "accounting",
+            component: Accounting
+        },
+    ]
+});
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
@@ -61,5 +88,6 @@ const app = new Vue({
         icons: {
             iconfont: "mdi" // 'mdi' || 'mdiSvg' || 'md' || 'fa' || 'fa4' || 'faSvg'
         }
-    })
+    }),
+    router
 });

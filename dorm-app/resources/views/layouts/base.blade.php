@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <div id="app">
+    <div id="app2">
         <v-app>
             <!-- <app-header avatarurl="{{ asset('/img/rubber_ducky_material.png') }}"></app-header> -->
             <app-header></app-header>
