@@ -52,13 +52,14 @@ files.keys().map(key =>
 import Introduction from './components/introduction/Introduction';
 import Users from './components/Users';
 import Accounting from './components/Accounting';
+import Closing from './components/Closing';
 
 const router = new VueRouter({
-    mode: "history",
+    mode: "hash",
     routes: [
         {
-            path: "/intro",
-            name: "intro",
+            path: "/introduction",
+            name: "introduction",
             component: Introduction
         },
         {
@@ -70,6 +71,11 @@ const router = new VueRouter({
             path: "/accounting",
             name: "accounting",
             component: Accounting
+        },
+        {
+            path: "/closing",
+            name: "closing",
+            component: Closing
         },
     ]
 });

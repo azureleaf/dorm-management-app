@@ -66,14 +66,14 @@ export default {
   data: function() {
     return {
       pages: [
-        { title: "寮紹介", uri: "/", icon: "mdi-home" },
+        { title: "寮紹介", uri: "/#/introduction", icon: "mdi-home" },
         {
           title: "納付記録",
-          uri: "/personal-accounting",
+          uri: "/#/accounting",
           icon: "mdi-currency-jpy"
         },
-        { title: "寮会計決算", uri: "/dorm-accounting", icon: "mdi-text-box-plus" },
-        { title: "寮生一覧", uri: "/user-list", icon: "mdi-account-group" },
+        { title: "寮会計決算", uri: "/#/closing", icon: "mdi-text-box-plus" },
+        { title: "寮生一覧", uri: "/#/users", icon: "mdi-account-group" },
         // { title: "日程管理", uri: "/schedule", icon: "mdi-clock" },
         // { title: "寮文書", uri: "/document", icon: "mdi-file-document" },
         { title: "ログアウト", uri: "/logout", icon: "mdi-lock-open" }

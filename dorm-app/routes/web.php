@@ -26,7 +26,7 @@ Route::get('/', function () {
 /**
  * Views
  */
-Route::get('/', function () {
+Route::get('/intro', function () {
     return view('introduction');
 });
 
