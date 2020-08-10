@@ -76,7 +76,7 @@ export default {
         { title: "寮生一覧", uri: "/#/users", icon: "mdi-account-group" },
         // { title: "日程管理", uri: "/schedule", icon: "mdi-clock" },
         // { title: "寮文書", uri: "/document", icon: "mdi-file-document" },
-        { title: "ログアウト", uri: "/logout", icon: "mdi-lock-open" }
+        // { title: "ログアウト", uri: "/logout", icon: "mdi-lock-open" }
       ]
     };
   },
