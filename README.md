@@ -138,14 +138,16 @@ Run these commands in the root directory of the Laravel application.
 ## Deploy to the AWS
 
 1. Bundle the app: `zip ~/Desktop/laravel-default.zip -r * .[^.]* -x "vendor/*"`
+    - Note that `vendor/` is excluded by `-x` flag
+    - Note that hidden file such as `.env` is included
 2. Go to Elastic Beanstalk console.
 3. Choose "Upload your file", then upload the zipped file.
 4. Deploy.
 5. Go to "Configuration" > "Software" > "Edit"
 6. Set app root as `/public`
-5. Go to "Configuration" > "Database" > "Edit"
-7. Choose `postgres`, set user name & password
-8. Edit the original file `dorm-app > config > database.php` (better create the branch for AWS EB, I guess)
+7. Go to "Configuration" > "Database" > "Edit"
+8. Choose `postgres`, set user name & password
+9.  Edit the original file `dorm-app > config > database.php` (better create the branch for AWS EB, I guess)
     ```php
     'host' => env('RDS_HOSTNAME', '127.0.0.1'),
     'port' => env('RDS_PORT', '5432'),
@@ -153,8 +155,8 @@ Run these commands in the root directory of the Laravel application.
     'username' => env('RDS_USERNAME', 'forge'),
     'password' => env('RDS_PASSWORD', ''),
     ```
-9. Rebundle the app: `zip ~/Desktop/laravel-v2-rds.zip -r * .[^.]* -x "vendor/*"`
-1.  Deploy again.
+10. Rebundle the app: `zip ~/Desktop/laravel-v2-rds.zip -r * .[^.]* -x "vendor/*"`
+11. Deploy again.
 
 # Feature Milestones
 
