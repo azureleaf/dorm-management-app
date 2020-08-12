@@ -10,10 +10,6 @@
         <v-card-title class="font-weight-bold">青葉大学青葉寮公式サイトへようこそ！</v-card-title>
         <v-card-text>
           <p>仙台にある青葉大学の男子寮・青葉寮の公式ウェブサイトです。入寮をお考えの皆さまに私たちの寮をご紹介いたします。</p>
-          <p>
-            在寮生には青葉寮運営電子化基盤（Aoba Cloud）のサービスを提供します。利用するには
-            <a href="./login">ログイン</a>してください。
-          </p>
         </v-card-text>
       </v-card>
       <v-card elevation="10" class="card-section">
@@ -51,7 +47,7 @@
         <v-card-text>
           <v-card v-for="(sectionItem, index) in section.sectionItems" :key="index" outlined tile>
             <v-card-title>{{sectionItem.title}}</v-card-title>
-            <v-card-text>{{sectionItem.desc}}</v-card-text>
+            <v-card-text v-html="sectionItem.desc"></v-card-text>
           </v-card>
         </v-card-text>
       </v-card>
@@ -78,19 +74,19 @@ export default {
         {
           title: "連絡先",
           desc:
-            "hoge@gmail.com<br>返信まで数日かかる場合がありますが、ご了承ください。"
+            "hoge@gmail.com　（返信まで数日かかる場合がありますが、ご了承ください。）"
         },
         {
           title: "所在地",
           desc:
-            "仙台市一番町<br>当寮と同じ住所に寮が複数ありますので、郵便物には寮名・部屋番号まで必ず書いてください。"
+            "仙台市一番町（当寮と同じ住所に寮が複数ありますので、郵便物には寮名・部屋番号まで必ず書いてください。）"
         },
         { title: "定員", desc: "100名" },
         { title: "入寮資格", desc: "本学の大学生・大学院生" },
         {
           title: "入寮申込方法",
           desc:
-            "本学の<a href=''>教務学生支援課生活支援係</a>（TEL: 022-123-4567）に直接ご応募ください。"
+            "本学の教務学生支援課生活支援係（TEL: 022-123-4567）に直接ご応募ください。"
         }
       ],
       contactHeaders: [
@@ -122,12 +118,12 @@ export default {
         {
           title: "インターネット",
           desc:
-            "有線/Wifiともに共用回線に接続可能。より高速な接続環境を希望する方は回線を個人契約してください（ FLET'S光マンションタイプ導入工事済）。"
+            "有線/Wifiともに共用回線に接続可能。より高速な接続環境を希望する方は回線を個人契約してください（FLET'S光マンションタイプ導入工事済）。"
         },
         {
           title: "周辺施設",
           desc:
-            "銀行・郵便局・コンビニ・飲食店・交番・医院などが徒歩5分圏内です。<br>緑地に隣接し、閑静な住宅街の中にあります。<br>バス停が近く、仙台駅・八木山動物公園駅・片平キャンパスまで直通バスあり。"
+            "銀行・郵便局・コンビニ・飲食店・交番・医院などが徒歩5分圏内です。緑地に隣接し、閑静な住宅街の中にあります。バス停が近く、仙台駅・八木山動物公園駅まで直通バスあり。"
         },
         { title: "その他", desc: "AED設置済・アスベスト検査済・耐震性検査済" }
       ],
@@ -258,36 +254,36 @@ export default {
             }
           ]
         },
-        {
-          sectionTitle: "よくある質問",
-          sectionSubtitle: "頻繁に寄せられる疑問にお答えします。",
-          sectionItems: [
-            {
-              title: "どうやって通学しているの？",
-              desc: "あああ"
-            },
-            {
-              title: "建物古くない？",
-              desc: "あああ"
-            },
-            {
-              title: "冬寒い？",
-              desc: "あああ"
-            },
-            {
-              title: "坂きつくない？",
-              desc: "あああ"
-            },
-            {
-              title: "食事は？",
-              desc: "寮運"
-            },
-            {
-              title: "買い物は？",
-              desc: "寮運"
-            }
-          ]
-        },
+        // {
+        //   sectionTitle: "よくある質問",
+        //   sectionSubtitle: "頻繁に寄せられる疑問にお答えします。",
+        //   sectionItems: [
+        //     {
+        //       title: "どうやって通学しているの？",
+        //       desc: "あああ"
+        //     },
+        //     {
+        //       title: "建物古くない？",
+        //       desc: "あああ"
+        //     },
+        //     {
+        //       title: "冬寒い？",
+        //       desc: "あああ"
+        //     },
+        //     {
+        //       title: "坂きつくない？",
+        //       desc: "あああ"
+        //     },
+        //     {
+        //       title: "食事は？",
+        //       desc: "寮運"
+        //     },
+        //     {
+        //       title: "買い物は？",
+        //       desc: "寮運"
+        //     }
+        //   ]
+        // },
         {
           sectionTitle: "寮生の仕事",
           sectionSubtitle: "共同生活では、寮生同士の役割分担が不可欠です。",
