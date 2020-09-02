@@ -9,10 +9,11 @@
   - [Requirements](#requirements)
   - [Installation of the requirements](#installation-of-the-requirements)
     - [PHP, Apache](#php-apache)
-    - [~~MySQL~~](#smysqls)
+    - [MySQL](#mysql)
     - [Postgres](#postgres)
     - [Composer](#composer)
     - [Laravel (globally)](#laravel-globally)
+  - [Set up MySQL](#set-up-mysql)
   - [Set up Postgres](#set-up-postgres)
   - [Laravel Installation](#laravel-installation)
   - [Deploy to the AWS](#deploy-to-the-aws)
@@ -76,12 +77,14 @@ Tried at Aug. 2020 on Ubuntu 20.04
 1. `sudo systemctl enable apache2.service`
 1. `sudo systemctl restart apache2.service`
 
+### MySQL
 
-### ~~MySQL~~
-
-5. `sudo apt install mysql-server php7.4-mysql`
-6. `sudo /usr/bin/mysql_secure_installation`
-1. `sudo systemctl enable mysql.service`
+1. `sudo apt install mysql-server php7.4-mysql`
+2. `sudo /usr/bin/mysql_secure_installation` (set password)
+3. `sudo systemctl enable mysql.service`
+4. `sudo systemctl stop mysql` (if necessary)
+4. `sudo systemctl start mysql` (if necessary)
+5. `sudo mysql -u root -p`
 
 ### Postgres
 
@@ -100,6 +103,22 @@ Tried at Aug. 2020 on Ubuntu 20.04
 1. `composer global require laravel/installer`
 2. `echo 'export PATH="$PATH:$HOME/.composer/vendor/bin"' >> ~/.bashrc`
 
+## Set up MySQL
+
+1. `sudo mysql -u root -p`
+1. `create database dorm_db`
+2. `show databases`
+3. `use dorm_db`
+1. Edit `.env`
+  ```
+  DB_CONNECTION=mysql
+  DB_HOST=127.0.0.1
+  DB_PORT=3306
+  DB_DATABASE=dorm_db
+  DB_USERNAME=root
+  DB_PASSWORD=passwordhere
+  ```
+
 ## Set up Postgres
 
 1. Install postgres
@@ -111,7 +130,7 @@ Tried at Aug. 2020 on Ubuntu 20.04
    DB_PORT=5432
    DB_DATABASE=dorm_db
    DB_USERNAME=postgres
-   DB_PASSWORD=mypw1234
+   DB_PASSWORD=passwordhere
    ```
 4. Edit `config/app.php` and set timezone to `Asia/Tokyo`
 5. `sudo su postgres` (`sudo -u postgres psql`)
