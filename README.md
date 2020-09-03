@@ -105,18 +105,33 @@ Tried at Aug. 2020 on Ubuntu 20.04
 
 ## Set up MySQL
 
+
 1. `sudo mysql -u root -p`
-1. `create database dorm_db`
-2. `show databases`
-3. `use dorm_db`
-1. Edit `.env`
+2. Create a new non-root user
+   -  `root` requires `sudo`, which results in `SQLSTATE[HY000] [1698] Access denied for user 'root'@'localhost'` when Laravel accesses MySQL
+   - Therefore, create the non-admin user is the solution
+   - Because default MEDIUM password policy requires the use of special characters
+
+    ```sql
+    CREATE DATABASE dorm_db
+    SHOW databases
+    USE dorm_db
+    set global validate_password_policy=LOW;
+
+    SHOW VARIABLES like 'validate_password%';
+    CREATE USER 'dorm_app'@'localhost' IDENTIFIED BY 'newpw';    
+    GRANT ALL PRIVILEGES ON dorm_db.* TO 'dorm_app'@'localhost';
+    SHOW GRANTS FOR 'dorm_app'@'localhost';
+    ```
+1. `mysql -u dorm_app -p`
+9. Edit `.env`
   ```
   DB_CONNECTION=mysql
   DB_HOST=127.0.0.1
   DB_PORT=3306
   DB_DATABASE=dorm_db
-  DB_USERNAME=root
-  DB_PASSWORD=passwordhere
+  DB_USERNAME=dorm_app
+  DB_PASSWORD=newpw
   ```
 
 ## Set up Postgres
