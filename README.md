@@ -16,7 +16,10 @@
   - [Set up MySQL](#set-up-mysql)
   - [Set up Postgres](#set-up-postgres)
   - [Laravel Installation](#laravel-installation)
-  - [Deploy to the AWS](#deploy-to-the-aws)
+  - [Deploy to the AWS (w/ EB)](#deploy-to-the-aws-w-eb)
+    - [Seeding](#seeding)
+    - [Reference](#reference)
+  - [Deploy to the AWS (w/o EB)](#deploy-to-the-aws-wo-eb)
 - [Feature Milestones](#feature-milestones)
   - [Must have](#must-have)
   - [Optional Features](#optional-features)
@@ -169,17 +172,32 @@ Run these commands in the root directory of the Laravel application.
 1. `php artisan db:seed`
 1. `php artisan serve`
 
-## Deploy to the AWS
+## Deploy to the AWS (w/ EB)
 
-1. Bundle the app: `zip ~/laravel-default.zip -r * .[^.]* -x "vendor/*"`
-2. Go to Elastic Beanstalk console.
-3. Choose "Upload your file", then upload the zipped file.
-4. Deploy.
-5. Go to "Configuration" > "Software" > "Edit"
-6. Set app root as `/public`
-5. Go to "Configuration" > "Database" > "Edit"
-7. Choose `postgres`, set user name & password
-8. Edit the original file `dorm-app > config > database.php` (should create the branch for AWS EB, I guess)
+1. Edit `dorm-app > config > database.php` (better create the branch for AWS EB, I guess)
+2. Bundle the app: `zip ~/Desktop/laravel-default.zip -r * .[^.]* -x "vendor/*"`
+3. Go to Elastic Beanstalk console.
+4. Choose "Upload your file", then upload the zipped file.
+5. Deploy.
+6. Go to "Configuration" > "Software" > "Edit"
+7. Set app root as `/public`
+8. Go to "Configuration" > "Database" > "Edit"
+9. Choose `mysql`, set user name & password
+
+### Seeding
+
+1. Connect to EC2 with AWS CLI
+2. `php artisan migrate`
+3. `php artisan db:seed`
+
+### Reference
+
+- https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/php-laravel-tutorial.html
+
+
+## Deploy to the AWS (w/o EB)
+
+- https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/php-development-environment.html#php-development-environment-php
 
 # Feature Milestones
 
