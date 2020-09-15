@@ -17,7 +17,8 @@
   - [Set up Postgres](#set-up-postgres)
   - [Laravel Installation](#laravel-installation)
   - [Deploy to the AWS (w/ EB)](#deploy-to-the-aws-w-eb)
-    - [Seeding](#seeding)
+    - [Seeding (w/ data importation)](#seeding-w-data-importation)
+    - [Seeding (w/ PHP)](#seeding-w-php)
     - [Reference](#reference)
   - [Deploy to the AWS (w/o EB)](#deploy-to-the-aws-wo-eb)
 - [Feature Milestones](#feature-milestones)
@@ -127,7 +128,11 @@ Tried at Aug. 2020 on Ubuntu 20.04
     SHOW GRANTS FOR 'dorm_app'@'localhost';
     ```
 3. `mysql -u dormapp -p`
-4. Edit `.env`
+4. `use dorm_db;`
+   - Check connection
+5. `show tables;`
+   - No table will be shown at this point, tho
+6. Edit `.env`
   ```
   DB_CONNECTION=mysql
   DB_HOST=127.0.0.1
@@ -184,7 +189,16 @@ Run these commands in the root directory of the Laravel application.
 8. Go to "Configuration" > "Database" > "Edit"
 9. Choose `mysql`, set user name & password
 
-### Seeding
+### Seeding (w/ data importation)
+
+- https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/MySQL.Procedural.Importing.Other.html
+  - https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/MySQL.Procedural.Importing.html
+    - Note that you can't import to the existing DB instance with this
+1. 
+
+### Seeding (w/ PHP)
+
+Not sure if this really work
 
 1. Connect to EC2 with AWS CLI
 2. `php artisan migrate`
