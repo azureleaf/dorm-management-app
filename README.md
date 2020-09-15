@@ -123,17 +123,17 @@ Tried at Aug. 2020 on Ubuntu 20.04
 
     SHOW VARIABLES like 'validate_password%';
     CREATE USER 'dorm_app'@'localhost' IDENTIFIED BY 'newpw';    
-    GRANT ALL PRIVILEGES ON dorm_db.* TO 'dorm_app'@'localhost';
+    GRANT ALL PRIVILEGES ON dorm_db.* TO 'dormapp'@'localhost';
     SHOW GRANTS FOR 'dorm_app'@'localhost';
     ```
-1. `mysql -u dorm_app -p`
-9. Edit `.env`
+3. `mysql -u dormapp -p`
+4. Edit `.env`
   ```
   DB_CONNECTION=mysql
   DB_HOST=127.0.0.1
   DB_PORT=3306
   DB_DATABASE=dorm_db
-  DB_USERNAME=dorm_app
+  DB_USERNAME=dormapp
   DB_PASSWORD=newpw
   ```
 
