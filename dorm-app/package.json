@@ -28,6 +28,7 @@
         "vue-router": "^3.3.4",
         "vuetify": "^2.2.26",
         "serialize-javascript": ">=3.1.0",
-        "websocket-extensions": ">=0.1.4"
+        "websocket-extensions": ">=0.1.4",
+        "node-forge": ">=0.10.0"
     }
 }
