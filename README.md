@@ -16,7 +16,9 @@
   - [Set up MySQL](#set-up-mysql)
   - [Set up Postgres](#set-up-postgres)
   - [Laravel Installation](#laravel-installation)
-  - [Deploy to the AWS](#deploy-to-the-aws)
+  - [Deploy to AWS (w/o Elastic Beanstalk)](#deploy-to-aws-wo-elastic-beanstalk)
+  - [Deploy to AWS (Deploy to EC2 directly)](#deploy-to-aws-deploy-to-ec2-directly)
+    - [Set up LAMP](#set-up-lamp)
 - [Feature Milestones](#feature-milestones)
   - [Must have](#must-have)
   - [Optional Features](#optional-features)
@@ -169,7 +171,7 @@ Run these commands in the root directory of the Laravel application.
 1. `php artisan db:seed`
 1. `php artisan serve`
 
-## Deploy to the AWS
+## Deploy to AWS (w/o Elastic Beanstalk)
 
 1. Bundle the app: `zip ~/laravel-default.zip -r * .[^.]* -x "vendor/*"`
 2. Go to Elastic Beanstalk console.
@@ -180,6 +182,29 @@ Run these commands in the root directory of the Laravel application.
 5. Go to "Configuration" > "Database" > "Edit"
 7. Choose `postgres`, set user name & password
 8. Edit the original file `dorm-app > config > database.php` (should create the branch for AWS EB, I guess)
+
+## Deploy to AWS (Deploy to EC2 directly)
+
+### Set up LAMP
+
+Ref: [Tutorial: LAMP](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/install-LAMP.html)
+
+1. Create the EC2 instance with Amazon Linux AMI (**not Linux 2**)
+2. Installation
+    ```sh
+    ssh -i /path/my-key-pair.pem ec2-user@my-instance-IPv6-address
+    sudo yum update -y
+    sudo yum install -y httpd24 php72 mysql57-server php72-mysqlnd
+    sudo service httpd start
+    sudo chkconfig httpd on
+    chkconfig --list httpd
+    ```
+1. Allow TCP connection to the EC2 instance
+2. Test: Show AMI test page
+3. Change file permissions
+4. Test: Show phpinfo.php
+5. Set up MySQL
+6. Install phpMyAdmin
 
 # Feature Milestones
 
